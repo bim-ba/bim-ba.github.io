@@ -10,6 +10,7 @@
 #### Under [SIL OFL 1.1](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
 
 Font author: [Carrios](https://carrois.com/)
+
 Font page: [github](https://github.com/mozilla/Fira)
 
 ```text
@@ -106,6 +107,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #### Under [SIL OFL 1.1](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
 
 Font author: [Kimberly Geswein](http://www.kimberlygeswein.com/)
+
 Font page: [google-fonts](https://fonts.google.com/specimen/Indie+Flower?query=indie+flower#glyphs)
 
 ```text
