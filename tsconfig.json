@@ -1,0 +1,36 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@common/*": ["./src/common/*"],
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/components/pages/*"],
+      "@router/*": ["./src/router/*"],
+      "@style/*": ["./src/style/*"],
+      "@types": ["./src/types/types.d.ts"],
+      "@injection-keys": ["./src/types/injection-keys.ts"],
+      "@views/*": ["./src/views/*"]
+    },
+    "strict": true,
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "isolatedModules": true,
+    "allowJs": true,
+    "types": [ "node" ]
+  },
+  "references": [
+    {
+      "path": "./tsconfig.vite-config.json"
+    }
+  ]
+}
