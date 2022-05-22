@@ -1,0 +1,23 @@
+[
+  { "color": "lightgray" },
+  { "color": "lightgray", "offset": 7 },
+  { "color": "lightgray" },
+  { "color": "lightgray", "offset": 5 },
+  { "color": "lightgray" },
+  { "color": "lightgray", "offset": 3 },
+  { "color": "lightgray", "offset": 4 },
+  { "color": "cornflowerblue", "offset": 6 },
+  { "color": "darkslateblue" },
+  { "color": "mediumseagreen", "offset": 5 },
+  { "color": "gold", "offset": 2 },
+  { "color": "indigo" },
+  { "color": "darkorange", "offset": 9 },
+  { "color": "lightgray", "offset": 7 },
+  { "color": "black", "offset": 2 },
+  { "color": "white" },
+  { "color": "lightgray", "offset": 3 },
+  { "color": "lightgray", "offset": 8 },
+  { "color": "lightgray" },
+  { "color": "lightgray", "offset": 5 },
+  { "color": "lightgray" }
+]

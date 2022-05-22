@@ -1,0 +1,16 @@
+{
+  "coordinates": {
+    "north": {
+      "degrees": 55,
+      "minutes": 49
+    },
+    "east": {
+      "degrees": 37,
+      "minutes": 48
+    }
+  },
+  "area": {
+    "city": "Moscow",
+    "distrinct": "Golyanovo"
+  }
+}
