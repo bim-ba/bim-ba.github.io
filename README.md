@@ -36,6 +36,7 @@
   - [ ] Drop shadow
   - [ ] Carousel
   - [ ] Normalize font size
+  - [ ] Floating images around floppy
 - [ ] Loading page
 
 ## Sketch
