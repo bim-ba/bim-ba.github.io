@@ -1,5 +1,5 @@
 <template>
-  <span ref="coordinates" @mouseover="revealLocation = true" @mouseout="revealLocation = false">{{
+  <span @mouseover="revealLocation = true" @mouseout="revealLocation = false">{{
     formattedLocation
   }}</span>
 </template>

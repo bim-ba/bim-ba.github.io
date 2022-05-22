@@ -30,7 +30,7 @@
 ## Todo
 
 - [ ] Modal
-  - [ ] Transition
+  - [x] Transition
   - [ ] Normalize font size
 - [ ] Floppy
   - [ ] Drop shadow

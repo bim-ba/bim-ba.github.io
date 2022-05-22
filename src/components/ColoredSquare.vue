@@ -1,7 +1,7 @@
 <template>
   <div v-for="n in props.breakLinesBefore" :key="n" class="break"></div>
   <div v-if="props.offset" class="space"></div>
-  <div ref="square" class="square"></div>
+  <div ref="squareRef" class="square"></div>
   <div v-for="n in props.breakLinesAfter" :key="n" class="break"></div>
 </template>
 

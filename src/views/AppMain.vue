@@ -1,7 +1,7 @@
 <template>
-  <AppBackground ref="background" :size="1.5" />
-  <AppContent ref="content" />
-  <AppFooter ref="footer" />
+  <AppBackground ref="backgroundRef" :size="1.5" />
+  <AppContent ref="contentRef" />
+  <AppFooter ref="footerRef" />
 </template>
 
 <script setup lang="ts">
@@ -26,44 +26,49 @@ const timeline = anime.timeline({ delay: 500 });
 // REFS
 interface ThisComponentPublicInstance extends ComponentPublicInstance {
   $refs: {
-    content: ComponentPublicInstance & {
+    contentRef: ComponentPublicInstance & {
       $refs: {
-        firstname: HTMLElement;
-        lastname: HTMLElement;
-        description: HTMLElement;
+        firstnameRef: HTMLElement;
+        lastnameRef: HTMLElement;
+        descriptionRef: HTMLElement;
       };
     };
-    footer: ComponentPublicInstance & {
+    footerRef: ComponentPublicInstance & {
       $refs: {
-        coordinates: ComponentPublicInstance;
-        icon: ComponentPublicInstance;
+        coordinatesRef: ComponentPublicInstance;
+        iconRef: ComponentPublicInstance;
       };
     };
-    background: ComponentPublicInstance & {
+    backgroundRef: ComponentPublicInstance & {
       $refs: {
-        squares: ComponentPublicInstance[];
+        squaresRef: ComponentPublicInstance[];
       };
     };
   };
 }
 
-const content = ref<Pick<ThisComponentPublicInstance["$refs"]["content"], "$refs"> | null>(null);
-const footer = ref<Pick<ThisComponentPublicInstance["$refs"]["footer"], "$refs"> | null>(null);
-const background = ref<Pick<ThisComponentPublicInstance["$refs"]["background"], "$refs"> | null>(
+const contentRef = ref<Pick<ThisComponentPublicInstance["$refs"]["contentRef"], "$refs"> | null>(
+  null
+);
+const footerRef = ref<Pick<ThisComponentPublicInstance["$refs"]["footerRef"], "$refs"> | null>(
+  null
+);
+// eslint-disable-next-line prettier/prettier
+const backgroundRef = ref<Pick<ThisComponentPublicInstance["$refs"]["backgroundRef"], "$refs"> | null>(
   null
 );
 
 // HOOKS
 onMounted(() => {
   timeline
-    .add({ targets: content.value?.$refs.firstname, ...slideFromLeftAnimation })
-    .add({ targets: content.value?.$refs.lastname, ...slideFromRightAnimation }, "-=1000")
-    .add({ targets: content.value?.$refs.description, ...riseFromBottomAnimation }, "-=1000")
-    .add({ targets: footer.value?.$refs.coordinates.$el, ...riseFromBottomAnimation }, "-=1000")
-    .add({ targets: footer.value?.$refs.icon.$el, ...bubbleJellyAnimation }, "-=1000")
+    .add({ targets: contentRef.value?.$refs.firstnameRef, ...slideFromLeftAnimation })
+    .add({ targets: contentRef.value?.$refs.lastnameRef, ...slideFromRightAnimation }, "-=1000")
+    .add({ targets: contentRef.value?.$refs.descriptionRef, ...riseFromBottomAnimation }, "-=1000")
+    .add({ targets: footerRef.value?.$refs.coordinatesRef.$el, ...riseFromBottomAnimation }, "-=1000") // eslint-disable-line prettier/prettier
+    .add({ targets: footerRef.value?.$refs.iconRef.$el, ...bubbleJellyAnimation }, "-=1000")
     .add(
       {
-        targets: background.value?.$refs.squares.map(({ $refs }) => $refs.square),
+        targets: backgroundRef.value?.$refs.squaresRef.map(({ $refs }) => $refs.squareRef),
         delay: anime.stagger(100),
         scaleY: [0, 1],
         translateX: ["2500%", 0],

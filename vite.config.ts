@@ -13,6 +13,7 @@ export default defineConfig({
       "@assets": fileURLToPath(new URL("./src/assets", import.meta.url)),
       "@common": fileURLToPath(new URL("./src/common", import.meta.url)),
       "@components": fileURLToPath(new URL("./src/components", import.meta.url)),
+      "@data": fileURLToPath(new URL("./src/data", import.meta.url)),
       "@pages": fileURLToPath(new URL("./src/components/pages", import.meta.url)),
       "@router": fileURLToPath(new URL("./src/router", import.meta.url)),
       "@style": fileURLToPath(new URL("./src/style", import.meta.url)),
@@ -20,5 +21,11 @@ export default defineConfig({
       "@injection-keys": fileURLToPath(new URL("./src/types/injection-keys.ts", import.meta.url)),
       "@views": fileURLToPath(new URL("./src/views", import.meta.url)),
     },
+  },
+  publicDir: "./src/assets",
+  build: {
+    outDir: "docs",
+    minify: false,
+    target: "esnext",
   },
 });

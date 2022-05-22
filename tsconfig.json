@@ -12,6 +12,7 @@
       "@assets/*": ["./src/assets/*"],
       "@common/*": ["./src/common/*"],
       "@components/*": ["./src/components/*"],
+      "@data/*": ["./src/data/*"],
       "@pages/*": ["./src/components/pages/*"],
       "@router/*": ["./src/router/*"],
       "@style/*": ["./src/style/*"],

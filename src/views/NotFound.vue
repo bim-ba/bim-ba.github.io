@@ -1,13 +1,13 @@
 <template>
   <div class="icon-content-container">
-    <div ref="icon" class="icon">
+    <div ref="iconRef" class="icon">
       <router-link to="/">
-        <img ref="outer" src="@assets/svg/outer.svg" alt="loadicon" class="outer" />
-        <img ref="inner" src="@assets/svg/inner.svg" alt="loadicon" class="inner" />
+        <img ref="outerRef" src="/svg/outer.svg" alt="loadicon" class="outer" />
+        <img ref="innerRef" src="/svg/inner.svg" alt="loadicon" class="inner" />
       </router-link>
     </div>
     <h1
-      ref="text"
+      ref="textRef"
       class="text"
       @mouseover="error = errorData.details"
       @mouseout="error = errorData.code"
@@ -34,24 +34,24 @@ const timeline = anime.timeline({ duration: 750 });
 const error = ref<string | number>(errorData.code);
 
 // REFS
-const icon = ref<HTMLElement | null>(null);
-const outer = ref<HTMLElement | null>(null);
-const inner = ref<HTMLElement | null>(null);
-const text = ref<HTMLElement | null>(null);
+const iconRef = ref<HTMLElement | null>(null);
+const outerRef = ref<HTMLElement | null>(null);
+const innerRef = ref<HTMLElement | null>(null);
+const textRef = ref<HTMLElement | null>(null);
 
 // HOOKS
 onMounted(() => {
-  anime.set(outer.value, { translateX: "-50%", translateY: "-50%" });
-  anime.set(inner.value, { translateX: "-50%", translateY: "-50%" });
+  anime.set(outerRef.value, { translateX: "-50%", translateY: "-50%" });
+  anime.set(innerRef.value, { translateX: "-50%", translateY: "-50%" });
 
   timeline
     .add({
-      targets: icon.value,
+      targets: iconRef.value,
       ...bubbleAnimation,
     })
     .add(
       {
-        targets: text.value,
+        targets: textRef.value,
         ...bubbleAnimation,
       },
       0
@@ -59,13 +59,13 @@ onMounted(() => {
 
   timeline.finished.then(() => {
     anime({
-      targets: outer.value,
+      targets: outerRef.value,
       rotate: [90, 180, 270, 360],
       duration: 8000,
       loop: true,
     });
     anime({
-      targets: inner.value,
+      targets: innerRef.value,
       rotate: [60, 120, 180, 240, 300, 360],
       duration: 6000,
       loop: true,

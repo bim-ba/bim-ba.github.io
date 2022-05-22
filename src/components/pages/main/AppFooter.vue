@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
     <div></div>
-    <FooterCoordinates ref="coordinates" />
-    <NavigationIcon ref="icon" :size="3" to="/projects" class="icon" />
+    <FooterCoordinates ref="coordinatesRef" />
+    <NavigationIcon ref="iconRef" :size="3" to="/projects" class="icon" />
   </div>
 </template>
 

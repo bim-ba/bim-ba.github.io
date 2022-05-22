@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component, route }">
-    <transition :name="route.meta.transition" mode="out-in">
+    <transition :name="route.meta.transition">
       <div :key="route.path" class="route-container">
         <component :is="Component" />
       </div>
@@ -25,24 +25,21 @@
 
 html,
 body,
-#app {
+#app,
+.route-container {
   height: 100%;
 }
 
 #app {
   @include mixins.font("Fira Sans", sans-serif, variables.$font-size);
-}
-
-body {
-  background: no-repeat center colors.$almost-white url(@assets/svg/dotted-pattern.svg);
-}
-
-.route-container {
-  height: 100%;
   overflow: hidden;
 }
 
-// transitions
+body {
+  background: no-repeat center colors.$almost-white url(/svg/dotted-pattern.svg);
+}
+
+// page transitions
 .scale-bottom-right-enter-active,
 .scale-bottom-right-leave-active,
 .scale-bottom-left-enter-active,

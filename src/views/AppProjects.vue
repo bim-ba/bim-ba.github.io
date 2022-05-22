@@ -1,8 +1,8 @@
 <template>
   <div class="grid-wrapper">
-    <FloppyCarousel ref="carousel" style="grid-area: floppy" />
-    <NavigationIcon ref="icon" reversed :size="3" to="/" style="margin-left: 2em" />
-    <FooterSquares ref="squares" :size="0.6" style="grid-area: footer" />
+    <FloppyCarousel ref="carouselRef" style="grid-area: floppy" />
+    <NavigationIcon ref="iconRef" reversed :size="3" to="/" style="margin-left: 2em" />
+    <FooterSquares ref="squaresRef" :size="0.6" style="grid-area: footer" />
   </div>
 </template>
 
@@ -23,35 +23,42 @@ const timeline = anime.timeline();
 // REFS
 interface ThisComponentPublicInstance extends ComponentPublicInstance {
   $refs: {
-    carousel: ComponentPublicInstance & {
+    carouselRef: ComponentPublicInstance & {
       $refs: {
-        floppies: ComponentPublicInstance[];
+        floppiesRef: ComponentPublicInstance[];
       };
     };
-    footer: ComponentPublicInstance & {
+    footerRef: ComponentPublicInstance & {
       $refs: {
-        squares: ComponentPublicInstance[];
+        squaresRef: ComponentPublicInstance[];
       };
     };
   };
 }
 
-const icon = ref<ComponentPublicInstance | null>(null);
-const carousel = ref<Pick<ThisComponentPublicInstance["$refs"]["carousel"], "$refs"> | null>(null);
-const squares = ref<Pick<ThisComponentPublicInstance["$refs"]["footer"], "$refs"> | null>(null);
+// eslint-disable-next-line prettier/prettier
+const iconRef = ref<ComponentPublicInstance | null>(
+  null
+);
+const carouselRef = ref<Pick<ThisComponentPublicInstance["$refs"]["carouselRef"], "$refs"> | null>(
+  null
+);
+const squaresRef = ref<Pick<ThisComponentPublicInstance["$refs"]["footerRef"], "$refs"> | null>(
+  null
+);
 
 // HOOKS
 onMounted(() => {
   timeline
     .add({
-      targets: carousel.value?.$refs.floppies.map(({ $refs }) => $refs.floppy),
+      targets: carouselRef.value?.$refs.floppiesRef.map(({ $refs }) => $refs.floppyRef),
       delay: anime.stagger(500, { start: 500 }),
       ...bubbleJellyAnimation,
     })
-    .add({ targets: icon.value?.$el, ...bubbleJellyAnimation }, "-=500")
+    .add({ targets: iconRef.value?.$el, ...bubbleJellyAnimation }, "-=500")
     .add(
       {
-        targets: squares.value?.$refs.squares.map(({ $refs }) => $refs.square),
+        targets: squaresRef.value?.$refs.squaresRef.map(({ $refs }) => $refs.squareRef),
         delay: anime.stagger(100, { start: 500 }),
         ...bubbleAnimation,
       },

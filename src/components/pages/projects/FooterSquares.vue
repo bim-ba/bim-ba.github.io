@@ -2,7 +2,7 @@
   <div class="wrapper">
     <ColoredSquare
       v-for="(square, index) in footerSquares"
-      ref="squares"
+      ref="squaresRef"
       :key="index"
       :size="props.size"
       :color="square.color"

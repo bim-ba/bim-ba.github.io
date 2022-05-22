@@ -2,7 +2,7 @@
   <div class="background-squares">
     <ColoredSquare
       v-for="(square, index) in backgroundSquares"
-      ref="squares"
+      ref="squaresRef"
       :key="index"
       :size="props.size"
       :color="square.color"

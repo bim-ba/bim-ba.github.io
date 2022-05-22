@@ -8,7 +8,7 @@ declare namespace AppTypes {
 
   interface ProjectImage {
     source: string;
-    primary?: boolean;
+    primary: boolean;
   }
 
   interface Project {
@@ -20,6 +20,11 @@ declare namespace AppTypes {
       color: string;
       primary?: boolean;
     };
+  }
+
+  interface TestProject extends Project {
+    folder: string;
+    images: string[];
   }
 
   interface Square {

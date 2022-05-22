@@ -6,7 +6,7 @@
     :description="description"
     :images="images"
   />
-  <div ref="floppy" class="floppy-container" @click="showModal = true">
+  <div ref="floppyRef" class="floppy-container" @click="showModal = true">
     <div class="frame-container">
       <img :src="primaryImage?.source" alt="project primary image" />
       <span>{{ title }}</span>
@@ -37,10 +37,7 @@ interface ThisProps {
   color?: string;
   isPrimary?: boolean;
 }
-const props = withDefaults(defineProps<ThisProps>(), {
-  color: "gray",
-  isPrimary: false,
-});
+const props = withDefaults(defineProps<ThisProps>(), { color: "gray" });
 
 // COMPUTED
 const computedTitleFontSize = computed(() => {
@@ -95,7 +92,7 @@ $date-font-size: 0.75em;
 
   aspect-ratio: 1 / 1;
 
-  mask-image: url(@assets/svg/pure-floppy.svg);
+  mask-image: url(/svg/pure-floppy.svg);
   background-color: $floppy-color;
 
   font-size: $container-font-size;

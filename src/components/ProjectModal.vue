@@ -1,5 +1,10 @@
 <template>
-  <vue-final-modal classes="modal-container" content-class="modal-content" :esc-to-close="true">
+  <vue-final-modal
+    classes="modal-container"
+    content-class="modal-content"
+    :esc-to-close="true"
+    transition="scale-center"
+  >
     <div class="modal-wrapper">
       <div class="images-container">
         <img v-for="(img, index) in images" :key="index" :src="img.source" alt="project-image" />
@@ -67,7 +72,7 @@ $images-gap: 1em;
   justify-content: center;
 }
 :deep(.modal-content) {
-  background: $background-color url(@assets/svg/cross-pattern.svg) center no-repeat !important;
+  background: $background-color url(/svg/cross-pattern.svg) center no-repeat !important;
   height: $width !important;
   width: $height !important;
   border-radius: 0 !important;

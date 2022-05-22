@@ -2,7 +2,7 @@
   <div class="carousel-container">
     <FloppyDisk
       v-for="(project, index) in projects"
-      ref="floppies"
+      ref="floppiesRef"
       :key="index"
       :title="project.title"
       :description="project.description"

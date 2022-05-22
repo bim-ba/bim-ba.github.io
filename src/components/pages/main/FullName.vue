@@ -1,10 +1,10 @@
 <template>
   <div class="fullname-container">
-    <h1 ref="firstname" class="name">{{ firstname }}</h1>
+    <h1 ref="firstnameRef" class="name">{{ firstname }}</h1>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span ref="description" class="description" v-html="normalizedDescriptionHTML"></span>
+    <span ref="descriptionRef" class="description" v-html="normalizedDescriptionHTML"></span>
     <br />
-    <h1 ref="lastname" class="name" style="margin-left: 1ch">{{ lastname }}</h1>
+    <h1 ref="lastnameRef" class="name" style="margin-left: 1ch">{{ lastname }}</h1>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <router-link :to="to">
-    <img ref="icon" src="@assets/svg/favicon.svg" alt="appicon" />
+    <img src="/svg/favicon.svg" alt="appicon" />
   </router-link>
 </template>
 
