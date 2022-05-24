@@ -41,6 +41,7 @@
 - [ ] Loading page
 - [ ] Dev
   - [ ] `anime.js` animations as directives
+  - [ ] HTML sectioning
 
 ## Sketch
 
