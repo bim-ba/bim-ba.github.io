@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { inject } from "vue";
+
 import { squaresKey } from "@injection-keys";
 import type { Square } from "@types";
 

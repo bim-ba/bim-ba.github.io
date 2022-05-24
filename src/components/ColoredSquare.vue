@@ -6,6 +6,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, type ComponentPublicInstance } from "vue";
+
 // PROPS
 //
 // https://github.com/vuejs/core/issues/4294
@@ -18,13 +20,15 @@ interface ThisProps {
   breakLinesBefore?: number;
   breakLinesAfter?: number;
 }
-
 const props = withDefaults(defineProps<ThisProps>(), {
   size: 1,
   offset: 0,
   breakLinesBefore: 0,
   breakLinesAfter: 0,
 });
+
+// refs
+const squareRef = ref<ComponentPublicInstance | null>(null);
 </script>
 
 <style lang="scss" scoped>

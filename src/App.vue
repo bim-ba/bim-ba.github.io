@@ -1,5 +1,8 @@
 <template>
   <router-view v-slot="{ Component, route }">
+    <Head>
+      <title>{{ route.meta.title }}</title>
+    </Head>
     <transition :name="route.meta.transition">
       <div :key="route.path" class="route-container">
         <component :is="Component" />
@@ -7,6 +10,10 @@
     </transition>
   </router-view>
 </template>
+
+<script setup lang="ts">
+import { Head } from "@vueuse/head";
+</script>
 
 <style lang="scss">
 @use "@style/reset";

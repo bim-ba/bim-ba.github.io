@@ -2,6 +2,8 @@ import { createApp } from "vue";
 import App from "@/App.vue";
 import router from "@/router";
 
+import { createHead } from "@vueuse/head";
+
 import VueFinalModalPlugin from "vue-final-modal";
 
 import { contentKey, footerCoordinatesKey, squaresKey, projectsKey } from "@injection-keys";
@@ -16,6 +18,7 @@ import {
 
 const app = createApp(App);
 
+// PROVIDINGS
 app
   .provide(contentKey, content)
   .provide(footerCoordinatesKey, coordinates)
@@ -27,6 +30,9 @@ app
 
 // reactive providers
 app.config.unwrapInjectedRef = true;
+
+const head = createHead();
+app.use(head);
 
 app.use(router);
 app.use(VueFinalModalPlugin, {

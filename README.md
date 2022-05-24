@@ -34,10 +34,13 @@
   - [ ] Normalize font size
 - [ ] Floppy
   - [ ] Drop shadow
-  - [ ] Carousel
+  - [ ] Fix `click` event conflicts
+  - [x] Carousel
   - [ ] Normalize font size
   - [ ] Floating images around floppy
 - [ ] Loading page
+- [ ] Dev
+  - [ ] `anime.js` animations as directives
 
 ## Sketch
 

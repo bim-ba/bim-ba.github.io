@@ -65,6 +65,7 @@ $container-font-size: v-bind('isPrimary ? "1em" : "0.75em"');
 
 $floppy-color: v-bind(color);
 $floppy-size: 20em;
+$floppy-hovered-size: 20.5em;
 
 $frame-color: black;
 
@@ -78,8 +79,6 @@ $date-font: "Indie Flower";
 $date-font-size: 0.75em;
 
 .floppy-container {
-  cursor: pointer;
-
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr 50%;
   grid-template-columns: repeat(4, 25%);
@@ -95,8 +94,13 @@ $date-font-size: 0.75em;
   mask-image: url(/svg/pure-floppy.svg);
   background-color: $floppy-color;
 
-  font-size: $container-font-size;
-  max-height: $floppy-size;
+  // font-size: $container-font-size;
+  height: $floppy-size;
+
+  transition: height 0.25s ease-out, font-size 0.25s ease-out;
+  &:hover {
+    height: $floppy-hovered-size;
+  }
 
   .frame-container {
     display: flex;

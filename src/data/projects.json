@@ -1,5 +1,18 @@
 [
   {
+    "title": "PROJECT JOHNY",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+    "date": {
+      "year": 2018,
+      "quarters": [1, 2]
+    },
+    "folder": "mafia",
+    "images": [ "1.png", "2.jpg", "main.jpg" ],
+    "style": {
+      "color": "cornflowerblue"
+    }
+  },
+  {
     "title": "VERY LONG NAMED PROJECT",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
     "date": {
@@ -37,6 +50,19 @@
     "images": [ "1.png", "2.jpg", "main.jpg" ],
     "style": {
       "color": "#FCAE1E"
+    }
+  },
+  {
+    "title": "PROJECT PIZZA",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+    "date": {
+      "year": 2019,
+      "quarters": [1, 4]
+    },
+    "folder": "mafia",
+    "images": [ "1.png", "2.jpg", "main.jpg" ],
+    "style": {
+      "color": "mediumseagreen"
     }
   }
 ]

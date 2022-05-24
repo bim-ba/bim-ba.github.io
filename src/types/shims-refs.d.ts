@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as runtimeCore from "@vue/runtime-core";
-
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
     $refs: {
@@ -8,3 +5,5 @@ declare module "@vue/runtime-core" {
     };
   }
 }
+
+export {};

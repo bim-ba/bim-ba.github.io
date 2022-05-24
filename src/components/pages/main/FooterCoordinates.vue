@@ -1,11 +1,12 @@
 <template>
-  <span @mouseover="revealLocation = true" @mouseout="revealLocation = false">{{
-    formattedLocation
-  }}</span>
+  <span v-element-hover="onHover">{{ formattedLocation }}</span>
 </template>
 
 <script setup lang="ts">
 import { ref, inject, computed } from "vue";
+
+import { vElementHover } from "@vueuse/components";
+
 import { footerCoordinatesKey } from "@injection-keys";
 import type { Coordinates, CityArea, CardinalPoint } from "@types";
 
@@ -42,6 +43,10 @@ function formatCardinal({ degrees, minutes, seconds }: CardinalPoint) {
   const secondsString = seconds ? `${seconds}"` : "";
 
   return degreesString + minutesString + secondsString;
+}
+
+function onHover(state: boolean) {
+  revealLocation.value = state;
 }
 </script>
 

@@ -1,9 +1,4 @@
-import {
-  createRouter,
-  createWebHashHistory,
-  type RouteLocationNormalized,
-  type RouteRecordRaw,
-} from "vue-router";
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-router";
 
 import AppMain from "@views/AppMain.vue";
 import AppProjects from "@views/AppProjects.vue";
@@ -33,11 +28,6 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes: routes,
-});
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-router.afterEach((to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-  document.title = to.meta.title;
 });
 
 export default router;

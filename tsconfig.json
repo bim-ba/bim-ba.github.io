@@ -5,11 +5,13 @@
     "src/**/*",
     "src/**/*.vue"
   ],
+  "exclude": [ "node_modules", "docs" ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "~/*": ["./node_modules/*"],
       "@/*": ["./src/*"],
-      "@assets/*": ["./src/assets/*"],
+      "@assets/*": ["./public/*"],
       "@common/*": ["./src/common/*"],
       "@components/*": ["./src/components/*"],
       "@data/*": ["./src/data/*"],
@@ -21,12 +23,11 @@
       "@views/*": ["./src/views/*"]
     },
     "strict": true,
-    "lib": ["ESNext"],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "isolatedModules": true,
-    "allowJs": true,
+    "lib": ["esnext"],
     "types": [ "node" ]
   },
   "references": [
