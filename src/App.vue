@@ -17,9 +17,7 @@ import { Head } from "@vueuse/head";
 
 <style lang="scss">
 @use "@style/reset";
-
 @use "@style/mixins" as mixins;
-@use "@style/colors" as colors;
 @use "@style/variables" as variables;
 
 @use "@assets/fonts/Fira-Sans/stylesheet" as Fira-Sans;
@@ -43,7 +41,7 @@ body,
 }
 
 body {
-  background: no-repeat center colors.$almost-white url(/svg/dotted-pattern.svg);
+  background: no-repeat center rgb(235 230 230) url(/svg/dotted-pattern.svg);
 }
 
 // page transitions

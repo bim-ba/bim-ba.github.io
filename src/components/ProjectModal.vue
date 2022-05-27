@@ -1,3 +1,4 @@
+<!-- TODO -->
 <template>
   <vue-final-modal
     classes="modal-container"
@@ -24,7 +25,7 @@ import { computed } from "vue";
 
 import type { ProjectDate, ProjectImage } from "@types";
 
-// PROPS
+// props
 //
 // https://github.com/vuejs/core/issues/4294
 //
@@ -37,7 +38,7 @@ interface ThisProps {
 }
 const props = defineProps<ThisProps>();
 
-// COMPUTED
+// computed
 const formattedDate = computed(() => {
   return `${props.date.year} / ${props.date.quarters.map((quarter) => "Q" + quarter).join("-")}`;
 });

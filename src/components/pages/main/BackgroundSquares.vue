@@ -1,5 +1,5 @@
 <template>
-  <div class="background-squares">
+  <section class="background-squares">
     <ColoredSquare
       v-for="(square, index) in backgroundSquares"
       ref="squaresRef"
@@ -10,24 +10,17 @@
       :break-lines-before="square.breakLinesBefore"
       :break-lines-after="square.breakLinesAfter"
     />
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
+import { ref, inject } from "vue";
 
-import { squaresKey } from "@injection-keys";
-import type { Square } from "@types";
+import { squaresKey, type SquaresKeyType } from "@injection-keys";
 
 import ColoredSquare from "@components/ColoredSquare.vue";
 
-// INJECT
-const { backgroundSquares } = inject(squaresKey) as {
-  backgroundSquares: Square[];
-  footerSquares: Square[];
-};
-
-// PROPS
+// props
 //
 // https://github.com/vuejs/core/issues/4294
 //
@@ -36,6 +29,15 @@ interface ThisProps {
   size: number;
 }
 const props = withDefaults(defineProps<ThisProps>(), { size: 1 });
+
+// injected
+const { backgroundSquares } = inject(squaresKey) as NonNullable<SquaresKeyType>;
+
+// template refs
+const squaresRef = ref<Array<InstanceType<typeof ColoredSquare>> | null>(null);
+
+// exposed
+defineExpose({ squaresRef });
 </script>
 
 <style lang="scss" scoped>

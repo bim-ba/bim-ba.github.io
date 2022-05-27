@@ -1,13 +1,19 @@
 <template>
   <router-link :to="to">
-    <img src="/svg/favicon.svg" alt="appicon" />
+    <img ref="navigationIconRef" src="/svg/favicon.svg" alt="appicon" />
   </router-link>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed } from "vue";
 
-// PROPS
+import { useSpring, useMotionProperties } from "@vueuse/motion";
+import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
+
+import { useHover } from "@vueuse/gesture";
+import type { FullGestureState } from "@vueuse/gesture";
+
+// props
 //
 // https://github.com/vuejs/core/issues/4294
 //
@@ -19,16 +25,31 @@ interface ThisProps {
 }
 const props = withDefaults(defineProps<ThisProps>(), { reversed: false });
 
-// COMPUTED
+// template refs
+const navigationIconRef = ref<HTMLElement | null>(null);
+
+// computed
 const rotation = computed(() => {
   return 180 * (props.reversed as unknown as number);
 });
+
+// hovering
+const initialProps: MotionProperties = { scale: 1, rotate: rotation.value };
+const { motionProperties } = useMotionProperties(navigationIconRef, initialProps);
+const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 750 });
+
+const hover = ({ hovering }: FullGestureState<"move">) => {
+  if (!hovering) {
+    set(initialProps);
+    return;
+  }
+  set({ scale: 1.15 });
+};
+useHover(hover, { domTarget: navigationIconRef });
 </script>
 
 <style lang="scss" scoped>
 $width: v-bind('size + "em"');
-$hovered-width: calc($width + 0.25em);
-$rotation: v-bind('rotation + "deg"');
 
 a {
   display: flex;
@@ -37,13 +58,6 @@ a {
 
   img {
     width: $width;
-    transform: rotate($rotation);
-
-    transition: width 0.25s ease-out;
-
-    &:hover {
-      width: $hovered-width;
-    }
   }
 }
 </style>

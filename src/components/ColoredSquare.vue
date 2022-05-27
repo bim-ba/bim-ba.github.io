@@ -1,14 +1,20 @@
 <template>
   <div v-for="n in props.breakLinesBefore" :key="n" class="break"></div>
   <div v-if="props.offset" class="space"></div>
-  <div ref="squareRef" class="square"></div>
+  <div ref="squareRef" v-on-drag="drag" class="square"></div>
   <div v-for="n in props.breakLinesAfter" :key="n" class="break"></div>
 </template>
 
 <script setup lang="ts">
-import { ref, type ComponentPublicInstance } from "vue";
+import { ref } from "vue";
 
-// PROPS
+import { useSpring, useMotionProperties } from "@vueuse/motion";
+import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
+
+import { useDrag, dragDirective as vOnDrag } from "@vueuse/gesture";
+import type { FullGestureState } from "@vueuse/gesture";
+
+// props
 //
 // https://github.com/vuejs/core/issues/4294
 //
@@ -27,8 +33,39 @@ const props = withDefaults(defineProps<ThisProps>(), {
   breakLinesAfter: 0,
 });
 
-// refs
-const squareRef = ref<ComponentPublicInstance | null>(null);
+// template refs
+const squareRef = ref<HTMLElement | null>(null);
+
+// dragging
+const initalProps: MotionProperties = {
+  x: 0,
+  y: 0,
+  cursor: "grab",
+  filter: "invert(0%)",
+};
+const { motionProperties } = useMotionProperties(squareRef, initalProps);
+const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 500 });
+
+// FIXME: get rid of `scaleY`
+const drag = ({ dragging, movement: [x, y] }: FullGestureState<"drag">) => {
+  if (!dragging) {
+    set(initalProps);
+    return;
+  }
+
+  set({
+    cursor: "grabbing",
+    x,
+    y,
+    scale: 1,
+    scaleY: 1,
+    filter: "invert(100%)",
+  });
+};
+useDrag(drag, { domTarget: squareRef });
+
+// exposed
+defineExpose({ squareRef });
 </script>
 
 <style lang="scss" scoped>

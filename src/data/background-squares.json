@@ -1,16 +1,16 @@
 [
-  { "color": "black", "breakLinesBefore": 2 },
+  { "color": "#000000", "breakLinesBefore": 2 },
   { "color": "#00b4d8", "offset": 4 },
   { "color": "#ffea00" },
   { "color": "#f20089", "offset": 8, "breakLinesAfter": 2 },
 
-  { "color": "black" },
+  { "color": "#000000" },
   { "color": "#f20089", "offset": 2 },
   { "color": "#00b4d8" },
   { "color": "#ffea00", "offset": 2 },
-  { "color": "black", "offset": 12, "breakLinesAfter": 1 },
+  { "color": "#000000", "offset": 12, "breakLinesAfter": 1 },
 
-  { "color": "black", "offset": 2 },
+  { "color": "#000000", "offset": 2 },
   { "color": "#00b4d8", "offset": 4 },
   { "color": "#ffea00" },
   { "color": "#f20089", "offset": 5, "breakLinesAfter": 2 }

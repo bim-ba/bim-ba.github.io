@@ -1,14 +1,24 @@
 <template>
-  <div class="wrapper">
+  <footer class="wrapper">
+    <!-- empty space -->
     <div></div>
     <FooterCoordinates ref="coordinatesRef" />
     <NavigationIcon ref="iconRef" :size="3" to="/projects" class="icon" />
-  </div>
+  </footer>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
 import NavigationIcon from "@components/NavigationIcon.vue";
 import FooterCoordinates from "@pages/main/FooterCoordinates.vue";
+
+// template refs
+const coordinatesRef = ref<InstanceType<typeof FooterCoordinates> | null>(null);
+const iconRef = ref<InstanceType<typeof NavigationIcon> | null>(null);
+
+// exposed
+defineExpose({ coordinatesRef, iconRef });
 </script>
 
 <style lang="scss" scoped>

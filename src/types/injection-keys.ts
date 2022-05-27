@@ -1,13 +1,20 @@
 import type { InjectionKey } from "vue";
 import type { CityArea, Coordinates, Square, Content, Project } from "@types";
 
-export const footerCoordinatesKey = Symbol() as InjectionKey<{
-  coordinates: Coordinates;
+export interface FooterCoordinatesKeyType {
   area: CityArea;
-}>;
-export const squaresKey = Symbol() as InjectionKey<{
-  backgroundSquares: Square[];
+  coordinates: Coordinates;
+}
+export const footerCoordinatesKey = Symbol() as InjectionKey<FooterCoordinatesKeyType>;
+
+export interface SquaresKeyType {
   footerSquares: Square[];
-}>;
-export const contentKey = Symbol() as InjectionKey<Content>;
-export const projectsKey = Symbol() as InjectionKey<Project[]>;
+  backgroundSquares: Square[];
+}
+export const squaresKey = Symbol() as InjectionKey<SquaresKeyType>;
+
+export type ContentKeyType = Content;
+export const contentKey = Symbol() as InjectionKey<ContentKeyType>;
+
+export type ProjectsKeyType = Project[];
+export const projectsKey = Symbol() as InjectionKey<ProjectsKeyType>;

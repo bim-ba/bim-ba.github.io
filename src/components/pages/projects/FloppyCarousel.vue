@@ -1,17 +1,5 @@
+<!-- TODO -->
 <template>
-  <!-- <div class="carousel-container">
-    <FloppyDisk
-      v-for="(project, index) in projects"
-      ref="floppiesRef"
-      :key="index"
-      :title="project.title"
-      :description="project.description"
-      :date="project.date"
-      :images="project.images"
-      :color="project.style.color"
-      :is-primary="project.style.primary"
-    />
-  </div> -->
   <swiper
     :modules="[Mousewheel]"
     :grab-cursor="true"
@@ -37,19 +25,18 @@
 
 <script setup lang="ts">
 import { inject } from "vue";
-import { Mousewheel } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/scss";
 import "swiper/scss/mousewheel";
+import { Mousewheel } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
 
-import { projectsKey } from "@injection-keys";
-import type { Project } from "@types";
+import { projectsKey, type ProjectsKeyType } from "@injection-keys";
 
 import FloppyDisk from "@pages/projects/FloppyDisk.vue";
 
 // inject
-const projects = inject(projectsKey) as Project[];
+const projects = inject(projectsKey) as NonNullable<ProjectsKeyType>;
 </script>
 
 <style lang="scss" scoped>

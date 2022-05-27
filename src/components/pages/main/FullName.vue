@@ -1,25 +1,34 @@
 <template>
-  <div class="fullname-container">
+  <section class="fullname-container">
     <h1 ref="firstnameRef" class="name">{{ firstname }}</h1>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <span ref="descriptionRef" class="description" v-html="normalizedDescriptionHTML"></span>
+    <span ref="descriptionRef" class="description" v-html="normalizedDescriptionInnerHTML"></span>
     <br />
     <h1 ref="lastnameRef" class="name" style="margin-left: 1ch">{{ lastname }}</h1>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { ref, inject, computed } from "vue";
+
 import { contentKey } from "@injection-keys";
 import type { Content } from "@types";
 
-// INJECT
-const { firstname, lastname, description } = inject(contentKey) as Content;
+// inject
+const { firstname, lastname, description } = inject(contentKey) as NonNullable<Content>;
 
-// COMPUTED
-const normalizedDescriptionHTML = computed(() => {
+// template refs
+const firstnameRef = ref<HTMLElement | null>(null);
+const lastnameRef = ref<HTMLElement | null>(null);
+const descriptionRef = ref<HTMLElement | null>(null);
+
+// computed
+const normalizedDescriptionInnerHTML = computed(() => {
   return description.replace("\n", "<br />");
 });
+
+// exposed
+defineExpose({ firstnameRef, lastnameRef, descriptionRef });
 </script>
 
 <style lang="scss" scoped>

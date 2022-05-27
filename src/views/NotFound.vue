@@ -1,5 +1,5 @@
 <template>
-  <div class="icon-content-container">
+  <section class="icon-content-container">
     <div ref="iconRef" class="icon">
       <router-link to="/">
         <img ref="outerRef" src="/svg/outer.svg" alt="loadicon" class="outer" />
@@ -14,7 +14,7 @@
     >
       {{ error }}
     </h1>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -23,23 +23,23 @@ import { ref, onMounted } from "vue";
 import anime from "animejs";
 import { bubbleAnimation } from "@common/animations";
 
-// DATA
+// template refs
+const iconRef = ref<HTMLElement | null>(null);
+const outerRef = ref<HTMLElement | null>(null);
+const innerRef = ref<HTMLElement | null>(null);
+const textRef = ref<HTMLElement | null>(null);
+
+// data
 const errorData = {
   code: 404,
   details: "Not Found",
 };
 const timeline = anime.timeline({ duration: 750 });
 
-// REACTIVE
+// reactive
 const error = ref<string | number>(errorData.code);
 
-// REFS
-const iconRef = ref<HTMLElement | null>(null);
-const outerRef = ref<HTMLElement | null>(null);
-const innerRef = ref<HTMLElement | null>(null);
-const textRef = ref<HTMLElement | null>(null);
-
-// HOOKS
+// hooks
 onMounted(() => {
   anime.set(outerRef.value, { translateX: "-50%", translateY: "-50%" });
   anime.set(innerRef.value, { translateX: "-50%", translateY: "-50%" });

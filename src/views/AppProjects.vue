@@ -35,84 +35,49 @@
     />
     <FooterSquares ref="squaresRef" :size="0.6" style="grid-area: footer" />
   </footer>
-  <!-- <div class="grid-wrapper"> -->
-  <!-- <FloppyCarousel ref="carouselRef" style="grid-area: floppy" /> -->
-  <!-- <NavigationIcon ref="iconRef" reversed :size="3" to="/" style="margin-left: 2em" />
-    <FooterSquares ref="squaresRef" :size="0.6" style="grid-area: footer" /> -->
-  <!-- </div> -->
 </template>
 
 <script setup lang="ts">
-import { Mousewheel } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { ref, inject, onMounted } from "vue";
 
 import "swiper/scss";
 import "swiper/scss/mousewheel";
-
-import { projectsKey } from "@injection-keys";
-import type { Project } from "@types";
-
-import { ref, inject, onMounted } from "vue";
-import type { ComponentPublicInstance } from "vue";
+import { Mousewheel } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
 
 import anime from "animejs";
 import { bubbleAnimation, bubbleJellyAnimation } from "@common/animations";
+
+import { projectsKey, type ProjectsKeyType } from "@injection-keys";
 
 import FloppyDisk from "@pages/projects/FloppyDisk.vue";
 import NavigationIcon from "@components/NavigationIcon.vue";
 import FooterSquares from "@pages/projects/FooterSquares.vue";
 
+// template refs
+const iconRef = ref<InstanceType<typeof NavigationIcon> | null>(null);
+const squaresRef = ref<InstanceType<typeof FooterSquares> | null>(null);
+const floppiesRef = ref<Array<InstanceType<typeof FloppyDisk>> | null>(null);
+
 // data
 const timeline = anime.timeline();
 
-// refs
-interface ThisComponentPublicInstance extends ComponentPublicInstance {
-  $refs: {
-    carouselRef: ComponentPublicInstance & {
-      $refs: {
-        floppiesRef: ComponentPublicInstance[];
-      };
-    };
-    footerRef: ComponentPublicInstance & {
-      $refs: {
-        squaresRef: ComponentPublicInstance[];
-      };
-    };
-  };
-}
-
-// eslint-disable-next-line prettier/prettier
-const iconRef = ref<ComponentPublicInstance | null>(
-  null
-);
-const carouselRef = ref<Pick<ThisComponentPublicInstance["$refs"]["carouselRef"], "$refs"> | null>(
-  null
-);
-const squaresRef = ref<Pick<ThisComponentPublicInstance["$refs"]["footerRef"], "$refs"> | null>(
-  null
-);
-// eslint-disable-next-line prettier/prettier
-const floppiesRef = ref<ComponentPublicInstance[] | null>(
-  null
-);
-
 // hooks
 onMounted(() => {
-  const allFloppies = floppiesRef.value?.map(({ $refs }) => $refs.floppyRef);
-  const centeredFloppies = allFloppies?.slice(
-    allFloppies.length / 2 - 1,
-    allFloppies.length / 2 + 2
-  );
+  const onlyCenteredFloppies = floppiesRef.value
+    ?.map(({ floppyRef }) => floppyRef)
+    .slice(floppiesRef.value.length / 2 - 1, floppiesRef.value.length / 2 + 2);
+
   timeline
     .add({
-      targets: centeredFloppies,
+      targets: onlyCenteredFloppies,
       delay: anime.stagger(500, { start: 500 }),
       ...bubbleJellyAnimation,
     })
     .add({ targets: iconRef.value?.$el, ...bubbleJellyAnimation }, "-=500")
     .add(
       {
-        targets: squaresRef.value?.$refs.squaresRef.map(({ $refs }) => $refs.squareRef),
+        targets: squaresRef.value?.squaresRef?.map(({ squareRef }) => squareRef),
         delay: anime.stagger(100, { start: 500 }),
         ...bubbleAnimation,
       },
@@ -121,7 +86,7 @@ onMounted(() => {
 });
 
 // inject
-const projects = inject(projectsKey) as Project[];
+const projects = inject(projectsKey) as NonNullable<ProjectsKeyType>;
 </script>
 
 <style lang="scss" scoped>

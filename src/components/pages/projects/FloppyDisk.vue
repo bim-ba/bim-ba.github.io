@@ -11,20 +11,25 @@
       <img :src="primaryImage?.source" alt="project primary image" />
       <span>{{ title }}</span>
     </div>
-    <h2 :style="randomRotation">{{ formattedDate }}</h2>
+    <h2 :style="{ transform: randomRotation }">{{ formattedDate }}</h2>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
+
+import { useSpring, useMotionProperties } from "@vueuse/motion";
+import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
+
+import { useHover } from "@vueuse/gesture";
+import type { FullGestureState } from "@vueuse/gesture";
+
+import { generateRandomNumber } from "@common/helpers";
 import type { ProjectDate, ProjectImage } from "@types";
 
 import ProjectModal from "@components/ProjectModal.vue";
 
-// REACTIVE
-const showModal = ref(false);
-
-// PROPS
+// props
 //
 // https://github.com/vuejs/core/issues/4294
 //
@@ -39,7 +44,13 @@ interface ThisProps {
 }
 const props = withDefaults(defineProps<ThisProps>(), { color: "gray" });
 
-// COMPUTED
+// template refs
+const floppyRef = ref<HTMLElement | null>(null);
+
+// reactive
+const showModal = ref(false);
+
+// computed
 const computedTitleFontSize = computed(() => {
   return 12 / props.title.length;
 });
@@ -48,16 +59,28 @@ const formattedDate = computed(() => {
 });
 const randomRotation = computed(() => {
   const [min, max] = [1, 8];
-  return { transform: `rotate(${generateRandomNumber(min, max)}deg)` };
+  return `rotate(${generateRandomNumber(min, max)}deg)`;
 });
 const primaryImage = computed(() => {
   return props.images.find((image) => image.primary);
 });
 
-// METHODS
-function generateRandomNumber(min: number, max: number) {
-  return Math.floor(min + Math.random() * (max + 1 - min));
-}
+// hovering
+const initialProps: MotionProperties = { scale: 1 };
+const { motionProperties } = useMotionProperties(floppyRef, initialProps);
+const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 300 });
+
+const hover = ({ hovering }: FullGestureState<"move">) => {
+  if (!hovering) {
+    set(initialProps);
+    return;
+  }
+  set({ scale: 1.1, scaleY: 1 });
+};
+useHover(hover, { domTarget: floppyRef });
+
+// exposed
+defineExpose({ floppyRef });
 </script>
 
 <style lang="scss" scoped>
@@ -65,7 +88,6 @@ $container-font-size: v-bind('isPrimary ? "1em" : "0.75em"');
 
 $floppy-color: v-bind(color);
 $floppy-size: 20em;
-$floppy-hovered-size: 20.5em;
 
 $frame-color: black;
 
@@ -97,10 +119,7 @@ $date-font-size: 0.75em;
   // font-size: $container-font-size;
   height: $floppy-size;
 
-  transition: height 0.25s ease-out, font-size 0.25s ease-out;
-  &:hover {
-    height: $floppy-hovered-size;
-  }
+  transition: font-size 0.25s ease-out;
 
   .frame-container {
     display: flex;

@@ -22,11 +22,6 @@ declare namespace AppTypes {
     };
   }
 
-  interface TestProject extends Project {
-    folder: string;
-    images: string[];
-  }
-
   interface Square {
     color: string;
     size?: number;
