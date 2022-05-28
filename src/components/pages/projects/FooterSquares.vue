@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from "vue";
+import { ref, inject, computed } from "vue";
 
 import { whenever } from "@vueuse/core";
 import { useMagicKeys } from "@vueuse/core";
@@ -41,15 +41,22 @@ const { footerSquares } = inject(squaresKey) as NonNullable<SquaresKeyType>;
 // template refs
 const squaresRef = ref<Array<InstanceType<typeof ColoredSquare>> | null>(null);
 
+// computed
+const nonDraggingSquaresRef = computed(() =>
+  squaresRef.value?.filter((squareRef) => !squareRef.isDragging)
+);
+
 // space key pressing
 const initialProps: MotionProperties = { y: 0 };
 
 const { space } = useMagicKeys();
 
 whenever(space, () => {
-  const squareRef = squaresRef.value?.at(Math.floor(Math.random() * squaresRef.value.length));
+  const randomSquareRef = nonDraggingSquaresRef.value?.at(
+    generateRandomNumber(0, nonDraggingSquaresRef.value.length)
+  )?.squareRef;
 
-  const { motionProperties } = useMotionProperties(squareRef?.squareRef, initialProps);
+  const { motionProperties } = useMotionProperties(randomSquareRef, initialProps);
   const { set } = useSpring(motionProperties as PermissiveMotionProperties, {
     stiffness: 500,
     repeat: 1,

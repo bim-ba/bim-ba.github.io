@@ -1,56 +1,43 @@
-<!-- TODO -->
 <template>
   <vue-final-modal
+    :attach="'#app'"
+    :esc-to-close="true"
     classes="modal-container"
     content-class="modal-content"
-    :esc-to-close="true"
     transition="scale-center"
   >
     <div class="modal-wrapper">
-      <div class="images-container">
-        <img v-for="(img, index) in images" :key="index" :src="img.source" alt="project-image" />
-      </div>
-      <div class="content-wrapper">
-        <h1 class="title">{{ title }}</h1>
-        <span class="description">{{ description }}</span>
+      <section class="images-container">
+        <slot name="images" />
+      </section>
+      <main class="content-container">
+        <header ref="titleRef" class="title">
+          <slot name="title" />
+        </header>
+        <section class="description">
+          <slot name="description" />
+        </section>
         <div class="abstract-rectangle"></div>
-      </div>
-      <span class="footer-date">{{ formattedDate }}</span>
+      </main>
+      <footer class="footer-date">
+        <slot name="footer" />
+      </footer>
     </div>
   </vue-final-modal>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { ref, computed } from "vue";
 
-import type { ProjectDate, ProjectImage } from "@types";
-
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = Omit<Project, "style">;
-interface ThisProps {
-  title: string;
-  description: string;
-  date: ProjectDate;
-  images: ProjectImage[];
-}
-const props = defineProps<ThisProps>();
+// template refs
+const titleRef = ref<HTMLElement | null>(null);
 
 // computed
-const formattedDate = computed(() => {
-  return `${props.date.year} / ${props.date.quarters.map((quarter) => "Q" + quarter).join("-")}`;
-});
-const titleFontSize = computed(() => {
-  return Math.pow(18 / props.title.length, 0.5) * 3;
-});
-const descriptionFontSize = computed(() => {
-  return titleFontSize.value / 2;
-});
-const dateFontSize = computed(() => {
-  return titleFontSize.value / 4;
-});
+const titleFontSize = computed(
+  () => Math.pow(18 / (titleRef.value?.textContent?.length as NonNullable<number>), 0.5) * 3
+);
+const descriptionFontSize = computed(() => titleFontSize.value / 2);
+const dateFontSize = computed(() => titleFontSize.value / 4);
 </script>
 
 <style lang="scss" scoped>
@@ -102,7 +89,7 @@ $images-gap: 1em;
     align-items: center;
     gap: $images-gap;
 
-    img {
+    :slotted(img) {
       flex-grow: 1;
       object-fit: cover;
 
@@ -111,7 +98,7 @@ $images-gap: 1em;
       max-height: 100%;
     }
   }
-  .content-wrapper {
+  .content-container {
     grid-area: content;
 
     display: flex;

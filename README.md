@@ -30,15 +30,16 @@
 ## Todo
 
 - [ ] Modal
+  - [ ] Normalize font size
   - [x] Transition
-  - [ ] Normalize font size
 - [ ] Floppy
-  - [ ] Drop shadow
-  - [ ] Fix `click` event conflicts
-  - [x] Carousel
   - [ ] Normalize font size
-  - [ ] Floating images around floppy
+  - [x] Drop shadow
+  - [x] Fix `click` event conflicts
+  - [x] Carousel
+  - [ ] _(optional) floating images around floppy_
 - [ ] Loading page
+- [ ] Contacts page
 - [ ] Dev
   - [ ] `anime.js` animations as directives
   - [x] HTML5 sectioning

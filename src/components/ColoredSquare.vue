@@ -36,6 +36,9 @@ const props = withDefaults(defineProps<ThisProps>(), {
 // template refs
 const squareRef = ref<HTMLElement | null>(null);
 
+// reactive
+const isDragging = ref(false);
+
 // dragging
 const initalProps: MotionProperties = {
   x: 0,
@@ -48,8 +51,10 @@ const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stif
 
 // FIXME: get rid of `scaleY`
 const drag = ({ dragging, movement: [x, y] }: FullGestureState<"drag">) => {
+  isDragging.value = dragging;
+
   if (!dragging) {
-    set(initalProps);
+    set({ scale: 1, ...initalProps });
     return;
   }
 
@@ -57,7 +62,7 @@ const drag = ({ dragging, movement: [x, y] }: FullGestureState<"drag">) => {
     cursor: "grabbing",
     x,
     y,
-    scale: 1,
+    scale: 1.5,
     scaleY: 1,
     filter: "invert(100%)",
   });
@@ -65,7 +70,7 @@ const drag = ({ dragging, movement: [x, y] }: FullGestureState<"drag">) => {
 useDrag(drag, { domTarget: squareRef });
 
 // exposed
-defineExpose({ squareRef });
+defineExpose({ isDragging, squareRef });
 </script>
 
 <style lang="scss" scoped>

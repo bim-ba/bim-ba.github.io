@@ -1,17 +1,25 @@
 <template>
-  <ProjectModal
-    v-model="showModal"
-    :title="title"
-    :date="date"
-    :description="description"
-    :images="images"
-  />
-  <div ref="floppyRef" class="floppy-container" @click="showModal = true">
-    <div class="frame-container">
-      <img :src="primaryImage?.source" alt="project primary image" />
-      <span>{{ title }}</span>
+  <ProjectModal v-model="showModal">
+    <template #title>{{ title }}</template>
+    <template #description>{{ description }}</template>
+    <template #images>
+      <img
+        v-for="(img, index) in props.images"
+        :key="index"
+        :src="img.source"
+        alt="project image"
+      />
+    </template>
+    <template #footer>{{ formattedDate }}</template>
+  </ProjectModal>
+  <div class="floppy-shadow-container">
+    <div ref="floppyRef" class="floppy-container" @click="showModal = true">
+      <div class="frame-container">
+        <img :src="primaryImage?.source" alt="project primary image" />
+        <p>{{ title }}</p>
+      </div>
+      <h2 :style="{ transform: randomRotation }">{{ formattedDate }}</h2>
     </div>
-    <h2 :style="{ transform: randomRotation }">{{ formattedDate }}</h2>
   </div>
 </template>
 
@@ -65,6 +73,8 @@ const primaryImage = computed(() => {
   return props.images.find((image) => image.primary);
 });
 
+// floating image
+
 // hovering
 const initialProps: MotionProperties = { scale: 1 };
 const { motionProperties } = useMotionProperties(floppyRef, initialProps);
@@ -100,66 +110,69 @@ $date-color: midnightblue;
 $date-font: "Indie Flower";
 $date-font-size: 0.75em;
 
-.floppy-container {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 50%;
-  grid-template-columns: repeat(4, 25%);
-  grid-template-areas:
-    "frame frame frame frame"
-    "frame frame frame frame"
-    "frame frame frame frame"
-    "frame frame frame frame"
-    "date  date  ..... .....";
+.floppy-shadow-container {
+  filter: drop-shadow(0.15em 0.15em 0.35em rgba(0, 0, 0, 0.5));
+  .floppy-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 50%;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-areas:
+      "frame frame frame frame"
+      "frame frame frame frame"
+      "frame frame frame frame"
+      "frame frame frame frame"
+      "date  date  ..... .....";
 
-  aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1;
 
-  mask-image: url(/svg/pure-floppy.svg);
-  background-color: $floppy-color;
+    mask-image: url(/svg/pure-floppy.svg);
+    background-color: $floppy-color;
 
-  // font-size: $container-font-size;
-  height: $floppy-size;
+    // font-size: $container-font-size;
+    height: $floppy-size;
 
-  transition: font-size 0.25s ease-out;
+    transition: font-size 0.25s ease-out;
 
-  .frame-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    grid-area: frame;
+    .frame-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      grid-area: frame;
 
-    background-color: $frame-color;
-    margin: 0 15%;
+      background-color: $frame-color;
+      margin: 0 15%;
 
-    img {
-      max-height: 50%;
-      max-width: 70%;
-      object-fit: cover;
-      filter: grayscale(1);
-    }
+      img {
+        max-height: 50%;
+        max-width: 70%;
+        object-fit: cover;
+        filter: grayscale(1);
+      }
 
-    span {
-      color: $title-color;
+      p {
+        color: $title-color;
 
-      font-weight: bold;
-      font-size: $title-font-size;
+        font-weight: bold;
+        font-size: $title-font-size;
 
-      margin: 0% 15%;
+        margin: 0% 15%;
 
-      &::selection {
-        color: $title-selected-color;
-        background-color: $title-selected-background-color;
+        &::selection {
+          color: $title-selected-color;
+          background-color: $title-selected-background-color;
+        }
       }
     }
-  }
 
-  h2 {
-    grid-area: date;
-    place-self: center;
+    h2 {
+      grid-area: date;
+      place-self: center;
 
-    color: $date-color;
-    font-family: $date-font;
-    font-size: $date-font-size;
+      color: $date-color;
+      font-family: $date-font;
+      font-size: $date-font-size;
+    }
   }
 }
 
