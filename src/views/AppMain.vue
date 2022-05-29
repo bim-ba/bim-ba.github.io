@@ -7,10 +7,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-import MainContent from "@pages/main/FullName.vue";
-import MainFooter from "@pages/main/AppFooter.vue";
-import MainBackground from "@pages/main/BackgroundSquares.vue";
-
 import anime from "animejs";
 import {
   slideFromLeftAnimation,
@@ -18,6 +14,10 @@ import {
   riseFromBottomAnimation,
   bubbleJellyAnimation,
 } from "@common/animations";
+
+import MainContent from "@pages/main/FullName.vue";
+import MainFooter from "@pages/main/AppFooter.vue";
+import MainBackground from "@pages/main/BackgroundSquares.vue";
 
 // template refs
 const footerRef = ref<InstanceType<typeof MainFooter> | null>(null);
