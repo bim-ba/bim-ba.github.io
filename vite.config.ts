@@ -19,7 +19,7 @@ export default defineConfig({
       "@router": fileURLToPath(new URL("./src/router", import.meta.url)),
       "@style": fileURLToPath(new URL("./src/style", import.meta.url)),
       "@types": fileURLToPath(new URL("./src/types/types.d.ts", import.meta.url)),
-      "@injection-keys": fileURLToPath(new URL("./src/types/injection-keys.ts", import.meta.url)),
+      "@injection-keys": fileURLToPath(new URL("./src/common/injection-keys.ts", import.meta.url)),
       "@views": fileURLToPath(new URL("./src/views", import.meta.url)),
     },
   },

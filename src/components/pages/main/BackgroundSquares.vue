@@ -1,14 +1,14 @@
 <template>
-  <section class="background-squares">
+  <section class="background-squares-container">
     <ColoredSquare
-      v-for="(square, index) in backgroundSquares"
+      v-for="({ color, offset, size, breakLinesAfter, breakLinesBefore }, index) in squares"
       ref="squaresRef"
       :key="index"
-      :size="props.size"
-      :color="square.color"
-      :offset="square.offset"
-      :break-lines-before="square.breakLinesBefore"
-      :break-lines-after="square.breakLinesAfter"
+      :size="size"
+      :color="color"
+      :offset="offset"
+      :break-lines-before="breakLinesBefore"
+      :break-lines-after="breakLinesAfter"
     />
   </section>
 </template>
@@ -16,33 +16,25 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
 
-import { squaresKey, type SquaresKeyType } from "@injection-keys";
+import { mainPageKey, type MainPageKeyType } from "@injection-keys";
+import type { Nullable } from "@/types/helpers";
 
 import ColoredSquare from "@components/ColoredSquare.vue";
 
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = ...
-interface ThisProps {
-  size: number;
-}
-const props = withDefaults(defineProps<ThisProps>(), { size: 1 });
-
 // injected
-const { backgroundSquares } = inject(squaresKey) as NonNullable<SquaresKeyType>;
+const { squares } = inject(mainPageKey) as NonNullable<MainPageKeyType>;
 
 // template refs
-const squaresRef = ref<Array<InstanceType<typeof ColoredSquare>> | null>(null);
+const squaresRef = ref<Nullable<Array<InstanceType<typeof ColoredSquare>>>>(null);
 
 // exposed
 defineExpose({ squaresRef });
 </script>
 
 <style lang="scss" scoped>
-.background-squares {
-  position: fixed;
+.background-squares-container {
+  position: absolute;
+  top: 0;
   right: 0;
   width: 55%;
   height: 100%;

@@ -1,16 +1,17 @@
-import projectsJSON from "@data/projects.json";
-import footerSquaresJSON from "@data/footer-squares.json";
-import backgroundSquaresJSON from "@data/background-squares.json";
-import coordinatesJSON from "@data/coordinates.json";
-import contentJSON from "@data/content.json";
-import type { Project, ProjectDate, Square, Coordinates, CityArea, Content } from "@types";
+import mainPageJSON from "@data/main.json";
+import projectsPageJSON from "@data/projects.json";
+import contactsPageJSON from "@data/contacts.json";
+import type { Project, ProjectDate } from "@types";
 
-export const content: Content = contentJSON;
-export const footerSquares: Square[] = footerSquaresJSON;
-export const backgroundSquares: Square[] = backgroundSquaresJSON;
-export const coordinates: { coordinates: Coordinates; area: CityArea } = coordinatesJSON;
+import type { MainPageKeyType, ProjectsPageKeyType, ContactsPageKeyType } from "@injection-keys";
 
-export const projects: Project[] = projectsJSON.map((project) => ({
+// main page
+export const mainPageData: MainPageKeyType = mainPageJSON;
+
+// projects page
+const { projects, squares } = projectsPageJSON;
+
+const projectsWithResolvedPaths: Project[] = projects.map((project) => ({
   title: project.title,
   description: project.description,
   date: project.date as ProjectDate,
@@ -20,7 +21,16 @@ export const projects: Project[] = projectsJSON.map((project) => ({
     primary: img.split(".")[0] == "main" ? true : false,
   })),
 }));
+export const projectsPageDate: ProjectsPageKeyType = {
+  projects: projectsWithResolvedPaths,
+  squares,
+};
 
+// contacts page
+export const contactsPageData: ContactsPageKeyType = contactsPageJSON;
+
+// TODO: move to `helpers.ts`
+// helpers
 function resolveAssetURL(relativeFolderPath: string, filenameWithExtension: string, base?: string) {
   return new URL(`${relativeFolderPath}/${filenameWithExtension}`, base).href;
 }

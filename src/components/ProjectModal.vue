@@ -29,25 +29,20 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-// template refs
-const titleRef = ref<HTMLElement | null>(null);
+import type { Nullable } from "@/types/helpers";
 
-// computed
-const titleFontSize = computed(
-  () => Math.pow(18 / (titleRef.value?.textContent?.length as NonNullable<number>), 0.5) * 3
-);
-const descriptionFontSize = computed(() => titleFontSize.value / 2);
-const dateFontSize = computed(() => titleFontSize.value / 4);
+// template refs
+const titleRef = ref<Nullable<HTMLElement>>(null);
 </script>
 
 <style lang="scss" scoped>
 $width: 90%;
 $height: 90%;
 
-$title-font-size: v-bind('titleFontSize + "em"');
+$title-font-size: 3em;
 $title-font-weight: 900;
-$description-font-size: v-bind('descriptionFontSize + "em"');
-$date-font-size: v-bind('dateFontSize + "em"');
+$description-font-size: 1.5em;
+$date-font-size: 1em;
 
 $background-color: tomato;
 

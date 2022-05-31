@@ -19,7 +19,7 @@
       "@router/*": ["./src/router/*"],
       "@style/*": ["./src/style/*"],
       "@types": ["./src/types/types.d.ts"],
-      "@injection-keys": ["./src/types/injection-keys.ts"],
+      "@injection-keys": ["./src/common/injection-keys.ts"],
       "@views/*": ["./src/views/*"]
     },
     "strict": true,

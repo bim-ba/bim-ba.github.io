@@ -1,44 +1,37 @@
 import { createApp } from "vue";
+import { createHead } from "@vueuse/head";
+import { createPinia } from "pinia";
+
 import App from "@/App.vue";
 import router from "@/router";
 
-import { createHead } from "@vueuse/head";
+import VueFinalModalPlugin, { type VfmOptions } from "vue-final-modal";
 
-import VueFinalModalPlugin from "vue-final-modal";
+import { mainPageKey, projectsPageKey, contactsPageKey } from "@injection-keys";
 
-import { contentKey, footerCoordinatesKey, squaresKey, projectsKey } from "@injection-keys";
-
-import {
-  content,
-  projects,
-  coordinates,
-  footerSquares,
-  backgroundSquares,
-} from "@common/constructed-data";
+import { mainPageData, projectsPageDate, contactsPageData } from "@common/constructed-data";
 
 const app = createApp(App);
 
-// PROVIDINGS
+// global providings
 app
-  .provide(contentKey, content)
-  .provide(footerCoordinatesKey, coordinates)
-  .provide(squaresKey, {
-    backgroundSquares: backgroundSquares,
-    footerSquares: footerSquares,
-  })
-  .provide(projectsKey, projects);
+  .provide(mainPageKey, mainPageData)
+  .provide(projectsPageKey, projectsPageDate)
+  .provide(contactsPageKey, contactsPageData);
 
 // reactive providers
 app.config.unwrapInjectedRef = true;
 
-const head = createHead();
-app.use(head);
-
+// plugins
 app.use(router);
+
+app.use(createHead());
+app.use(createPinia());
+
 app.use(VueFinalModalPlugin, {
   key: "$vfm",
   componentName: "VueFinalModal",
   dynamicContainerName: "ModalsContainer",
-});
+} as VfmOptions);
 
 app.mount("#app");

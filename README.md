@@ -37,11 +37,10 @@
   - [x] Drop shadow
   - [x] Fix `click` event conflicts
   - [x] Carousel
-  - [ ] _(optional) floating images around floppy_
 - [ ] Loading page
 - [ ] Contacts page
-- [ ] Dev
-  - [ ] `anime.js` animations as directives
+- [x] Dev
+  - [x] ~~`anime.js` animations as directives~~ _(due to the difficulty of maintaining)_
   - [x] HTML5 sectioning
 
 ## Sketch
@@ -58,7 +57,7 @@
 
 ![Project modal sketch](/sketch/var2.png)
 
-### Loading / 404 page ([partial released](#todo) :heavy_check_mark:)
+### Loading / 404 page (released :heavy_check_mark:)
 
 Inspired by [this music clip](https://www.youtube.com/watch?v=c1GxjzHm5us).
 ![Loading page sketch](/sketch/0loading.png)
@@ -67,29 +66,3 @@ Inspired by [this music clip](https://www.youtube.com/watch?v=c1GxjzHm5us).
 
 ![Project modal sketch](/sketch/3details.png)
 ![Project modal sketch](/sketch/var1.png)
-
-## Tools
-
-### Build
-
-- vite@latest
-
-### Framework
-
-- vue@latest # composition api
-
-### Animation
-
-- anime.js@latest
-
-### Plugins
-
-- vue-router@latest
-- vue-final-modal@latest
-
-### Dev
-
-- sass@latest
-- eslint@latest
-- prettier@latest
-- typescript@latest

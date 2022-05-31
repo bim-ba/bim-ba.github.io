@@ -34,6 +34,7 @@ import type { FullGestureState } from "@vueuse/gesture";
 
 import { generateRandomNumber } from "@common/helpers";
 import type { ProjectDate, ProjectImage } from "@types";
+import type { Nullable } from "@/types/helpers";
 
 import ProjectModal from "@components/ProjectModal.vue";
 
@@ -53,27 +54,20 @@ interface ThisProps {
 const props = withDefaults(defineProps<ThisProps>(), { color: "gray" });
 
 // template refs
-const floppyRef = ref<HTMLElement | null>(null);
+const floppyRef = ref<Nullable<HTMLElement>>(null);
 
 // reactive
 const showModal = ref(false);
 
 // computed
-const computedTitleFontSize = computed(() => {
-  return 12 / props.title.length;
-});
-const formattedDate = computed(() => {
-  return `${props.date.year} / ${props.date.quarters.map((quarter) => "Q" + quarter).join("-")}`;
-});
+const formattedDate = computed(
+  () => `${props.date.year} / ${props.date.quarters.map((quarter) => "Q" + quarter).join("-")}`
+);
 const randomRotation = computed(() => {
   const [min, max] = [1, 8];
   return `rotate(${generateRandomNumber(min, max)}deg)`;
 });
-const primaryImage = computed(() => {
-  return props.images.find((image) => image.primary);
-});
-
-// floating image
+const primaryImage = computed(() => props.images.find((image) => image.primary));
 
 // hovering
 const initialProps: MotionProperties = { scale: 1 };
@@ -104,11 +98,11 @@ $frame-color: black;
 $title-color: white;
 $title-selected-color: black;
 $title-selected-background-color: white;
-$title-font-size: v-bind('computedTitleFontSize + "em"');
+$title-font-size: 1em;
 
 $date-color: midnightblue;
 $date-font: "Indie Flower";
-$date-font-size: 0.75em;
+$date-font-size: 0.95em;
 
 .floppy-shadow-container {
   filter: drop-shadow(0.15em 0.15em 0.35em rgba(0, 0, 0, 0.5));

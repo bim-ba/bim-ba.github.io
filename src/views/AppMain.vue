@@ -1,31 +1,42 @@
 <template>
-  <MainBackground ref="backgroundRef" :size="1.5" />
-  <MainContent ref="contentRef" />
-  <MainFooter ref="footerRef" />
+  <!-- TODO: slots -->
+  <Content ref="contentRef" />
+  <FancyFooter ref="footerRef" />
+  <Background ref="backgroundRef" />
+  <!-- 
+    <Content>
+      <template #firstname>{{ firstname }}</template>
+      <template #lastname>{{ lastname }}</template>
+      <template #description>{{ description }}</template>
+    </Content>
+   -->
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
 import anime from "animejs";
+
 import {
   slideFromLeftAnimation,
   slideFromRightAnimation,
   riseFromBottomAnimation,
   bubbleJellyAnimation,
 } from "@common/animations";
+import { useTimeline } from "@common/composables";
+import type { Nullable } from "@/types/helpers";
 
-import MainContent from "@pages/main/FullName.vue";
-import MainFooter from "@pages/main/AppFooter.vue";
-import MainBackground from "@pages/main/BackgroundSquares.vue";
+import Content from "@pages/main/FullName.vue";
+import FancyFooter from "@pages/main/FancyFooter.vue";
+import Background from "@pages/main/BackgroundSquares.vue";
 
 // template refs
-const footerRef = ref<InstanceType<typeof MainFooter> | null>(null);
-const contentRef = ref<InstanceType<typeof MainContent> | null>(null);
-const backgroundRef = ref<InstanceType<typeof MainBackground> | null>(null);
+const footerRef = ref<Nullable<InstanceType<typeof FancyFooter>>>(null);
+const contentRef = ref<Nullable<InstanceType<typeof Content>>>(null);
+const backgroundRef = ref<Nullable<InstanceType<typeof Background>>>(null);
 
-// data
-const timeline = anime.timeline({ delay: 500 });
+// reactive
+const { timeline } = useTimeline({ delay: 500 });
 
 // hooks
 onMounted(() => {
@@ -46,17 +57,3 @@ onMounted(() => {
     );
 });
 </script>
-
-<style lang="scss">
-.main-footer {
-  display: flex;
-  justify-content: space-between;
-
-  position: fixed;
-  width: 100%;
-  bottom: 1em;
-  .icon {
-    margin-right: 2.5em;
-  }
-}
-</style>

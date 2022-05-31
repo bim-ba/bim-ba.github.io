@@ -12,15 +12,18 @@
       :loop-additional-slides="3"
       :initial-slide="projects.length / 2"
     >
-      <swiper-slide v-for="(project, index) in projects" :key="index">
+      <swiper-slide
+        v-for="({ title, description, date, images, style }, index) in projects"
+        :key="index"
+      >
         <FloppyDisk
           ref="floppiesRef"
-          :title="project.title"
-          :description="project.description"
-          :date="project.date"
-          :images="project.images"
-          :color="project.style.color"
-          :is-primary="project.style.primary"
+          :title="title"
+          :description="description"
+          :date="date"
+          :images="images"
+          :color="style.color"
+          :is-primary="style.primary"
         />
       </swiper-slide>
     </swiper>
@@ -35,15 +38,16 @@ import "swiper/scss/mousewheel";
 import { Mousewheel } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
-import { projectsKey, type ProjectsKeyType } from "@injection-keys";
+import { projectsPageKey, type ProjectsPageKeyType } from "@injection-keys";
+import type { Nullable } from "@/types/helpers";
 
 import FloppyDisk from "@pages/projects/FloppyDisk.vue";
 
 // template refs
-const floppiesRef = ref<Array<InstanceType<typeof FloppyDisk>> | null>(null);
+const floppiesRef = ref<Nullable<Array<InstanceType<typeof FloppyDisk>>>>(null);
 
 // inject
-const projects = inject(projectsKey) as NonNullable<ProjectsKeyType>;
+const { projects } = inject(projectsPageKey) as NonNullable<ProjectsPageKeyType>;
 
 // exposed
 defineExpose({ floppiesRef });

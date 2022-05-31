@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-rou
 
 import AppMain from "@views/AppMain.vue";
 import AppProjects from "@views/AppProjects.vue";
+import AppContacts from "@views/AppContacts.vue";
 import NotFound from "@views/NotFound.vue";
 
 const routes: RouteRecordRaw[] = [
@@ -16,6 +17,12 @@ const routes: RouteRecordRaw[] = [
     name: "Projects",
     component: AppProjects,
     meta: { transition: "scale-bottom-left", title: "Projects" },
+  },
+  {
+    path: "/about",
+    name: "Contacts",
+    component: AppContacts,
+    meta: { transition: "scale-bottom-left", title: "Contacts & About" },
   },
   {
     path: "/:pathMatch(.*)*",

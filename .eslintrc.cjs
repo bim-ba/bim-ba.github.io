@@ -19,12 +19,4 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  rules: {
-    "vue/multi-word-component-names": [
-      "error",
-      {
-        ignores: ["Carousel"],
-      },
-    ],
-  },
 };

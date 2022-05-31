@@ -1,68 +1,127 @@
-[
-  {
-    "title": "PROJECT JOHNY",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
-    "date": {
-      "year": 2018,
-      "quarters": [1, 2]
+{
+  "projects": [
+    {
+      "title": "PROJECT JOHNY",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "date": {
+        "year": 2018,
+        "quarters": [
+          1,
+          2
+        ]
+      },
+      "folder": "mafia",
+      "images": [
+        "1.png",
+        "2.jpg",
+        "main.jpg"
+      ],
+      "style": {
+        "color": "cornflowerblue"
+      }
     },
-    "folder": "mafia",
-    "images": [ "1.png", "2.jpg", "main.jpg" ],
-    "style": {
-      "color": "cornflowerblue"
-    }
-  },
-  {
-    "title": "VERY LONG NAMED PROJECT",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
-    "date": {
-      "year": 2021,
-      "quarters": [2]
+    {
+      "title": "VERY LONG NAMED PROJECT",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "date": {
+        "year": 2021,
+        "quarters": [
+          2
+        ]
+      },
+      "folder": "mafia",
+      "images": [
+        "1.png",
+        "2.jpg",
+        "main.jpg"
+      ],
+      "style": {
+        "color": "#564592"
+      }
     },
-    "folder": "mafia",
-    "images": [ "1.png", "2.jpg", "main.jpg" ],
-    "style": {
-      "color": "#564592"
-    }
-  },
-  {
-    "title": "PROJECT BOMB",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
-    "date": {
-      "year": 2020,
-      "quarters": [1, 3]
+    {
+      "title": "PROJECT BOMB",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "date": {
+        "year": 2020,
+        "quarters": [
+          1,
+          3
+        ]
+      },
+      "folder": "mafia",
+      "images": [
+        "1.png",
+        "2.jpg",
+        "main.jpg"
+      ],
+      "style": {
+        "color": "#FC6A03",
+        "primary": true
+      }
     },
-    "folder": "mafia",
-    "images": [ "1.png", "2.jpg", "main.jpg" ],
-    "style": {
-      "color": "#FC6A03",
-      "primary": true
-    }
-  },
-  {
-    "title": "PROJECT SOME BOMB DA BABEPIZZA",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
-    "date": {
-      "year": 2021,
-      "quarters": [3, 4]
+    {
+      "title": "PROJECT SOME BOMB DA BABEPIZZA",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "date": {
+        "year": 2021,
+        "quarters": [
+          3,
+          4
+        ]
+      },
+      "folder": "mafia",
+      "images": [
+        "1.png",
+        "2.jpg",
+        "main.jpg"
+      ],
+      "style": {
+        "color": "#FCAE1E"
+      }
     },
-    "folder": "mafia",
-    "images": [ "1.png", "2.jpg", "main.jpg" ],
-    "style": {
-      "color": "#FCAE1E"
+    {
+      "title": "PROJECT PIZZA",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "date": {
+        "year": 2019,
+        "quarters": [
+          1,
+          4
+        ]
+      },
+      "folder": "mafia",
+      "images": [
+        "1.png",
+        "2.jpg",
+        "main.jpg"
+      ],
+      "style": {
+        "color": "mediumseagreen"
+      }
     }
-  },
-  {
-    "title": "PROJECT PIZZA",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
-    "date": {
-      "year": 2019,
-      "quarters": [1, 4]
-    },
-    "folder": "mafia",
-    "images": [ "1.png", "2.jpg", "main.jpg" ],
-    "style": {
-      "color": "mediumseagreen"
-    }
-  }
-]
+  ],
+  "squares": [
+    { "color": "#d3d3d3", "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 7, "size": 0.6 },
+    { "color": "#d3d3d3", "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 5, "size": 0.6 },
+    { "color": "#d3d3d3", "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 3, "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 4, "size": 0.6 },
+    { "color": "#6495ed", "offset": 6, "size": 0.6 },
+    { "color": "#483d8b", "size": 0.6 },
+    { "color": "#3cb371", "offset": 5, "size": 0.6 },
+    { "color": "#ffd700", "offset": 2, "size": 0.6 },
+    { "color": "#4b0082", "size": 0.6 },
+    { "color": "#ff8c00", "offset": 9, "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 7, "size": 0.6 },
+    { "color": "#000000", "offset": 2, "size": 0.6 },
+    { "color": "#ffffff", "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 3, "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 8, "size": 0.6 },
+    { "color": "#d3d3d3", "size": 0.6 },
+    { "color": "#d3d3d3", "offset": 5, "size": 0.6 },
+    { "color": "#d3d3d3", "size": 0.6 }
+  ]
+}

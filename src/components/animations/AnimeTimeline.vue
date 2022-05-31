@@ -1,8 +1,6 @@
 <!-- TODO: directive (single animation / timeline) -->
 <template>
-  <div ref="container" class="animation-container">
-    <slot></slot>
-  </div>
+  <slot></slot>
 </template>
 
 <script lang="ts">

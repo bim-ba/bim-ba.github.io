@@ -13,6 +13,8 @@ import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motio
 import { useHover } from "@vueuse/gesture";
 import type { FullGestureState } from "@vueuse/gesture";
 
+import type { Nullable } from "@/types/helpers";
+
 // props
 //
 // https://github.com/vuejs/core/issues/4294
@@ -26,12 +28,10 @@ interface ThisProps {
 const props = withDefaults(defineProps<ThisProps>(), { reversed: false });
 
 // template refs
-const navigationIconRef = ref<HTMLElement | null>(null);
+const navigationIconRef = ref<Nullable<HTMLElement>>(null);
 
 // computed
-const rotation = computed(() => {
-  return 180 * (props.reversed as unknown as number);
-});
+const rotation = computed(() => 180 * (props.reversed as unknown as number));
 
 // hovering
 const initialProps: MotionProperties = { scale: 1, rotate: rotation.value };

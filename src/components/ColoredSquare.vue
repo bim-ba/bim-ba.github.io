@@ -6,13 +6,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import { useSpring, useMotionProperties } from "@vueuse/motion";
 import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
 
 import { useDrag, dragDirective as vOnDrag } from "@vueuse/gesture";
 import type { FullGestureState } from "@vueuse/gesture";
+
+import { useAnySquareStore } from "@/stores/appmain";
+
+import type { Nullable } from "@/types/helpers";
 
 // props
 //
@@ -21,7 +25,7 @@ import type { FullGestureState } from "@vueuse/gesture";
 // type ThisProps = ...
 interface ThisProps {
   color: string;
-  size?: number;
+  size: number;
   offset?: number;
   breakLinesBefore?: number;
   breakLinesAfter?: number;
@@ -34,27 +38,34 @@ const props = withDefaults(defineProps<ThisProps>(), {
 });
 
 // template refs
-const squareRef = ref<HTMLElement | null>(null);
+const squareRef = ref<Nullable<HTMLElement>>(null);
+
+// store
+const store = useAnySquareStore();
 
 // reactive
 const isDragging = ref(false);
 
+// watchers
+watch(isDragging, (value) => store.$patch({ dragging: value, color: props.color }));
+
 // dragging
-const initalProps: MotionProperties = {
+const initialProps: MotionProperties = {
   x: 0,
   y: 0,
   cursor: "grab",
   filter: "invert(0%)",
 };
-const { motionProperties } = useMotionProperties(squareRef, initalProps);
+
+const { motionProperties } = useMotionProperties(squareRef, initialProps);
 const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 500 });
 
-// FIXME: get rid of `scaleY`
+// FIXME: get rid of `scaleY` (create this routine after the element is not animated)
 const drag = ({ dragging, movement: [x, y] }: FullGestureState<"drag">) => {
   isDragging.value = dragging;
 
   if (!dragging) {
-    set({ scale: 1, ...initalProps });
+    set({ scale: 1, ...initialProps });
     return;
   }
 
@@ -62,8 +73,8 @@ const drag = ({ dragging, movement: [x, y] }: FullGestureState<"drag">) => {
     cursor: "grabbing",
     x,
     y,
-    scale: 1.5,
     scaleY: 1,
+    scale: 1.25,
     filter: "invert(100%)",
   });
 };

@@ -1,0 +1,13 @@
+{
+  "content": [
+    "Hello there! My name is Sava Znatnov, I am creative designer currently based in Moscow.",
+    "I am interested in: backend development, high-load services, blockchain development, graphic design.",
+    "I love _swiss design_ and _helvetica_.",
+    "Trying to make this world better."
+  ],
+  "contacts": [
+    { "type": "mail", "data": "znatnov.sava@yandex.ru", "link": "mailto:znatnov.sava@yandex.ru", "copyable": true },
+    { "type": "telegram", "data": "@cursedforest", "link": "https://telegram.me/cursedforest" },
+    { "type": "behance", "data": "@onmidesign", "link": "https://behance.net/onmidesign" }
+  ]
+}

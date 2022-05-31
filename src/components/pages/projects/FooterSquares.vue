@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
     <ColoredSquare
-      v-for="(square, index) in footerSquares"
+      v-for="({ color, size, offset }, index) in squares"
       ref="squaresRef"
       :key="index"
-      :size="props.size"
-      :color="square.color"
-      :offset="square.offset"
+      :size="size"
+      :color="color"
+      :offset="offset"
     />
   </div>
 </template>
@@ -21,25 +21,16 @@ import { useSpring, useMotionProperties } from "@vueuse/motion";
 import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
 
 import { generateRandomNumber } from "@common/helpers";
-import { squaresKey, type SquaresKeyType } from "@injection-keys";
+import { projectsPageKey, type ProjectsPageKeyType } from "@injection-keys";
+import type { Nullable } from "@/types/helpers";
 
 import ColoredSquare from "@components/ColoredSquare.vue";
 
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = ...;
-interface ThisProps {
-  size: number;
-}
-const props = defineProps<ThisProps>();
-
 // inject
-const { footerSquares } = inject(squaresKey) as NonNullable<SquaresKeyType>;
+const { squares } = inject(projectsPageKey) as NonNullable<ProjectsPageKeyType>;
 
 // template refs
-const squaresRef = ref<Array<InstanceType<typeof ColoredSquare>> | null>(null);
+const squaresRef = ref<Nullable<Array<InstanceType<typeof ColoredSquare>>>>(null);
 
 // computed
 const nonDraggingSquaresRef = computed(() =>
@@ -72,15 +63,8 @@ defineExpose({ squaresRef });
 </script>
 
 <style lang="scss" scoped>
-$square-size: v-bind('props.size + "em"');
 .wrapper {
   display: flex;
   place-self: center;
-  .square {
-    width: $square-size;
-    height: $square-size;
-
-    flex-shrink: 0;
-  }
 }
 </style>

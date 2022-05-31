@@ -1,0 +1,40 @@
+{
+  "content": {
+    "firstname": "Sava",
+    "lastname": "Znatnov",
+    "description": "creative designer\n currently based in Moscow"
+  },
+  "location": {
+    "area": {
+      "city": "Moscow",
+      "distrinct": "Golyanovo"
+    },
+    "coordinates": {
+      "north": {
+        "degrees": 55,
+        "minutes": 49
+      },
+      "east": {
+        "degrees": 37,
+        "minutes": 48
+      }
+    }
+  },
+  "squares": [
+      { "color": "#000000", "breakLinesBefore": 2, "size": 1.5 },
+      { "color": "#00b4d8", "offset": 4, "size": 1.5 },
+      { "color": "#ffea00", "size": 1.5 },
+      { "color": "#f20089", "offset": 8, "breakLinesAfter": 2, "size": 1.5 },
+    
+      { "color": "#000000", "size": 1.5 },
+      { "color": "#f20089", "offset": 2, "size": 1.5 },
+      { "color": "#00b4d8", "size": 1.5 },
+      { "color": "#ffea00", "offset": 2, "size": 1.5 },
+      { "color": "#000000", "offset": 12, "breakLinesAfter": 1, "size": 1.5 },
+    
+      { "color": "#000000", "offset": 2, "size": 1.5 },
+      { "color": "#00b4d8", "offset": 4, "size": 1.5 },
+      { "color": "#ffea00", "size": 1.5 },
+      { "color": "#f20089", "offset": 5, "breakLinesAfter": 2, "size": 1.5 }
+  ]
+}

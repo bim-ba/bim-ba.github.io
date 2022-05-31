@@ -7,17 +7,20 @@
 import { ref, onMounted } from "vue";
 
 import anime from "animejs";
+
+import { useTimeline } from "@common/composables";
 import { bubbleAnimation, bubbleJellyAnimation } from "@common/animations";
+import type { Nullable } from "@/types/helpers";
 
 import ProjectsCarousel from "@pages/projects/FloppyCarousel.vue";
 import ProjectsFooter from "@pages/projects/ProjectsFooter.vue";
 
 // template refs
-const carouselRef = ref<InstanceType<typeof ProjectsCarousel> | null>(null);
-const footerRef = ref<InstanceType<typeof ProjectsFooter> | null>(null);
+const carouselRef = ref<Nullable<InstanceType<typeof ProjectsCarousel>>>(null);
+const footerRef = ref<Nullable<InstanceType<typeof ProjectsFooter>>>(null);
 
-// data
-const timeline = anime.timeline();
+// reactive
+const { timeline } = useTimeline();
 
 // hooks
 onMounted(() => {
@@ -34,7 +37,8 @@ onMounted(() => {
       delay: anime.stagger(500, { start: 500 }),
       ...bubbleJellyAnimation,
     })
-    .add({ targets: footerRef.value?.iconRef?.$el, ...bubbleJellyAnimation }, "-=500")
+    .add({ targets: footerRef.value?.backwardIconRef?.$el, ...bubbleJellyAnimation }, "-=500")
+    .add({ targets: footerRef.value?.forwardIconRef?.$el, ...bubbleJellyAnimation }, "-=500")
     .add(
       {
         targets: footerRef.value?.squaresRef?.squaresRef?.map(({ squareRef }) => squareRef),

@@ -9,20 +9,17 @@ import { ref, inject, computed } from "vue";
 
 import { vElementHover as vOnHover } from "@vueuse/components";
 
-import { useSpring, useMotionProperties } from "@vueuse/motion";
-import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
+import { useMotion } from "@vueuse/motion";
 
-import { useHover } from "@vueuse/gesture";
-import type { FullGestureState } from "@vueuse/gesture";
-
-import { footerCoordinatesKey, type FooterCoordinatesKeyType } from "@injection-keys";
+import { mainPageKey, type MainPageKeyType } from "@injection-keys";
 import type { CardinalPoint } from "@types";
+import type { Nullable } from "@/types/helpers";
 
 // injected
-const { coordinates, area } = inject(footerCoordinatesKey) as NonNullable<FooterCoordinatesKeyType>;
+const { location } = inject(mainPageKey) as NonNullable<MainPageKeyType>;
 
 // template refs
-const footerCoordinatesRef = ref<HTMLElement | null>(null);
+const footerCoordinatesRef = ref<Nullable<HTMLElement>>(null);
 
 // reactive
 const revealLocation = ref(false);
@@ -31,7 +28,9 @@ const revealLocation = ref(false);
 const encodedLocation = computed(() => {
   let strings: string[] = [];
 
-  for (const [crdName, crdData] of Object.entries(coordinates) as [string, CardinalPoint][]) {
+  for (const [crdName, crdData] of Object.entries(location.coordinates) as Array<
+    [string, CardinalPoint]
+  >) {
     const firstLetterUpper = crdName[0].toUpperCase();
     const formattedCardinal = formatCardinal(crdData);
     strings.push(`${firstLetterUpper} ${formattedCardinal}`);
@@ -39,9 +38,7 @@ const encodedLocation = computed(() => {
 
   return strings.join(" / ");
 });
-const decodedLocation = computed(() => {
-  return `${area.city} / ${area.distrinct}`;
-});
+const decodedLocation = computed(() => `${location.area.city} / ${location.area.distrinct}`);
 
 // methods
 const formatCardinal = ({ degrees, minutes, seconds }: CardinalPoint) => {
@@ -53,47 +50,62 @@ const formatCardinal = ({ degrees, minutes, seconds }: CardinalPoint) => {
 };
 
 // hovering
-const initialProps: MotionProperties = {
-  scale: 1,
-};
-const { motionProperties } = useMotionProperties(footerCoordinatesRef, initialProps);
-const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 300 });
-
-const hover = ({ hovering }: FullGestureState<"move">) => {
-  if (!hovering) {
-    set(initialProps);
-    return;
-  }
-  set({ scale: 1.15, scaleY: 1 });
-};
-useHover(hover, { domTarget: footerCoordinatesRef });
+const { variant } = useMotion(footerCoordinatesRef, {
+  initial: { scale: 1, scaleY: 1 },
+  hovered: {
+    scale: 1.15,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      onComplete: () => (variant.value = "initial"),
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 $font-size: 0.6em;
 $font-weight: 500;
-$font-size-hover: 0.65em;
 $padding: 0.25em;
 
 p {
+  position: relative;
+  align-self: end;
+
   padding: $padding;
 
   font-size: $font-size;
   font-weight: $font-weight;
 
-  align-self: end;
-
-  transform-origin: bottom;
-  transition: background 0.25s ease-out, color 0.25s ease-out;
+  transition: color 0.25s ease-out;
 
   &:hover {
     color: white;
-    background: black;
 
     &::selection {
       color: black;
       background: white;
     }
+
+    &::after {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: black;
+    transform: scaleY(0);
+    transform-origin: top;
+
+    transition: transform 0.25s ease-out;
   }
 }
 </style>

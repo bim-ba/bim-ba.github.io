@@ -6,13 +6,8 @@
         <img ref="innerRef" src="/svg/inner.svg" alt="loadicon" class="inner" />
       </router-link>
     </div>
-    <h1
-      ref="textRef"
-      class="text"
-      @mouseover="error = errorData.details"
-      @mouseout="error = errorData.code"
-    >
-      {{ error }}
+    <h1 ref="textRef" v-on-hover="(state) => (revealError = state)" class="text">
+      {{ revealError ? errorData.details : errorData.code }}
     </h1>
   </section>
 </template>
@@ -20,24 +15,49 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
+import { vElementHover as vOnHover } from "@vueuse/components";
+
+import { useMotionProperties, useSpring } from "@vueuse/motion";
+import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
+
+import { useHover } from "@vueuse/gesture";
+import type { FullGestureState } from "@vueuse/gesture";
+
 import anime from "animejs";
+
+import { useTimeline } from "@/common/composables";
 import { bubbleAnimation } from "@common/animations";
+import type { Nullable } from "@/types/helpers";
 
 // template refs
-const iconRef = ref<HTMLElement | null>(null);
-const outerRef = ref<HTMLElement | null>(null);
-const innerRef = ref<HTMLElement | null>(null);
-const textRef = ref<HTMLElement | null>(null);
+const iconRef = ref<Nullable<HTMLElement>>(null);
+const outerRef = ref<Nullable<HTMLElement>>(null);
+const innerRef = ref<Nullable<HTMLElement>>(null);
+const textRef = ref<Nullable<HTMLElement>>(null);
 
-// data
+// shared
 const errorData = {
   code: 404,
   details: "Not Found",
 };
-const timeline = anime.timeline({ duration: 750 });
 
 // reactive
-const error = ref<string | number>(errorData.code);
+const { timeline } = useTimeline({ duration: 750 });
+const revealError = ref(false);
+
+// hovering
+const initialProps: MotionProperties = { scale: 1 };
+const { motionProperties } = useMotionProperties(textRef, initialProps);
+const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 300 });
+
+const hover = ({ hovering }: FullGestureState<"move">) => {
+  if (!hovering) {
+    set(initialProps);
+    return;
+  }
+  set({ scale: 1.15, scaleY: 1 });
+};
+useHover(hover, { domTarget: textRef });
 
 // hooks
 onMounted(() => {
@@ -55,22 +75,21 @@ onMounted(() => {
         ...bubbleAnimation,
       },
       0
-    );
-
-  timeline.finished.then(() => {
-    anime({
-      targets: outerRef.value,
-      rotate: [90, 180, 270, 360],
-      duration: 8000,
-      loop: true,
+    )
+    .finished.then(() => {
+      anime({
+        targets: outerRef.value,
+        rotate: [90, 180, 270, 360],
+        duration: 8000,
+        loop: true,
+      });
+      anime({
+        targets: innerRef.value,
+        rotate: [60, 120, 180, 240, 300, 360],
+        duration: 6000,
+        loop: true,
+      });
     });
-    anime({
-      targets: innerRef.value,
-      rotate: [60, 120, 180, 240, 300, 360],
-      duration: 6000,
-      loop: true,
-    });
-  });
 });
 </script>
 
@@ -85,7 +104,6 @@ $icon-container-size: calc($outer-icon-height * 1.5);
 
 $text-font-weight: normal;
 $text-font-size: calc($outer-icon-height / 7);
-$hovered-text-font-weight: bold;
 .icon-content-container {
   display: flex;
   align-items: center;
@@ -129,17 +147,35 @@ $hovered-text-font-weight: bold;
 
     padding: 0.25em;
 
-    transition: 0.25s ease-out;
+    transition: color 0.25s ease-out;
 
     &:hover {
-      font-weight: $hovered-text-font-weight;
       color: white;
-      background: black;
 
       &::selection {
         color: black;
         background: white;
       }
+
+      &::after {
+        transform: scaleY(1);
+        transform-origin: bottom;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background: black;
+      transform: scaleY(0);
+      transform-origin: top;
+
+      transition: transform 0.25s ease-out;
     }
   }
 }
