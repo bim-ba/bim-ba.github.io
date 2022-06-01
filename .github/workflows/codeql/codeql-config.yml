@@ -1,8 +1,6 @@
 name: "CodeQL config"
 
-queries:
-  - uses: security-and-quality
-  - uses: ./.github/workflows/codeql/queries
+- queries: ./.github/workflows/codeql/queries
 
 paths-ignore:
   - '/docs/'
