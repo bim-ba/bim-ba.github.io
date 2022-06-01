@@ -7,13 +7,8 @@
   </a>
   <img src="https://img.shields.io/github/license/bim-ba/bim-ba.github.io">
   <br>
-  <img src="https://img.shields.io/github/package-json/dependency-version/bim-ba/bim-ba.github.io/dev/vite">
-  <img src="https://img.shields.io/github/package-json/dependency-version/bim-ba/bim-ba.github.io/dev/typescript">
-  <br>
-  <img src="https://img.shields.io/github/package-json/dependency-version/bim-ba/bim-ba.github.io/vue">
-  <img src="https://img.shields.io/github/package-json/dependency-version/bim-ba/bim-ba.github.io/vue-router">
-  <img src="https://img.shields.io/github/package-json/dependency-version/bim-ba/bim-ba.github.io/vue-final-modal">
-  <img src="https://img.shields.io/github/package-json/dependency-version/bim-ba/bim-ba.github.io/animejs">
+  <img src="https://github.com/bim-ba/bim-ba.github.io/actions/workflows/pages/pages-build-deployment/badge.svg?branch=build">
+  <img src="https://github.com/bim-ba/bim-ba.github.io/actions/workflows/codeql.yml/badge.svg">
 </p>
 
 ## Contents
