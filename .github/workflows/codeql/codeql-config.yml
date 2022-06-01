@@ -1,6 +1,6 @@
 name: "CodeQL config"
 
-- queries: ./.github/workflows/codeql/queries
+queries: ./.github/workflows/codeql/queries
 
 paths-ignore:
   - '/docs/'
