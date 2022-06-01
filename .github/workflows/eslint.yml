@@ -44,6 +44,10 @@ jobs:
           npm install eslint-plugin-vue @vue/eslint-config-typescript @rushstack/eslint-patch
           npm install @microsoft/eslint-formatter-sarif
 
+      - name: Output current ESLint config
+        run: npx eslint --print-config .eslintrc.cjs
+        continue-on-error: false
+
       - name: Run ESLint
         run: npx eslint .
           --config .eslintrc.cjs

@@ -1,0 +1,19 @@
+name: TODOS to issues
+
+on: [ push, workflow_dispatch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: TODOS to issues
+        id: todo
+        uses: alstr/todo-to-issue-action@v4.6.5
+        with:
+          AUTO_ASSIGN: true

@@ -8,7 +8,6 @@
   <img src="https://img.shields.io/github/license/bim-ba/bim-ba.github.io">
   <br>
   <img src="https://github.com/bim-ba/bim-ba.github.io/actions/workflows/pages/pages-build-deployment/badge.svg?branch=build">
-  <img src="https://github.com/bim-ba/bim-ba.github.io/actions/workflows/codeql.yml/badge.svg">
 </p>
 
 ## Contents
