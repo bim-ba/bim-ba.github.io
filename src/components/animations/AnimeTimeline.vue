@@ -1,4 +1,4 @@
-<!-- TODO: directive (single animation / timeline) -->
+<!-- TODO: not used -->
 <template>
   <slot></slot>
 </template>
