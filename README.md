@@ -49,11 +49,11 @@
 
 ![Main page sketch](/sketch/1main.png)
 
-### Projects page ([partial released](#todo) :warning:)
+### Projects page (released :heavy_check_mark:)
 
 ![Projects page sketch](/sketch/2projects.png)
 
-### Project modal ([partial released](#todo) :warning:)
+### Project modal (released :heavy_check_mark:)
 
 ![Project modal sketch](/sketch/var2.png)
 
