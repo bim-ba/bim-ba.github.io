@@ -1,0 +1,12 @@
+name: "CodeQL config"
+
+queries:
+  - name: security and quality
+  uses: security-and-quality
+  - name: custom queries
+  uses: ./.github/codeql/queries
+
+paths-ignore:
+  - '/docs/'
+  - '/public/'
+  - '/sketch/'
