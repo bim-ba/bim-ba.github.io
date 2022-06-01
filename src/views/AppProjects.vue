@@ -34,7 +34,7 @@ onMounted(() => {
   timeline
     .add({
       targets: onlyCenteredFloppies,
-      delay: anime.stagger(500, { start: 500 }),
+      delay: anime.stagger(500, { start: 500, from: "center" }),
       ...bubbleJellyAnimation,
     })
     .add({ targets: footerRef.value?.backwardIconRef?.$el, ...bubbleJellyAnimation }, "-=500")

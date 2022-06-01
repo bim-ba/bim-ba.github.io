@@ -1,15 +1,7 @@
 <template>
-  <!-- TODO: slots -->
   <Content ref="contentRef" />
   <FancyFooter ref="footerRef" />
   <Background ref="backgroundRef" />
-  <!-- 
-    <Content>
-      <template #firstname>{{ firstname }}</template>
-      <template #lastname>{{ lastname }}</template>
-      <template #description>{{ description }}</template>
-    </Content>
-   -->
 </template>
 
 <script setup lang="ts">
@@ -39,7 +31,7 @@ const backgroundRef = ref<Nullable<InstanceType<typeof Background>>>(null);
 const { timeline } = useTimeline({ delay: 500 });
 
 // hooks
-onMounted(() => {
+onMounted(() =>
   timeline
     .add({ targets: contentRef.value?.firstnameRef, ...slideFromLeftAnimation })
     .add({ targets: contentRef.value?.lastnameRef, ...slideFromRightAnimation }, 0)
@@ -54,6 +46,6 @@ onMounted(() => {
         translateX: ["2500%", 0],
       },
       "-=2000"
-    );
-});
+    )
+);
 </script>

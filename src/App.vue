@@ -1,10 +1,14 @@
 <!-- TODO: fix scaleY problem -->
+
+<!-- TODO: create global `FancyFooter.vue` -->
+<!-- because almost all pages include same footer -->
+
 <template>
   <router-view v-slot="{ Component, route }">
     <Head>
       <title>{{ route.meta.title }}</title>
     </Head>
-    <transition :name="route.meta.transition">
+    <transition :name="route.meta.transition" mode="out-in">
       <div :key="route.path" class="route-container">
         <component :is="Component" />
       </div>
@@ -89,14 +93,18 @@ body {
   transform: scale(0);
 }
 
-.scale-bottom-right-enter-active,
-.scale-bottom-right-leave-active {
+.scale-bottom-right-enter-active {
   transform-origin: bottom left;
 }
-
-.scale-bottom-left-enter-active,
-.scale-bottom-left-leave-active {
+.scale-bottom-right-leave-active {
   transform-origin: bottom right;
+}
+
+.scale-bottom-left-enter-active {
+  transform-origin: bottom right;
+}
+.scale-bottom-left-leave-active {
+  transform-origin: bottom left;
 }
 
 .scale-center-enter-active,

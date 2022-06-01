@@ -31,7 +31,7 @@
   - [x] Drop shadow
   - [x] Fix `click` event conflicts
   - [x] Carousel
-- [ ] Loading page
+- [ ] Preloader
 - [x] Contacts page
 - [x] Dev
   - [x] ~~`anime.js` animations as directives~~ _(due to the difficulty of maintaining)_

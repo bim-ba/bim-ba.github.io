@@ -1,5 +1,5 @@
 <template>
-  <p ref="footerCoordinatesRef" v-on-hover="(state) => (revealLocation = state)">
+  <p ref="footerCoordinatesRef" v-on-hover="hover">
     {{ revealLocation ? decodedLocation : encodedLocation }}
   </p>
 </template>
@@ -9,8 +9,9 @@ import { ref, inject, computed } from "vue";
 
 import { vElementHover as vOnHover } from "@vueuse/components";
 
-import { useMotion } from "@vueuse/motion";
+import anime from "animejs";
 
+import { normalScale, slightlyScale } from "@/common/animations";
 import { mainPageKey, type MainPageKeyType } from "@injection-keys";
 import type { CardinalPoint } from "@types";
 import type { Nullable } from "@/types/helpers";
@@ -50,17 +51,18 @@ const formatCardinal = ({ degrees, minutes, seconds }: CardinalPoint) => {
 };
 
 // hovering
-const { variant } = useMotion(footerCoordinatesRef, {
-  initial: { scale: 1, scaleY: 1 },
-  hovered: {
-    scale: 1.15,
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      onComplete: () => (variant.value = "initial"),
-    },
-  },
-});
+//
+// TODO: this can be optimized
+// `anime` on every call creates a new anime instance.
+// we can create an anime instace with necessary animation before hover method
+// but this will require some extra checks like component is mounted
+//
+const hover = (state: boolean) => {
+  revealLocation.value = state;
+  state
+    ? anime({ targets: footerCoordinatesRef.value, ...slightlyScale(1.15) })
+    : anime({ targets: footerCoordinatesRef.value, ...normalScale(1) });
+};
 </script>
 
 <style lang="scss" scoped>

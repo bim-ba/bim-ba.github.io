@@ -1,32 +1,43 @@
 <template>
   <main class="content-container">
     <!-- eslint-disable-next-line vue/no-v-html, prettier/prettier -->
-    <p v-for="(paragraph, index) in normalizedParagraphs" :key="index" class="content-paragraph" v-html="paragraph"></p>
+    <p v-for="(paragraph, index) in normalizedParagraphs" ref="paragraphsRef" :key="index" class="content-paragraph" v-html="paragraph"></p>
   </main>
 </template>
 
 <script setup lang="ts">
-import { inject, computed } from "vue";
+import { ref, inject, computed } from "vue";
 
 import { contactsPageKey, type ContactsPageKeyType } from "@injection-keys";
+import type { Nullable } from "@/types/helpers";
 
 // injected
 const { content } = inject(contactsPageKey) as NonNullable<ContactsPageKeyType>;
 
+// template refs
+const paragraphsRef = ref<Nullable<Array<HTMLElement>>>(null);
+
 // computed
 const normalizedParagraphs = computed(() =>
   content.map((paragraph) =>
-    paragraph.replace(
-      /_((?![_\s])(?:[^_]*[^_\s])?)_/g,
-      '<span class="fancy-underlined-text">$1</span>'
-    )
+    paragraph
+      .replace(/_((?![_\s])(?:[^_]*[^_\s])?)_/g, '<span class="fancy-underlined-text">$1</span>')
+      .replace(
+        /\*((?![*\s])(?:[^*]*[^*\s])?)\*/g,
+        '<span class="fancy-backgrounded-text">$1</span>'
+      )
   )
 );
+
+// exposed
+defineExpose({ paragraphsRef });
 </script>
 
 <style lang="scss" scoped>
 .content-container {
-  display: inline-flex;
+  grid-area: main;
+
+  display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 2em;
@@ -34,7 +45,7 @@ const normalizedParagraphs = computed(() =>
   padding: 0 5em;
 
   .content-paragraph {
-    font-size: 2em;
+    font-size: 1.9em;
     font-weight: bold;
   }
 }
@@ -77,6 +88,16 @@ const normalizedParagraphs = computed(() =>
     z-index: -1;
 
     transition: transform 0.25s ease-out;
+  }
+}
+
+.fancy-backgrounded-text {
+  color: white;
+  background: black;
+
+  &::selection {
+    color: black;
+    background: white;
   }
 }
 </style>

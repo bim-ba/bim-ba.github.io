@@ -7,7 +7,16 @@ declare module "@vue/runtime-core" {
 
 declare module "vue-router" {
   interface RouteMeta {
-    transition: string;
+    transition:
+      | "scale-up-left"
+      | "scale-up"
+      | "scale-up-right"
+      | "scale-left"
+      | "scale-center"
+      | "scale-right"
+      | "scale-bottom-left"
+      | "scale-bottom"
+      | "scale-bottom-right";
     title: string;
   }
 }

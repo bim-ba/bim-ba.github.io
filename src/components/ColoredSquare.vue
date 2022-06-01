@@ -60,7 +60,8 @@ const initialProps: MotionProperties = {
 const { motionProperties } = useMotionProperties(squareRef, initialProps);
 const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 500 });
 
-// FIXME: get rid of `scaleY` (create this routine after the element is not animated)
+// TODO: get rid of `scaleY`
+// this routine needs to be created after the element is not animated by `animejs`
 const drag = ({ dragging, movement: [x, y] }: FullGestureState<"drag">) => {
   isDragging.value = dragging;
 

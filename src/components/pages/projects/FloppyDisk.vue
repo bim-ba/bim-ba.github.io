@@ -13,7 +13,7 @@
     <template #footer>{{ formattedDate }}</template>
   </ProjectModal>
   <div class="floppy-shadow-container">
-    <div ref="floppyRef" class="floppy-container" @click="showModal = true">
+    <div ref="floppyRef" v-on-hover="hover" class="floppy-container" @click="showModal = true">
       <div class="frame-container">
         <img :src="primaryImage?.source" alt="project primary image" />
         <p>{{ title }}</p>
@@ -26,12 +26,11 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-import { useSpring, useMotionProperties } from "@vueuse/motion";
-import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
+import { vElementHover as vOnHover } from "@vueuse/components";
 
-import { useHover } from "@vueuse/gesture";
-import type { FullGestureState } from "@vueuse/gesture";
+import anime from "animejs";
 
+import { normalScale, slightlyScale } from "@common/animations";
 import { generateRandomNumber } from "@common/helpers";
 import type { ProjectDate, ProjectImage } from "@types";
 import type { Nullable } from "@/types/helpers";
@@ -70,18 +69,16 @@ const randomRotation = computed(() => {
 const primaryImage = computed(() => props.images.find((image) => image.primary));
 
 // hovering
-const initialProps: MotionProperties = { scale: 1 };
-const { motionProperties } = useMotionProperties(floppyRef, initialProps);
-const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 300 });
-
-const hover = ({ hovering }: FullGestureState<"move">) => {
-  if (!hovering) {
-    set(initialProps);
-    return;
-  }
-  set({ scale: 1.1, scaleY: 1 });
-};
-useHover(hover, { domTarget: floppyRef });
+//
+// TODO: this can be optimized
+// `anime` on every call creates a new anime instance.
+// we can create an anime instace with necessary animation before hover method
+// but this will require some extra checks like component is mounted
+//
+const hover = (state: boolean) =>
+  state
+    ? anime({ targets: floppyRef.value, ...slightlyScale(1.1) })
+    : anime({ targets: floppyRef.value, ...normalScale(1) });
 
 // exposed
 defineExpose({ floppyRef });

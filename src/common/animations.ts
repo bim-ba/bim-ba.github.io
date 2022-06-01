@@ -20,15 +20,15 @@ const overwriteCSSProperty = <T extends keyof CSS.PropertiesHyphen>(
   };
 };
 
-/** WARN: using this will overwrite existing `transform-origin` to `bottom` on element
- * this property will be cleared on animation end
+/** WARN: using this will overwrite existing `transform-origin` to `bottom` on element,
+ * this property will be cleared on the animation end
  */
 export const riseFromBottomAnimation: AnimeAnimParams = {
   scaleY: [0, 1],
   ...overwriteCSSProperty("transform-origin", "bottom"),
 };
-/** WARN: using this will overwrite existing `transform-origin` to `top` on element
- * this property will be cleared on animation end
+/** WARN: using this will overwrite existing `transform-origin` to `top` on element,
+ * this property will be cleared on the animation end
  */
 export const riseFromTopAnimation: AnimeAnimParams = {
   scaleY: [0, 1],
@@ -45,3 +45,6 @@ export const slideFromRightAnimation: AnimeAnimParams = {
   skewX: [-60, 0],
   scaleY: [0, 1],
 };
+
+export const normalScale = (value: number): AnimeAnimParams => ({ scale: value });
+export const slightlyScale = (value: number): AnimeAnimParams => ({ scale: value });

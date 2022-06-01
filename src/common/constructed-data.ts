@@ -5,6 +5,8 @@ import type { Project, ProjectDate } from "@types";
 
 import type { MainPageKeyType, ProjectsPageKeyType, ContactsPageKeyType } from "@injection-keys";
 
+import { resolveAssetURL } from "@common/helpers";
+
 // main page
 export const mainPageData: MainPageKeyType = mainPageJSON;
 
@@ -28,9 +30,3 @@ export const projectsPageDate: ProjectsPageKeyType = {
 
 // contacts page
 export const contactsPageData: ContactsPageKeyType = contactsPageJSON;
-
-// TODO: move to `helpers.ts`
-// helpers
-function resolveAssetURL(relativeFolderPath: string, filenameWithExtension: string, base?: string) {
-  return new URL(`${relativeFolderPath}/${filenameWithExtension}`, base).href;
-}
