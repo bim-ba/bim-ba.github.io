@@ -18,10 +18,6 @@ on:
       - '**.js'
       - '**.ts'
       - '**.vue'
-    paths-ignore:
-      - 'docs/**'
-      - 'public/**'
-      - 'sketch/**'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
@@ -29,10 +25,6 @@ on:
       - '**.js'
       - '**.ts'
       - '**.vue'
-    paths-ignore:
-    - 'docs/**'
-    - 'public/**'
-    - 'sketch/**'
   schedule:
     - cron: '0 0 * * 1'
 
