@@ -4,7 +4,7 @@ queries:
   - name: security and quality
   uses: security-and-quality
   - name: custom queries
-  uses: ./.github/codeql/queries
+  uses: ./.github/workflows/codeql/queries
 
 paths-ignore:
   - '/docs/'
