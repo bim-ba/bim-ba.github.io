@@ -1,6 +1,7 @@
 import type CSS from "csstype";
 
 import type { AnimeAnimParams, AnimeCallBack } from "animejs";
+import type { Nullable } from "@/types/helpers";
 
 export const bubbleJellyAnimation: AnimeAnimParams = { scale: [0, 1], scaleY: [0, 1] };
 export const bubbleAnimation: AnimeAnimParams = { scale: [0, 1] };
@@ -11,7 +12,9 @@ const overwriteCSSProperty = <T extends keyof CSS.PropertiesHyphen>(
 ): { begin: AnimeCallBack["begin"]; complete: AnimeCallBack["complete"] } => {
   return {
     begin: ({ animatables }) =>
-      animatables.forEach(({ target }) => target.style.setProperty(property, value)),
+      animatables.forEach(
+        ({ target }) => target.style.setProperty(property, value as Nullable<string>) // remove Nullable
+      ),
     complete: ({ animatables }) =>
       animatables.forEach(({ target }) => target.style.removeProperty(property)),
   };
