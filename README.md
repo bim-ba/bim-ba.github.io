@@ -29,16 +29,16 @@
 
 ## Todo
 
-- [ ] Modal
-  - [ ] Normalize font size
+- [x] Modal
+  - [x] Normalize font size
   - [x] Transition
-- [ ] Floppy
-  - [ ] Normalize font size
+- [x] Floppy
+  - [x] Normalize font size
   - [x] Drop shadow
   - [x] Fix `click` event conflicts
   - [x] Carousel
 - [ ] Loading page
-- [ ] Contacts page
+- [x] Contacts page
 - [x] Dev
   - [x] ~~`anime.js` animations as directives~~ _(due to the difficulty of maintaining)_
   - [x] HTML5 sectioning
