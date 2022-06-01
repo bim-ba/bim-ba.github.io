@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        languages: [ 'typescript', 'javascript' ]
+        languages: [ 'typescript' ]
         frameworks: [ 'vue' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'typescript' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
@@ -52,7 +52,10 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
+        paths:
+          - 'src/**'
         languages: ${{ matrix.languages }}
+        frameworks: ${{ matrix.frameworks }}
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
