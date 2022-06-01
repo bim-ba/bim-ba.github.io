@@ -30,7 +30,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.2.0
         with:
-          node-version: lts
+          node-version: lts/*
           cache: npm
           cache-dependency-path: cache/package.lock.json
           
