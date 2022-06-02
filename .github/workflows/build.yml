@@ -1,4 +1,4 @@
-name: Build, lint, deploy
+name: Build and deploy
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
     runs-on: unbuntu-latest
 
     steps:
-      - uses: actions/checkout/v3
+      - uses: actions/checkout@v3
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.2.0
