@@ -39,7 +39,7 @@ jobs:
         run: npm run build
 
       - name: Deploy
-        uses: s0/github-publish-subdir-action@develop
+        uses: s0/git-publish-subdir-action@develop
         env:
           REPO: $REPOSITORY
           BRANCH: $BUILD_BRANCH
