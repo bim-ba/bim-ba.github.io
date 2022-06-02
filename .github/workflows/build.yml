@@ -16,7 +16,7 @@ env:
 
 jobs:
   init:
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
 
     permissions:
       contents: write
