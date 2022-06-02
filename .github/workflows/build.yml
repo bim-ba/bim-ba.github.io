@@ -18,6 +18,9 @@ jobs:
   init:
     runs-on: unbuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout/v3
 
@@ -29,33 +32,12 @@ jobs:
       - name: Init workspace
         run: npm ci
 
-  lint:
-    needs: init
-
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Run ESLint
         run: npm run lint
 
-  build:
-    needs: lint
-
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Build
         run: npm run build
 
-  deploy:
-    needs: build
-
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
       - name: Deploy
         uses: s0/github-publish-subdir-action@develop
         env:
