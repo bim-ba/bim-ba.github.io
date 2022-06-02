@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.2.0
         with:
-          node-version: $NODE
+          node-version: ${{ env.NODE }}
 
       - name: Init workspace
         run: npm ci
@@ -41,7 +41,7 @@ jobs:
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
-          REPO: $REPOSITORY
-          BRANCH: $BUILD_BRANCH
-          FOLDER: $BUILD_FOLDER
+          REPO: ${{ env.REPOSITORY }}
+          BRANCH: ${{ env.BUILD_BRANCH }}
+          FOLDER: ${{ env.BUILD_FOLDER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
