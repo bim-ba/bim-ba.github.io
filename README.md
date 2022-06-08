@@ -1,5 +1,5 @@
 <h1 align="center">Portfolio</h1>
-<p align="center">Small portfolio created via <a href="https://github.com/vuejs/core" title="Progressive, incrementally-adoptable JavaScript framework for building UI on the web.">vuejs</a> insipred by <a href="https://www.swissted.com/?page=3">swiss design</a>.</p>
+<p align="center">Small portfolio created via <a href="https://github.com/vuejs/core" title="Progressive, incrementally-adoptable JavaScript framework for building UI on the web.">vuejs</a> insipred by <a href="https://www.swissted.com">swiss design</a>.</p>
 
 <p align="center">
   <a href="https://bim-ba.github.io">
