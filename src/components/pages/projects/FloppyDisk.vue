@@ -7,7 +7,13 @@
     <Transition name="fade">
       <section v-if="modalOpened" class="modal" @click="modalOpened = false">
         <div class="modal-content">
-          <img :src="props.image" />
+          <img
+            ref="projectDropZoneRef"
+            :src="projectDroppedImageSource || props.image"
+            class="droppable-image"
+            :class="{ active: isOverProjectDropZone, inactive: !isOverProjectDropZone }"
+            alt="project image"
+          />
         </div>
       </section>
     </Transition>
@@ -17,7 +23,12 @@
   <div class="floppy-shadow-container">
     <div ref="floppyRef" v-on-hover="hover" class="floppy-container" @click="modalOpened = true">
       <div class="frame-container">
-        <img :src="props.preview" alt="project primary image" />
+        <img
+          :src="previewDroppedImageSource || props.preview"
+          class="droppable-image"
+          :class="{ active: isOverFloppyDropZone, inactive: !isOverFloppyDropZone }"
+          alt="preview image"
+        />
         <p>{{ title }}</p>
       </div>
       <h2 :style="{ transform: randomRotation }">{{ formattedDate }}</h2>
@@ -28,6 +39,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
+import { useDropZone } from "@vueuse/core";
 import { vElementHover as vOnHover } from "@vueuse/components";
 
 import anime from "animejs";
@@ -55,6 +67,7 @@ const props = withDefaults(defineProps<ThisProps>(), { color: "gray" });
 
 // template refs
 const floppyRef = ref<Nullable<HTMLElement>>(null);
+const projectDropZoneRef = ref<Nullable<HTMLImageElement>>(null);
 
 // reactive
 const modalOpened = ref(false);
@@ -82,6 +95,42 @@ const hover = (state: boolean) =>
       ? anime({ targets: floppyRef.value, ...slightlyScale(1.1) })
       : anime({ targets: floppyRef.value, ...normalScale(1) })
     : "pass";
+
+// image dropping
+const projectDroppedImageSource = ref<string>();
+const previewDroppedImageSource = ref<string>();
+
+const onProjectImageDrop = (files: Nullable<Array<File>>) => {
+  if (!files) {
+    return;
+  }
+
+  let file = files[0];
+  let reader = new FileReader();
+
+  reader.onload = (event) => (projectDroppedImageSource.value = event.target?.result as string);
+
+  reader.readAsDataURL(file);
+};
+
+const onFloppyDrop = (files: Nullable<Array<File>>) => {
+  if (!files || files.length > 1) {
+    return;
+  }
+
+  let file = files[0];
+  let reader = new FileReader();
+
+  reader.onload = (event) => (previewDroppedImageSource.value = event.target?.result as string);
+
+  reader.readAsDataURL(file);
+};
+
+const { isOverDropZone: isOverFloppyDropZone } = useDropZone(floppyRef, onFloppyDrop);
+const { isOverDropZone: isOverProjectDropZone } = useDropZone(
+  projectDropZoneRef,
+  onProjectImageDrop
+);
 
 // exposed
 defineExpose({ floppyRef, timelined });
@@ -191,10 +240,23 @@ $date-font-size: 0.95em;
   }
 }
 
+.droppable-image {
+  outline: 0.5em dotted;
+  outline-offset: -0.25em;
+  transition: outline-color 0.5s ease;
+
+  &.active {
+    outline-color: royalblue;
+  }
+  &.inactive {
+    outline-color: transparent;
+  }
+}
+
 // modal transition
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease-out;
+  transition: opacity 0.25s ease-out;
 }
 
 .fade-enter-from,
