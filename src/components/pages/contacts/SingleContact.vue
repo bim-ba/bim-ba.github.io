@@ -30,7 +30,13 @@ interface ThisProps {
 const props = defineProps<ThisProps>();
 
 // copy
-const { copy } = useClipboard();
+const { copy, isSupported } = useClipboard();
+
+!isSupported && props.copyable
+  ? console.error(
+      `unfortunately, clipboard api is not supported in your browser, so we cannot copy my ${props.type.toLowerCase()}! 😢`
+    )
+  : "pass";
 </script>
 
 <style lang="scss" scoped>

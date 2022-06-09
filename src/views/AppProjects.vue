@@ -24,18 +24,18 @@ const { timeline } = useTimeline();
 
 // hooks
 onMounted(() => {
-  const onlyCenteredFloppies = carouselRef.value?.floppiesRef
-    ?.map(({ floppyRef }) => floppyRef)
-    .slice(
-      carouselRef.value.floppiesRef.length / 2 - 1,
-      carouselRef.value.floppiesRef.length / 2 + 2
-    );
+  const onlyCenteredFloppies = carouselRef.value?.floppiesRef?.slice(
+    carouselRef.value.floppiesRef.length / 2 - 1,
+    carouselRef.value.floppiesRef.length / 2 + 2
+  );
 
   timeline
     .add({
-      targets: onlyCenteredFloppies,
+      targets: onlyCenteredFloppies?.map(({ floppyRef }) => floppyRef),
       delay: anime.stagger(500, { start: 500, from: "center" }),
       ...bubbleJellyAnimation,
+      begin: () => onlyCenteredFloppies?.forEach((floppy) => (floppy.timelined = true)),
+      complete: () => onlyCenteredFloppies?.forEach((floppy) => (floppy.timelined = false)),
     })
     .add({ targets: footerRef.value?.backwardIconRef?.$el, ...bubbleJellyAnimation }, "-=500")
     .add({ targets: footerRef.value?.forwardIconRef?.$el, ...bubbleJellyAnimation }, "-=500")

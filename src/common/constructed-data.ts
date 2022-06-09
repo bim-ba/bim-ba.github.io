@@ -5,24 +5,22 @@ import type { Project, ProjectDate } from "@types";
 
 import type { MainPageKeyType, ProjectsPageKeyType, ContactsPageKeyType } from "@injection-keys";
 
-import { resolveAssetURL } from "@common/helpers";
-
 // main page
 export const mainPageData: MainPageKeyType = mainPageJSON;
 
 // projects page
 const { projects, squares } = projectsPageJSON;
 
-const projectsWithResolvedPaths: Project[] = projects.map((project) => ({
-  title: project.title,
-  description: project.description,
-  date: project.date as ProjectDate,
-  style: project.style,
-  images: project.images.map((img) => ({
-    source: resolveAssetURL(`/projects/${project.folder}`, img, import.meta.url),
-    primary: img.split(".")[0] == "main" ? true : false,
-  })),
-}));
+const projectsWithResolvedPaths: Project[] = projects.map(
+  ({ title, description, date, style, image, preview }) => ({
+    title: title,
+    description: description,
+    date: date as ProjectDate,
+    style: style,
+    image: image,
+    preview: preview,
+  })
+);
 export const projectsPageDate: ProjectsPageKeyType = {
   projects: projectsWithResolvedPaths,
   squares,

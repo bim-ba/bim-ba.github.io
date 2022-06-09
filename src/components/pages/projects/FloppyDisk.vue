@@ -1,21 +1,23 @@
 <template>
-  <ProjectModal v-model="showModal">
-    <template #title>{{ title }}</template>
-    <template #description>{{ description }}</template>
-    <template #images>
-      <img
-        v-for="(img, index) in props.images"
-        :key="index"
-        :src="img.source"
-        alt="project image"
-      />
-    </template>
-    <template #footer>{{ formattedDate }}</template>
-  </ProjectModal>
+  <!-- preload image -->
+  <link rel="prefetch" :href="props.image" />
+
+  <!-- modal -->
+  <Teleport to="body">
+    <Transition name="fade">
+      <section v-if="modalOpened" class="modal" @click="modalOpened = false">
+        <div class="modal-content">
+          <img :src="props.image" />
+        </div>
+      </section>
+    </Transition>
+  </Teleport>
+
+  <!-- floppy -->
   <div class="floppy-shadow-container">
-    <div ref="floppyRef" v-on-hover="hover" class="floppy-container" @click="showModal = true">
+    <div ref="floppyRef" v-on-hover="hover" class="floppy-container" @click="modalOpened = true">
       <div class="frame-container">
-        <img :src="primaryImage?.source" alt="project primary image" />
+        <img :src="props.preview" alt="project primary image" />
         <p>{{ title }}</p>
       </div>
       <h2 :style="{ transform: randomRotation }">{{ formattedDate }}</h2>
@@ -32,10 +34,8 @@ import anime from "animejs";
 
 import { normalScale, slightlyScale } from "@common/animations";
 import { generateRandomNumber } from "@common/helpers";
-import type { ProjectDate, ProjectImage } from "@types";
+import type { ProjectDate } from "@types";
 import type { Nullable } from "@/types/helpers";
-
-import ProjectModal from "@components/ProjectModal.vue";
 
 // props
 //
@@ -46,7 +46,8 @@ interface ThisProps {
   title: string;
   description: string;
   date: ProjectDate;
-  images: ProjectImage[];
+  preview: string;
+  image: string;
   color?: string;
   isPrimary?: boolean;
 }
@@ -56,7 +57,8 @@ const props = withDefaults(defineProps<ThisProps>(), { color: "gray" });
 const floppyRef = ref<Nullable<HTMLElement>>(null);
 
 // reactive
-const showModal = ref(false);
+const modalOpened = ref(false);
+const timelined = ref<boolean | undefined>(); // to fix timeline + hover at the same time issue
 
 // computed
 const formattedDate = computed(
@@ -66,7 +68,6 @@ const randomRotation = computed(() => {
   const [min, max] = [1, 8];
   return `rotate(${generateRandomNumber(min, max)}deg)`;
 });
-const primaryImage = computed(() => props.images.find((image) => image.primary));
 
 // hovering
 //
@@ -76,12 +77,14 @@ const primaryImage = computed(() => props.images.find((image) => image.primary))
 // but this will require some extra checks like component is mounted
 //
 const hover = (state: boolean) =>
-  state
-    ? anime({ targets: floppyRef.value, ...slightlyScale(1.1) })
-    : anime({ targets: floppyRef.value, ...normalScale(1) });
+  !timelined.value
+    ? state
+      ? anime({ targets: floppyRef.value, ...slightlyScale(1.1) })
+      : anime({ targets: floppyRef.value, ...normalScale(1) })
+    : "pass";
 
 // exposed
-defineExpose({ floppyRef });
+defineExpose({ floppyRef, timelined });
 </script>
 
 <style lang="scss" scoped>
@@ -119,7 +122,6 @@ $date-font-size: 0.95em;
     mask-image: url(/svg/pure-floppy.svg);
     background-color: $floppy-color;
 
-    // font-size: $container-font-size;
     height: $floppy-size;
 
     transition: font-size 0.25s ease-out;
@@ -167,25 +169,36 @@ $date-font-size: 0.95em;
   }
 }
 
-:deep(.modal-container) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-:deep(.modal-content) {
-  display: flex;
-  flex-direction: column;
-  margin: 0 1em;
-  padding: 1em;
-  border: 1px solid lightgray;
-  border-radius: 0.25rem;
-  background: white;
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  width: 500px;
-  height: 250px;
+  overflow-x: hidden; // because of bouncing transition
+  overflow-y: scroll;
+  // overscroll-behavior: contain;
+
+  z-index: 2;
+
+  background: #2828287f;
+  .modal-content {
+    display: flex;
+    justify-content: center;
+
+    margin: 3em auto;
+  }
 }
-.modal__title {
-  font-size: 2em;
-  font-weight: 700;
+
+// modal transition
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

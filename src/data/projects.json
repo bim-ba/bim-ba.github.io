@@ -5,100 +5,66 @@
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
       "date": {
         "year": 2018,
-        "quarters": [
-          1,
-          2
-        ]
+        "quarters": [ 1, 2 ]
       },
-      "folder": "mafia",
-      "images": [
-        "1.png",
-        "2.jpg",
-        "main.jpg"
-      ],
       "style": {
         "color": "cornflowerblue"
-      }
+      },
+      "preview": "https://via.placeholder.com/872x350",
+      "image": "/projects/gaymafia.jpg"
     },
     {
       "title": "VERY LONG NAMED PROJECT",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
       "date": {
         "year": 2021,
-        "quarters": [
-          2
-        ]
+        "quarters": [ 2 ]
       },
-      "folder": "mafia",
-      "images": [
-        "1.png",
-        "2.jpg",
-        "main.jpg"
-      ],
       "style": {
         "color": "#564592"
-      }
+      },
+      "preview": "https://via.placeholder.com/783x350",
+      "image": "https://via.placeholder.com/783x1500"
     },
     {
       "title": "PROJECT BOMB",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
       "date": {
         "year": 2020,
-        "quarters": [
-          1,
-          3
-        ]
+        "quarters": [ 1, 3 ]
       },
-      "folder": "mafia",
-      "images": [
-        "1.png",
-        "2.jpg",
-        "main.jpg"
-      ],
       "style": {
         "color": "#FC6A03",
         "primary": true
-      }
+      },
+      "preview": "https://via.placeholder.com/612x350",
+      "image": "https://via.placeholder.com/612x1500"
     },
     {
       "title": "PROJECT SOME BOMB DA BABEPIZZA",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
       "date": {
         "year": 2021,
-        "quarters": [
-          3,
-          4
-        ]
+        "quarters": [ 3, 4 ]
       },
-      "folder": "mafia",
-      "images": [
-        "1.png",
-        "2.jpg",
-        "main.jpg"
-      ],
       "style": {
         "color": "#FCAE1E"
-      }
+      },
+      "preview": "https://via.placeholder.com/922x350",
+      "image": "https://via.placeholder.com/922x1500"
     },
     {
       "title": "PROJECT PIZZA",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
       "date": {
         "year": 2019,
-        "quarters": [
-          1,
-          4
-        ]
+        "quarters": [ 1, 4 ]
       },
-      "folder": "mafia",
-      "images": [
-        "1.png",
-        "2.jpg",
-        "main.jpg"
-      ],
       "style": {
         "color": "mediumseagreen"
-      }
+      },
+      "preview": "https://via.placeholder.com/517x350",
+      "image": "https://via.placeholder.com/517x1500"
     }
   ],
   "squares": [

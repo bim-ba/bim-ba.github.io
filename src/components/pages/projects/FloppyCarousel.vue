@@ -13,7 +13,7 @@
       :initial-slide="projects.length / 2"
     >
       <swiper-slide
-        v-for="({ title, description, date, images, style }, index) in projects"
+        v-for="({ title, description, date, style, image, preview }, index) in projects"
         :key="index"
       >
         <FloppyDisk
@@ -21,7 +21,8 @@
           :title="title"
           :description="description"
           :date="date"
-          :images="images"
+          :preview="preview"
+          :image="image"
           :color="style.color"
           :is-primary="style.primary"
         />

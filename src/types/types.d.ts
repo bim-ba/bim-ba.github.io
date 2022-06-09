@@ -5,20 +5,16 @@ export interface ProjectDate {
   quarters: [YearQuarter, YearQuarter?];
 }
 
-export interface ProjectImage {
-  source: string;
-  primary: boolean;
-}
-
 export interface Project {
   title: string;
   description: string;
   date: ProjectDate;
-  images: ProjectImage[];
   style: {
     color: string;
     primary?: boolean;
   };
+  preview: string;
+  image: string;
 }
 
 export interface Square {

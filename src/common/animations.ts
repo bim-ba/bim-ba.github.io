@@ -3,9 +3,6 @@ import type CSS from "csstype";
 import type { AnimeAnimParams, AnimeCallBack } from "animejs";
 import type { Nullable } from "@/types/helpers";
 
-export const bubbleJellyAnimation: AnimeAnimParams = { scale: [0, 1], scaleY: [0, 1] };
-export const bubbleAnimation: AnimeAnimParams = { scale: [0, 1] };
-
 const overwriteCSSProperty = <T extends keyof CSS.PropertiesHyphen>(
   property: T,
   value: CSS.PropertiesHyphen[T]
@@ -19,6 +16,9 @@ const overwriteCSSProperty = <T extends keyof CSS.PropertiesHyphen>(
       animatables.forEach(({ target }) => target.style.removeProperty(property)),
   };
 };
+
+export const bubbleJellyAnimation: AnimeAnimParams = { scale: [0, 1], scaleY: [0, 1] };
+export const bubbleAnimation: AnimeAnimParams = { scale: [0, 1] };
 
 /** WARN: using this will overwrite existing `transform-origin` to `bottom` on element,
  * this property will be cleared on the animation end

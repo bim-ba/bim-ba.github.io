@@ -5,8 +5,6 @@ import { createPinia } from "pinia";
 import App from "@/App.vue";
 import router from "@/router";
 
-import VueFinalModalPlugin, { type VfmOptions } from "vue-final-modal";
-
 import { mainPageKey, projectsPageKey, contactsPageKey } from "@injection-keys";
 
 import { mainPageData, projectsPageDate, contactsPageData } from "@common/constructed-data";
@@ -27,11 +25,5 @@ app.use(router);
 
 app.use(createHead());
 app.use(createPinia());
-
-app.use(VueFinalModalPlugin, {
-  key: "$vfm",
-  componentName: "VueFinalModal",
-  dynamicContainerName: "ModalsContainer",
-} as VfmOptions);
 
 app.mount("#app");
