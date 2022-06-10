@@ -6,17 +6,19 @@
   },
   "location": {
     "area": {
-      "city": "Created by",
-      "distrinct": "Sava Znatnov"
+      "city": "Moscow",
+      "distrinct": "Izmaylovo"
     },
     "coordinates": {
       "north": {
         "degrees": 55,
-        "minutes": 49
+        "minutes": 49,
+        "seconds": 6
       },
       "east": {
         "degrees": 37,
-        "minutes": 48
+        "minutes": 46,
+        "seconds": 19
       }
     }
   },
