@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     name: "Main",
     component: AppMain,
-    meta: { transition: "scale-bottom-left", title: "Sava Znatnov" },
+    meta: { transition: "scale-bottom-left", title: "Eduard Metelkin" },
   },
   {
     path: "/projects",
