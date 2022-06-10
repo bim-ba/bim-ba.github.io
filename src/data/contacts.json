@@ -6,8 +6,8 @@
     "*Trying to make this world better.*"
   ],
   "contacts": [
-    { "type": "mail", "data": "metelkin@metelkin.design", "link": "mailto:metelkin@metelkin.design", "copyable": true },
-    { "type": "telegram", "data": "@cursedforest", "link": "https://telegram.me/cursedforest" },
-    { "type": "behance", "data": "@onmidesign", "link": "https://behance.net/onmidesign" }
+    { "type": "mail", "data": "contact@metelkin.design", "link": "mailto:contact@metelkin.design", "copyable": true },
+    { "type": "telegram", "data": "@metelkindesign", "link": "https://telegram.me/" },
+    { "type": "behance", "data": "@metelkindesign", "link": "https://www.behance.net/metelkindesign" }
   ]
 }
