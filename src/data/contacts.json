@@ -2,8 +2,8 @@
   "content": [
     "Привет! Меня зовут Эдуард Метелкин, я креативный дизайнер, сейчас живу в Москве.",
     "Интересуюсь: графическим дизайном, технической эстетикой и визульной коммуникацией.",
-    "I love _swiss design_ and _helvetica_.",
-    "*Trying to make this world better.*"
+    "Тащюсь от _швейцарского дизайна_ и _гельветики_.",
+    "*Пытаюсь сделать этот мир лучше.*"
   ],
   "contacts": [
     { "type": "mail", "data": "contact@metelkin.design", "link": "mailto:contact@metelkin.design", "copyable": true },
