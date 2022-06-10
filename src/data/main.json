@@ -1,13 +1,13 @@
 {
   "content": {
-    "firstname": "Ed",
-    "lastname": "Sanych",
-    "description": "creative designer\n currently based in Saratov"
+    "firstname": "Eduard",
+    "lastname": "Metelkin",
+    "description": "creative designer\n currently based in Moscow"
   },
   "location": {
     "area": {
       "city": "Moscow",
-      "distrinct": "Metrogorodok"
+      "distrinct": "Izmailovo"
     },
     "coordinates": {
       "north": {
