@@ -18,6 +18,7 @@ declare module "vue-router" {
       | "scale-bottom"
       | "scale-bottom-right";
     title: string;
+    order: number;
   }
 }
 

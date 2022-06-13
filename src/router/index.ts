@@ -10,32 +10,40 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     name: "Main",
     component: AppMain,
-    meta: { transition: "scale-bottom-left", title: "Eduard Metelkin" },
+    meta: { order: 0, transition: "scale-center", title: "Eduard Metelkin" },
   },
   {
     path: "/projects",
     name: "Projects",
     component: AppProjects,
-    meta: { transition: "scale-bottom-right", title: "Projects" },
+    meta: { order: 1, transition: "scale-center", title: "Projects" },
   },
   {
     path: "/about",
     name: "Contacts",
     component: AppContacts,
-    meta: { transition: "scale-bottom-right", title: "Contacts & About" },
+    meta: { order: 2, transition: "scale-center", title: "Contacts & About" },
     // TODO: normalize per-route transition (corners)
   },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: NotFound,
-    meta: { transition: "scale-center", title: "Not found" },
+    meta: { order: 0, transition: "scale-center", title: "Not found" },
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: routes,
+});
+
+// used to normalize per route transitions
+router.beforeEach((to, from, next) => {
+  to.meta.order > from.meta.order
+    ? (to.meta.transition = "scale-bottom-right")
+    : (to.meta.transition = "scale-bottom-left");
+  next();
 });
 
 export default router;

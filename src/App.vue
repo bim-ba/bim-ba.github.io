@@ -111,4 +111,68 @@ body {
 .scale-center-leave-active {
   transform-origin: center;
 }
+
+// global classes
+
+$fut-color: var(--fancy-underlined-text-color, black);
+$fut-underline-color: var(--fancy-underlined-text-underline-color, black);
+$fut-underline-size: var(--fancy-underlined-text-underline-size, 0.1em);
+$fut-hover-color: var(--fancy-underlined-text-hover-color, white);
+$fut-hover-background: var(--fancy-underlined-text-hover-background, black);
+$fut-hover-selection-color: var(--fancy-underlined-text-hover-selection-color, black);
+$fut-hover-selection-background: var(--fancy-underlined-text-selection-background, white);
+
+.fancy-underlined-text {
+  color: $fut-color;
+  text-decoration: underline solid $fut-underline-color $fut-underline-size;
+
+  position: relative;
+
+  transition: color 0.25s ease-out;
+
+  &:hover {
+    color: $fut-hover-color;
+    text-decoration: none;
+
+    &::selection {
+      color: $fut-hover-selection-color;
+      background: $fut-hover-selection-background;
+    }
+
+    &::after {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    background: $fut-hover-background;
+    z-index: -1;
+
+    transition: transform 0.25s ease-out;
+  }
+}
+
+$fbt-color: var(--fancy-backgrounded-text-color, white);
+$fbt-background: var(--fancy-backgrounded-text-background, black);
+$fbt-selection-color: var(--fancy-backgrounded-text-selection-color, black);
+$fbt-selection-background: var(--fancy-backgrounded-text-selection-background, white);
+
+.fancy-backgrounded-text {
+  color: $fbt-color;
+  background: $fbt-background;
+
+  &::selection {
+    color: $fbt-selection-color;
+    background: $fbt-selection-background;
+  }
+}
 </style>

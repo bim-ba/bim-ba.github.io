@@ -4,6 +4,7 @@
     <ContactList ref="contactsRef" />
     <VerticalLine ref="lineRef" />
     <FancyFooter ref="footerRef" />
+    <FancyCopyright ref="copyrightRef" />
   </section>
 </template>
 
@@ -25,9 +26,11 @@ import VerticalLine from "@pages/contacts/VerticalLine.vue";
 import ContactList from "@pages/contacts/ContactList.vue";
 import Paragraphs from "@pages/contacts/ContentParagraphs.vue";
 import FancyFooter from "@pages/contacts/FancyFooter.vue";
+import FancyCopyright from "@pages/contacts/FancyCopyright.vue";
 
 // template refs
 const paragraphsRef = ref<Nullable<InstanceType<typeof Paragraphs>>>(null);
+const copyrightRef = ref<Nullable<InstanceType<typeof FancyCopyright>>>(null);
 const contactsRef = ref<Nullable<InstanceType<typeof ContactList>>>(null);
 const footerRef = ref<Nullable<InstanceType<typeof FancyFooter>>>(null);
 const lineRef = ref<Nullable<InstanceType<typeof VerticalLine>>>(null);
@@ -52,7 +55,8 @@ onMounted(() =>
       "-=500"
     )
     .add({ targets: footerRef.value?.iconRef?.$el, ...bubbleJellyAnimation }, "-=500")
-    .add({ targets: lineRef.value?.lineRef, scaleY: [0, 1], easing: "easeOutBounce" })
+    .add({ targets: copyrightRef.value?.$el, ...riseFromBottomAnimation }, "-=1000")
+    .add({ targets: lineRef.value?.$el, scaleY: [0, 1], easing: "easeOutBounce" }, "-=500")
 );
 </script>
 
@@ -60,10 +64,10 @@ onMounted(() =>
 .contacts-page-container {
   display: grid;
   grid-template-areas:
-    "main   some contacts"
-    "footer some ........";
+    "main   line contacts"
+    "footer line copyright";
   grid-template-rows: 85% auto;
-  grid-template-columns: auto 1em auto;
+  grid-template-columns: auto auto auto;
 
   height: 100%;
 }

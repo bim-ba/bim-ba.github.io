@@ -1,32 +1,21 @@
 <template>
-  <div class="vertical-line-wrapper">
-    <div ref="lineRef" class="vertical-line"></div>
-  </div>
+  <div ref="lineRef" class="vertical-line"></div>
 </template>
 
-<script setup lang="ts">
-import { ref } from "vue";
-
-import type { Nullable } from "@/types/helpers";
-
-// template refs
-const lineRef = ref<Nullable<HTMLElement>>(null);
-
-// exposed
-defineExpose({ lineRef });
-</script>
+<!-- this is needed to type component -->
+<script setup lang="ts"></script>
 
 <style lang="scss">
-.vertical-line-wrapper {
-  grid-area: some;
+$line-width: 0.075em;
+$line-height: 100vh;
+$line-color: #ccc;
 
-  display: flex;
-  justify-content: center;
-  .vertical-line {
-    width: 0.075em;
-    height: 100vh;
+.vertical-line {
+  grid-area: line;
 
-    background: #ccc;
-  }
+  width: $line-width;
+  height: $line-height;
+
+  background: $line-color;
 }
 </style>

@@ -1,6 +1,6 @@
 {
   "name": "portfolio-vue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -34,6 +34,7 @@
     "eslint-plugin-vue": "^8.2.0",
     "prettier": "^2.5.1",
     "sass": "^1.51.0",
+    "standard-version": "^9.5.0",
     "typescript": "^4.6.3",
     "vite": "^2.9.5",
     "vue-tsc": "^0.35.0"

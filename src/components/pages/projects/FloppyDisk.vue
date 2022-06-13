@@ -1,14 +1,15 @@
 <template>
-  <!-- preload image -->
-  <link rel="prefetch" :href="props.image" />
-
   <!-- modal -->
   <Teleport to="body">
     <Transition name="fade">
-      <section v-if="modalOpened" class="modal" @click="modalOpened = false">
+      <section
+        v-if="modalOpened"
+        ref="projectDropZoneRef"
+        class="modal"
+        @click="modalOpened = false"
+      >
         <div class="modal-content">
           <img
-            ref="projectDropZoneRef"
             :src="projectDroppedImageSource || props.image"
             class="droppable-image"
             :class="{ active: isOverProjectDropZone, inactive: !isOverProjectDropZone }"
@@ -37,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 
 import { useDropZone } from "@vueuse/core";
 import { vElementHover as vOnHover } from "@vueuse/components";
@@ -131,6 +132,12 @@ const { isOverDropZone: isOverProjectDropZone } = useDropZone(
   projectDropZoneRef,
   onProjectImageDrop
 );
+
+// hooks (image preloader)
+onBeforeMount(() => {
+  const image = new Image();
+  image.src = props.image;
+});
 
 // exposed
 defineExpose({ floppyRef, timelined });

@@ -18,14 +18,21 @@ const { content } = inject(contactsPageKey) as NonNullable<ContactsPageKeyType>;
 const paragraphsRef = ref<Nullable<Array<HTMLElement>>>(null);
 
 // computed
+//
+// markdown-like parser (i know this is bad and better to use libs like `marked`, `markdown.it`, etc...)
 const normalizedParagraphs = computed(() =>
   content.map((paragraph) =>
     paragraph
-      .replace(/_((?![_\s])(?:[^_]*[^_\s])?)_/g, '<span class="fancy-underlined-text">$1</span>')
+      // eslint-disable-next-line prettier/prettier
+      .replace(
+        /_((?![_\s])(?:[^_]*[^_\s])?)_/g,
+        '<span class="fancy-underlined-text">$1</span>'
+      )
       .replace(
         /\*((?![*\s])(?:[^*]*[^*\s])?)\*/g,
         '<span class="fancy-backgrounded-text">$1</span>'
       )
+      .replace("\n", "<br />")
   )
 );
 
@@ -34,70 +41,24 @@ defineExpose({ paragraphsRef });
 </script>
 
 <style lang="scss" scoped>
+$paragraphs-gap: 2em;
+$paragraph-font-size: 1.75em;
+
 .content-container {
+  --fancy-underlined-text-hover-background: #c61c1d;
+
   grid-area: main;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2em;
+  gap: $paragraphs-gap;
 
   padding: 0 5em;
 
   .content-paragraph {
-    font-size: 1.9em;
+    font-size: $paragraph-font-size;
     font-weight: bold;
-  }
-}
-</style>
-
-<style lang="scss">
-.fancy-underlined-text {
-  color: black;
-  text-decoration: underline solid black 0.1em;
-
-  position: relative;
-
-  transition: color 0.25s ease-out;
-
-  &:hover {
-    color: white;
-    text-decoration: none;
-
-    &::selection {
-      color: black;
-      background: white;
-    }
-
-    &::after {
-      transform: scaleY(1);
-      transform-origin: bottom;
-    }
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    transform: scaleY(0);
-    transform-origin: top;
-    background: #c61c1d;
-    z-index: -1;
-
-    transition: transform 0.25s ease-out;
-  }
-}
-
-.fancy-backgrounded-text {
-  color: white;
-  background: black;
-
-  &::selection {
-    color: black;
-    background: white;
   }
 }
 </style>
