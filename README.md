@@ -31,11 +31,13 @@
   - [x] Drop shadow
   - [x] Fix `click` event conflicts
   - [x] Carousel
-- [ ] Preloader
+- [x] Preloader
 - [x] Contacts page
 - [x] Dev
   - [x] ~~`anime.js` animations as directives~~ _(due to the difficulty of maintaining)_
   - [x] HTML5 sectioning
+- [ ] Three js fluid, drops, fluid disappering via mouse
+- [ ] Interactive floppy hovering (image-hints)
 
 ## Sketch
 
