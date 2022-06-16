@@ -1,6 +1,6 @@
 <template>
   <aside class="contacts-container">
-    <h1 ref="titleRef">CONTACT</h1>
+    <h1 ref="titleRef">КОНТАКТЫ</h1>
     <SingleContact
       v-for="({ type, data, link, copyable }, index) in contacts"
       ref="contactsRef"
