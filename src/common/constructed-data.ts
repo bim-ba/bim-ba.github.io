@@ -12,13 +12,13 @@ export const mainPageData: MainPageKeyType = mainPageJSON;
 const { projects, squares } = projectsPageJSON;
 
 const projectsWithResolvedPaths: Project[] = projects.map(
-  ({ title, description, date, style, image, preview }) => ({
-    title: title,
-    description: description,
+  ({ title, date, style, image, preview, hints }) => ({
+    title,
     date: date as ProjectDate,
-    style: style,
-    image: image,
-    preview: preview,
+    style,
+    image,
+    preview,
+    hints,
   })
 );
 export const projectsPageDate: ProjectsPageKeyType = {

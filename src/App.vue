@@ -1,15 +1,15 @@
 <!-- TODO: fix scaleY problem -->
 
-<!-- TODO: create global `FancyFooter.vue` -->
-<!-- because almost all pages include same footer -->
-
 <template>
   <router-view v-slot="{ Component, route }">
     <Head>
       <title>{{ route.meta.title }}</title>
     </Head>
-    <transition :name="route.meta.transition" mode="out-in">
-      <div :key="route.path" class="route-container">
+    <transition :name="route.meta.transition">
+      <div v-if="orientation?.startsWith('portrait')" class="alert-container">
+        <h1>ROTATE YOUR DEVICE</h1>
+      </div>
+      <div v-else :key="route.path" class="route-container">
         <component :is="Component" />
       </div>
     </transition>
@@ -20,15 +20,19 @@
 import { ref, onMounted } from "vue";
 
 import { Head } from "@vueuse/head";
+import { useScreenOrientation } from "@vueuse/core";
 
 import { useAnySquareStore } from "@/stores/appmain";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 // template ref
 const bodyRef = ref<Nullable<HTMLElement>>(null);
 
 // store
 const store = useAnySquareStore();
+
+// reactive
+const { orientation } = useScreenOrientation();
 
 // square dragging
 store.$subscribe((_, { dragging, color }) => {
@@ -40,6 +44,25 @@ store.$subscribe((_, { dragging, color }) => {
 // hooks (dom ready)
 onMounted(() => (bodyRef.value = document.body));
 </script>
+
+<style scoped lang="scss">
+.route-container {
+  height: 100%;
+}
+.alert-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  background: #c61c1d;
+
+  h1 {
+    color: white;
+  }
+}
+</style>
 
 <style lang="scss">
 @use "@style/reset";
@@ -54,8 +77,7 @@ onMounted(() => (bodyRef.value = document.body));
 
 html,
 body,
-#app,
-.route-container {
+#app {
   height: 100%;
 }
 
@@ -173,6 +195,23 @@ $fbt-selection-background: var(--fancy-backgrounded-text-selection-background, w
   &::selection {
     color: $fbt-selection-color;
     background: $fbt-selection-background;
+  }
+}
+
+$dpbl-image-outline-width: 0.5em;
+$dpbl-image-outline-offset: calc($dpbl-image-outline-width / 2 * -1);
+$dpbl-image-outline-color: royalblue;
+
+.droppable-image {
+  outline: $dpbl-image-outline-width dotted;
+  outline-offset: $dpbl-image-outline-offset;
+  transition: outline-color 0.5s ease;
+
+  &.active {
+    outline-color: $dpbl-image-outline-color;
+  }
+  &.inactive {
+    outline-color: transparent;
   }
 }
 </style>

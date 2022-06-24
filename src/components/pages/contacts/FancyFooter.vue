@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 import NavigationIcon from "@components/NavigationIcon.vue";
 

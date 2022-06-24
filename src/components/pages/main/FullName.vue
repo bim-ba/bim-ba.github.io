@@ -12,7 +12,7 @@
 import { ref, inject, computed } from "vue";
 
 import { mainPageKey, type MainPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 // inject
 const { content } = inject(mainPageKey) as NonNullable<MainPageKeyType>;

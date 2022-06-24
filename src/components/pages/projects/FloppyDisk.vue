@@ -2,37 +2,40 @@
   <!-- modal -->
   <Teleport to="body">
     <Transition name="fade">
-      <section
-        v-if="modalOpened"
-        ref="projectDropZoneRef"
-        class="modal"
-        @click="modalOpened = false"
-      >
-        <div class="modal-content">
-          <img
-            :src="projectDroppedImageSource || props.image"
-            class="droppable-image"
-            :class="{ active: isOverProjectDropZone, inactive: !isOverProjectDropZone }"
-            alt="project image"
-          />
-        </div>
-      </section>
+      <FancyProjectModal ref="projectModalRef" :default-image="props.image" />
     </Transition>
   </Teleport>
 
   <!-- floppy -->
   <div class="floppy-shadow-container">
-    <div ref="floppyRef" v-on-hover="hover" class="floppy-container" @click="modalOpened = true">
+    <div
+      ref="floppyRef"
+      v-on-hover="hover"
+      class="floppy-container"
+      @click="projectModalRef?.show()"
+    >
       <div class="frame-container">
         <img
-          :src="previewDroppedImageSource || props.preview"
+          ref="droppableImageRef"
           class="droppable-image"
           :class="{ active: isOverFloppyDropZone, inactive: !isOverFloppyDropZone }"
+          :src="previewDroppedImageSource || props.preview"
           alt="preview image"
         />
         <p>{{ title }}</p>
       </div>
       <h2 :style="{ transform: randomRotation }">{{ formattedDate }}</h2>
+    </div>
+
+    <!-- aside images -->
+    <div v-show="!timelined" class="aside-images-container">
+      <AsideImage
+        v-for="(src, index) in props.hints"
+        ref="asideImagesRef"
+        :key="index"
+        :src="src"
+        :side="(position[index] as 'top' | 'left' | 'right')"
+      />
     </div>
   </div>
 </template>
@@ -40,15 +43,18 @@
 <script setup lang="ts">
 import { ref, computed, onBeforeMount } from "vue";
 
-import { useDropZone } from "@vueuse/core";
+import { useImage, useDropZone } from "@vueuse/core";
 import { vElementHover as vOnHover } from "@vueuse/components";
 
 import anime from "animejs";
 
 import { normalScale, slightlyScale } from "@common/animations";
-import { generateRandomNumber } from "@common/helpers";
+import { shuffle, generateRandomNumber } from "@common/helpers";
 import type { ProjectDate } from "@types";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
+
+import AsideImage from "./AsideImage.vue";
+import FancyProjectModal from "./ProjectModal.vue";
 
 // props
 //
@@ -57,10 +63,10 @@ import type { Nullable } from "@/types/helpers";
 // type ThisProps = ...
 interface ThisProps {
   title: string;
-  description: string;
   date: ProjectDate;
   preview: string;
   image: string;
+  hints: Array<string>;
   color?: string;
   isPrimary?: boolean;
 }
@@ -68,11 +74,15 @@ const props = withDefaults(defineProps<ThisProps>(), { color: "gray" });
 
 // template refs
 const floppyRef = ref<Nullable<HTMLElement>>(null);
-const projectDropZoneRef = ref<Nullable<HTMLImageElement>>(null);
+const droppableImageRef = ref<Nullable<HTMLImageElement>>(null);
+const asideImagesRef = ref<Nullable<Array<InstanceType<typeof AsideImage>>>>(null);
+const projectModalRef = ref<Nullable<InstanceType<typeof FancyProjectModal>>>(null);
+
+// data
+const position: Array<"top" | "left" | "right"> = shuffle("top", "left", "right");
 
 // reactive
-const modalOpened = ref(false);
-const timelined = ref<boolean | undefined>(); // to fix timeline + hover at the same time issue
+const timelined = ref<boolean | undefined>(); // used to fix timeline + hover at the same time issue
 
 // computed
 const formattedDate = computed(
@@ -90,60 +100,53 @@ const randomRotation = computed(() => {
 // we can create an anime instace with necessary animation before hover method
 // but this will require some extra checks like component is mounted
 //
-const hover = (state: boolean) =>
-  !timelined.value
-    ? state
-      ? anime({ targets: floppyRef.value, ...slightlyScale(1.1) })
-      : anime({ targets: floppyRef.value, ...normalScale(1) })
-    : "pass";
+const hover = (state: boolean) => {
+  if (timelined.value) return;
+
+  if (state) {
+    anime({ targets: floppyRef.value, ...slightlyScale(1.1) });
+    asideImagesRef.value?.forEach((img) => img.show());
+  } else {
+    anime({ targets: floppyRef.value, ...normalScale(1) });
+    asideImagesRef.value?.forEach((img) => img.hide());
+  }
+};
 
 // image dropping
-const projectDroppedImageSource = ref<string>();
 const previewDroppedImageSource = ref<string>();
-
-const onProjectImageDrop = (files: Nullable<Array<File>>) => {
-  if (!files) {
-    return;
-  }
-
-  let file = files[0];
-  let reader = new FileReader();
-
-  reader.onload = (event) => (projectDroppedImageSource.value = event.target?.result as string);
-
-  reader.readAsDataURL(file);
-};
 
 const onFloppyDrop = (files: Nullable<Array<File>>) => {
   if (!files || files.length > 1) {
     return;
   }
 
-  let file = files[0];
-  let reader = new FileReader();
+  const file = files[0];
+
+  if (!file.type.startsWith("image/")) {
+    anime({
+      targets: droppableImageRef.value,
+      easing: "easeInQuad",
+      translateX: [-40, 40, -30, 30, -10, 10, 0, 0],
+    });
+    return;
+  }
+
+  const reader = new FileReader();
 
   reader.onload = (event) => (previewDroppedImageSource.value = event.target?.result as string);
-
   reader.readAsDataURL(file);
 };
 
 const { isOverDropZone: isOverFloppyDropZone } = useDropZone(floppyRef, onFloppyDrop);
-const { isOverDropZone: isOverProjectDropZone } = useDropZone(
-  projectDropZoneRef,
-  onProjectImageDrop
-);
 
 // hooks (image preloader)
-onBeforeMount(() => {
-  const image = new Image();
-  image.src = props.image;
-});
+onBeforeMount(() => useImage({ src: props.image }));
 
 // exposed
 defineExpose({ floppyRef, timelined });
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 $container-font-size: v-bind('isPrimary ? "1em" : "0.75em"');
 
 $floppy-color: v-bind(color);
@@ -193,8 +196,8 @@ $date-font-size: 0.95em;
       margin: 0 15%;
 
       img {
-        max-height: 50%;
-        max-width: 70%;
+        height: 50%;
+        width: 70%;
         object-fit: cover;
         filter: grayscale(1);
       }
@@ -224,50 +227,14 @@ $date-font-size: 0.95em;
     }
   }
 }
-
-.modal {
-  position: fixed;
+.aside-images-container {
+  position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
 
-  overflow-x: hidden; // because of bouncing transition
-  overflow-y: scroll;
-  // overscroll-behavior: contain;
+  width: 100%;
+  height: 100%;
 
-  z-index: 2;
-
-  background: #2828287f;
-  .modal-content {
-    display: flex;
-    justify-content: center;
-
-    margin: 3em auto;
-  }
-}
-
-.droppable-image {
-  outline: 0.5em dotted;
-  outline-offset: -0.25em;
-  transition: outline-color 0.5s ease;
-
-  &.active {
-    outline-color: royalblue;
-  }
-  &.inactive {
-    outline-color: transparent;
-  }
-}
-
-// modal transition
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+  z-index: -1;
 }
 </style>

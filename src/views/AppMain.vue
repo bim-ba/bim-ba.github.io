@@ -16,7 +16,7 @@ import {
   bubbleJellyAnimation,
 } from "@common/animations";
 import { useTimeline } from "@common/composables";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 import Content from "@pages/main/FullName.vue";
 import FancyFooter from "@pages/main/FancyFooter.vue";

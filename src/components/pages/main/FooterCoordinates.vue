@@ -14,7 +14,7 @@ import anime from "animejs";
 import { normalScale, slightlyScale } from "@/common/animations";
 import { mainPageKey, type MainPageKeyType } from "@injection-keys";
 import type { CardinalPoint } from "@types";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 // injected
 const { location } = inject(mainPageKey) as NonNullable<MainPageKeyType>;

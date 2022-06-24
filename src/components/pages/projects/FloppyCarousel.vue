@@ -13,16 +13,16 @@
       :initial-slide="projects.length / 2"
     >
       <swiper-slide
-        v-for="({ title, description, date, style, image, preview }, index) in projects"
+        v-for="({ title, date, style, image, preview, hints }, index) in projects"
         :key="index"
       >
         <FloppyDisk
           ref="floppiesRef"
           :title="title"
-          :description="description"
           :date="date"
           :preview="preview"
           :image="image"
+          :hints="hints"
           :color="style.color"
           :is-primary="style.primary"
         />
@@ -40,7 +40,7 @@ import { Mousewheel } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 import { projectsPageKey, type ProjectsPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 import FloppyDisk from "@pages/projects/FloppyDisk.vue";
 

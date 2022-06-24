@@ -2,33 +2,46 @@
   "projects": [
     {
       "title": "PROJECT JOHNY",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "preview": "https://via.placeholder.com/872x350",
+      "image": "https://via.placeholder.com/872x1500",
+      "hints": [
+        "https://via.placeholder.com/819x931",
+        "https://via.placeholder.com/334x640",
+        "https://via.placeholder.com/864x888"
+      ],
       "date": {
         "year": 2018,
         "quarters": [ 1, 2 ]
       },
       "style": {
         "color": "cornflowerblue"
-      },
-      "preview": "https://via.placeholder.com/872x350",
-      "image": "https://via.placeholder.com/872x1500"
+      }
     },
     {
       "title": "VERY LONG NAMED PROJECT",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "preview": "https://via.placeholder.com/783x350",
+      "image": "https://via.placeholder.com/783x1500",
+      "hints": [
+        "https://via.placeholder.com/772x961",
+        "https://via.placeholder.com/364x619"
+      ],
       "date": {
         "year": 2021,
         "quarters": [ 2 ]
       },
       "style": {
         "color": "#564592"
-      },
-      "preview": "https://via.placeholder.com/783x350",
-      "image": "https://via.placeholder.com/783x1500"
+      }
     },
     {
       "title": "PROJECT BOMB",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "preview": "https://via.placeholder.com/612x350",
+      "image": "https://via.placeholder.com/612x1500",
+      "hints": [
+        "https://via.placeholder.com/571x832",
+        "https://via.placeholder.com/402x992",
+        "https://via.placeholder.com/619x961"
+      ],
       "date": {
         "year": 2020,
         "quarters": [ 1, 3 ]
@@ -36,35 +49,38 @@
       "style": {
         "color": "#FC6A03",
         "primary": true
-      },
-      "preview": "https://via.placeholder.com/612x350",
-      "image": "https://via.placeholder.com/612x1500"
+      }
     },
     {
       "title": "PROJECT SOME BOMB DA BABEPIZZA",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "preview": "https://via.placeholder.com/922x350",
+      "image": "https://via.placeholder.com/922x1500",
+      "hints": [
+        "https://via.placeholder.com/550x723"
+      ],
       "date": {
         "year": 2021,
         "quarters": [ 3, 4 ]
       },
       "style": {
         "color": "#FCAE1E"
-      },
-      "preview": "https://via.placeholder.com/922x350",
-      "image": "https://via.placeholder.com/922x1500"
+      }
     },
     {
       "title": "PROJECT PIZZA",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis",
+      "preview": "https://via.placeholder.com/517x350",
+      "image": "https://via.placeholder.com/517x1500",
+      "hints": [
+        "https://via.placeholder.com/479x844",
+        "https://via.placeholder.com/330x869"
+      ],
       "date": {
         "year": 2019,
         "quarters": [ 1, 4 ]
       },
       "style": {
         "color": "mediumseagreen"
-      },
-      "preview": "https://via.placeholder.com/517x350",
-      "image": "https://via.placeholder.com/517x1500"
+      }
     }
   ],
   "squares": [

@@ -17,7 +17,7 @@
 import { ref, inject } from "vue";
 
 import { contactsPageKey, type ContactsPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 import SingleContact from "@pages/contacts/SingleContact.vue";
 

@@ -7,7 +7,6 @@ export interface ProjectDate {
 
 export interface Project {
   title: string;
-  description: string;
   date: ProjectDate;
   style: {
     color: string;
@@ -15,6 +14,7 @@ export interface Project {
   };
   preview: string;
   image: string;
+  hints: Array<string>;
 }
 
 export interface Square {

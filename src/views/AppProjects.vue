@@ -10,7 +10,7 @@ import anime from "animejs";
 
 import { useTimeline } from "@common/composables";
 import { bubbleAnimation, bubbleJellyAnimation } from "@common/animations";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 import ProjectsCarousel from "@pages/projects/FloppyCarousel.vue";
 import ProjectsFooter from "@pages/projects/ProjectsFooter.vue";

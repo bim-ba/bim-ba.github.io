@@ -13,7 +13,7 @@ import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motio
 import { useHover } from "@vueuse/gesture";
 import type { FullGestureState } from "@vueuse/gesture";
 
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 // props
 //

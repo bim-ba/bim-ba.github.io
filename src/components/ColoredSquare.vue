@@ -16,7 +16,7 @@ import type { FullGestureState } from "@vueuse/gesture";
 
 import { useAnySquareStore } from "@/stores/appmain";
 
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 // props
 //

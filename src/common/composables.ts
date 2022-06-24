@@ -1,14 +1,11 @@
-import { ref, unref, isRef } from "vue";
+import { ref, unref } from "vue";
 import type { MaybeRef } from "@vueuse/core";
 
 import anime from "animejs";
 import type { AnimeParams } from "animejs";
 
 export const useTimeline = (params?: MaybeRef<AnimeParams>) => {
-  let timeLineParams = params;
-  if (isRef(params)) {
-    timeLineParams = unref(params);
-  }
+  const timeLineParams = unref(params);
 
   const timeline = anime.timeline(timeLineParams);
   const isFinished = ref(false);

@@ -15,7 +15,7 @@
 import { ref, inject } from "vue";
 
 import { projectsPageKey, type ProjectsPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 import ColoredSquare from "@components/ColoredSquare.vue";
 

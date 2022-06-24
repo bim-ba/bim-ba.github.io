@@ -20,7 +20,7 @@ import {
   slideFromRightAnimation,
 } from "@/common/animations";
 
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 import VerticalLine from "@pages/contacts/VerticalLine.vue";
 import ContactList from "@pages/contacts/ContactList.vue";

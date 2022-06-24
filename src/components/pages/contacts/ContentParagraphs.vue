@@ -9,7 +9,7 @@
 import { ref, inject, computed } from "vue";
 
 import { contactsPageKey, type ContactsPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 // injected
 const { content } = inject(contactsPageKey) as NonNullable<ContactsPageKeyType>;

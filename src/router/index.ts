@@ -23,13 +23,12 @@ const routes: RouteRecordRaw[] = [
     name: "Contacts",
     component: AppContacts,
     meta: { order: 2, transition: "scale-center", title: "Contacts & About" },
-    // TODO: normalize per-route transition (corners)
   },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: NotFound,
-    meta: { order: 0, transition: "scale-center", title: "Not found" },
+    meta: { order: -1, transition: "scale-center", title: "Not found" },
   },
 ];
 
@@ -40,9 +39,17 @@ const router = createRouter({
 
 // used to normalize per route transitions
 router.beforeEach((to, from, next) => {
+  // matches 'NotFound' page
+  if (from.meta.order === -1 || to.meta.order === -1) {
+    // do not dynamically change transition
+    next();
+    return;
+  }
+
   to.meta.order > from.meta.order
     ? (to.meta.transition = "scale-bottom-right")
     : (to.meta.transition = "scale-bottom-left");
+
   next();
 });
 

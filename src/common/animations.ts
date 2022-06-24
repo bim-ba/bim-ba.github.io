@@ -1,7 +1,7 @@
 import type CSS from "csstype";
 
 import type { AnimeAnimParams, AnimeCallBack } from "animejs";
-import type { Nullable } from "@/types/helpers";
+import type { Nullable } from "@/types/utils";
 
 const overwriteCSSProperty = <T extends keyof CSS.PropertiesHyphen>(
   property: T,
