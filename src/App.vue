@@ -7,7 +7,7 @@
     </Head>
     <transition :name="route.meta.transition">
       <div v-if="orientation?.startsWith('portrait')" class="alert-container">
-        <h1>ROTATE YOUR DEVICE</h1>
+        <h1>{{ rotationRequest }}</h1>
       </div>
       <div v-else :key="route.path" class="route-container">
         <component :is="Component" />
@@ -17,12 +17,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, inject, onMounted } from "vue";
 
 import { Head } from "@vueuse/head";
 import { useScreenOrientation } from "@vueuse/core";
 
 import { useAnySquareStore } from "@/stores/appmain";
+import { utilKey, type UtilKeyType } from "@injection-keys";
 import type { Nullable } from "@/types/utils";
 
 // template ref
@@ -30,6 +31,9 @@ const bodyRef = ref<Nullable<HTMLElement>>(null);
 
 // store
 const store = useAnySquareStore();
+
+// inject
+const { rotationRequest } = inject(utilKey) as NonNullable<UtilKeyType>;
 
 // reactive
 const { orientation } = useScreenOrientation();
@@ -195,23 +199,6 @@ $fbt-selection-background: var(--fancy-backgrounded-text-selection-background, w
   &::selection {
     color: $fbt-selection-color;
     background: $fbt-selection-background;
-  }
-}
-
-$dpbl-image-outline-width: 0.5em;
-$dpbl-image-outline-offset: calc($dpbl-image-outline-width / 2 * -1);
-$dpbl-image-outline-color: royalblue;
-
-.droppable-image {
-  outline: $dpbl-image-outline-width dotted;
-  outline-offset: $dpbl-image-outline-offset;
-  transition: outline-color 0.5s ease;
-
-  &.active {
-    outline-color: $dpbl-image-outline-color;
-  }
-  &.inactive {
-    outline-color: transparent;
   }
 }
 </style>

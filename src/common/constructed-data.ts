@@ -1,9 +1,15 @@
+import utilJSON from "@data/util.json";
 import mainPageJSON from "@data/main.json";
 import projectsPageJSON from "@data/projects.json";
 import contactsPageJSON from "@data/contacts.json";
 import type { Project, ProjectDate } from "@types";
 
-import type { MainPageKeyType, ProjectsPageKeyType, ContactsPageKeyType } from "@injection-keys";
+import type {
+  UtilKeyType,
+  MainPageKeyType,
+  ProjectsPageKeyType,
+  ContactsPageKeyType,
+} from "@injection-keys";
 
 // main page
 export const mainPageData: MainPageKeyType = mainPageJSON;
@@ -12,13 +18,13 @@ export const mainPageData: MainPageKeyType = mainPageJSON;
 const { projects, squares } = projectsPageJSON;
 
 const projectsWithResolvedPaths: Project[] = projects.map(
-  ({ title, date, style, image, preview, hints }) => ({
+  ({ title, date, style, image, preview, cards }) => ({
     title,
     date: date as ProjectDate,
     style,
     image,
     preview,
-    hints,
+    cards,
   })
 );
 export const projectsPageDate: ProjectsPageKeyType = {
@@ -28,3 +34,6 @@ export const projectsPageDate: ProjectsPageKeyType = {
 
 // contacts page
 export const contactsPageData: ContactsPageKeyType = contactsPageJSON;
+
+// utils
+export const utilData: UtilKeyType = utilJSON;

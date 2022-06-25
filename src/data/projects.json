@@ -4,7 +4,7 @@
       "title": "PROJECT JOHNY",
       "preview": "https://via.placeholder.com/872x350",
       "image": "https://via.placeholder.com/872x1500",
-      "hints": [
+      "cards": [
         "https://via.placeholder.com/819x931",
         "https://via.placeholder.com/334x640",
         "https://via.placeholder.com/864x888"
@@ -21,9 +21,10 @@
       "title": "VERY LONG NAMED PROJECT",
       "preview": "https://via.placeholder.com/783x350",
       "image": "https://via.placeholder.com/783x1500",
-      "hints": [
+      "cards": [
         "https://via.placeholder.com/772x961",
-        "https://via.placeholder.com/364x619"
+        "https://via.placeholder.com/364x619",
+        "https://via.placeholder.com/334x640"
       ],
       "date": {
         "year": 2021,
@@ -37,7 +38,7 @@
       "title": "PROJECT BOMB",
       "preview": "https://via.placeholder.com/612x350",
       "image": "https://via.placeholder.com/612x1500",
-      "hints": [
+      "cards": [
         "https://via.placeholder.com/571x832",
         "https://via.placeholder.com/402x992",
         "https://via.placeholder.com/619x961"
@@ -55,8 +56,10 @@
       "title": "PROJECT SOME BOMB DA BABEPIZZA",
       "preview": "https://via.placeholder.com/922x350",
       "image": "https://via.placeholder.com/922x1500",
-      "hints": [
-        "https://via.placeholder.com/550x723"
+      "cards": [
+        "https://via.placeholder.com/550x723",
+        "https://via.placeholder.com/571x832",
+        "https://via.placeholder.com/334x640"
       ],
       "date": {
         "year": 2021,
@@ -70,9 +73,10 @@
       "title": "PROJECT PIZZA",
       "preview": "https://via.placeholder.com/517x350",
       "image": "https://via.placeholder.com/517x1500",
-      "hints": [
+      "cards": [
         "https://via.placeholder.com/479x844",
-        "https://via.placeholder.com/330x869"
+        "https://via.placeholder.com/330x869",
+        "https://via.placeholder.com/334x640"
       ],
       "date": {
         "year": 2019,

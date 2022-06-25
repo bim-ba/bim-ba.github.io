@@ -1,6 +1,6 @@
 <template>
   <aside class="contacts-container">
-    <h1 ref="titleRef">КОНТАКТЫ</h1>
+    <h1 ref="titleRef">{{ title }}</h1>
     <SingleContact
       v-for="({ type, data, link, copyable }, index) in contacts"
       ref="contactsRef"
@@ -22,7 +22,7 @@ import type { Nullable } from "@/types/utils";
 import SingleContact from "@pages/contacts/SingleContact.vue";
 
 // injected
-const { contacts } = inject(contactsPageKey) as NonNullable<ContactsPageKeyType>;
+const { contacts, title } = inject(contactsPageKey) as NonNullable<ContactsPageKeyType>;
 
 // template refs
 const titleRef = ref<Nullable<HTMLElement>>(null);

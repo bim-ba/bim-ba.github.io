@@ -5,14 +5,20 @@ import { createPinia } from "pinia";
 import App from "@/App.vue";
 import router from "@/router";
 
-import { mainPageKey, projectsPageKey, contactsPageKey } from "@injection-keys";
+import { utilKey, mainPageKey, projectsPageKey, contactsPageKey } from "@injection-keys";
 
-import { mainPageData, projectsPageDate, contactsPageData } from "@common/constructed-data";
+import {
+  utilData,
+  mainPageData,
+  projectsPageDate,
+  contactsPageData,
+} from "@common/constructed-data";
 
 const app = createApp(App);
 
 // global providings
 app
+  .provide(utilKey, utilData)
   .provide(mainPageKey, mainPageData)
   .provide(projectsPageKey, projectsPageDate)
   .provide(contactsPageKey, contactsPageData);

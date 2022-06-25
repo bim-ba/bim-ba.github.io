@@ -1,24 +1,13 @@
 <template>
   <section v-if="modalOpened" ref="projectDropZoneRef" class="modal-container" @click="hide()">
     <div class="modal-content">
-      <img
-        :src="projectDroppedImageSource || props.defaultImage"
-        class="droppable-image"
-        :class="{ active: isOverProjectDropZone, inactive: !isOverProjectDropZone }"
-        alt="project image"
-      />
+      <img :src="props.defaultImage" class="droppable-image" alt="project image" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-
-import { useDropZone } from "@vueuse/core";
-
-import anime from "animejs";
-
-import type { Nullable } from "@/types/utils";
 
 // props
 //
@@ -30,40 +19,8 @@ interface ThisProps {
 }
 const props = defineProps<ThisProps>();
 
-// template refs
-const projectDropZoneRef = ref<Nullable<HTMLImageElement>>(null);
-
 // reactive
 const modalOpened = ref(false);
-
-// image dropping
-const projectDroppedImageSource = ref<string>();
-
-const onProjectImageDrop = (files: Nullable<Array<File>>) => {
-  if (!files || files.length > 1) return;
-
-  const file = files[0];
-
-  if (!file.type.startsWith("image/")) {
-    anime({
-      targets: projectDropZoneRef.value,
-      easing: "easeInQuad",
-      translateX: [-50, 50, -30, 30, -10, 10, 0, 0],
-    });
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = (event) => (projectDroppedImageSource.value = event.target?.result as string);
-
-  reader.readAsDataURL(file);
-};
-
-const { isOverDropZone: isOverProjectDropZone } = useDropZone(
-  projectDropZoneRef,
-  onProjectImageDrop
-);
 
 // helpers
 const show = () => (modalOpened.value = true);

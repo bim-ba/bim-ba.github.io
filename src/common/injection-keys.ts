@@ -21,7 +21,14 @@ export const projectsPageKey = Symbol() as InjectionKey<ProjectsPageKeyType>;
 
 // contacts page
 export interface ContactsPageKeyType {
+  title: string;
   content: Array<string>;
   contacts: Array<Contact>;
 }
 export const contactsPageKey = Symbol() as InjectionKey<ContactsPageKeyType>;
+
+// utils
+export interface UtilKeyType {
+  rotationRequest: string;
+}
+export const utilKey = Symbol() as InjectionKey<UtilKeyType>;

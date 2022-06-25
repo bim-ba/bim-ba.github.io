@@ -18,8 +18,7 @@
         <img
           ref="droppableImageRef"
           class="droppable-image"
-          :class="{ active: isOverFloppyDropZone, inactive: !isOverFloppyDropZone }"
-          :src="previewDroppedImageSource || props.preview"
+          :src="props.preview"
           alt="preview image"
         />
         <p>{{ title }}</p>
@@ -30,7 +29,7 @@
     <!-- aside images -->
     <div v-show="!timelined" class="aside-images-container">
       <AsideImage
-        v-for="(src, index) in props.hints"
+        v-for="(src, index) in props.cards"
         ref="asideImagesRef"
         :key="index"
         :src="src"
@@ -43,7 +42,7 @@
 <script setup lang="ts">
 import { ref, computed, onBeforeMount } from "vue";
 
-import { useImage, useDropZone } from "@vueuse/core";
+import { useImage } from "@vueuse/core";
 import { vElementHover as vOnHover } from "@vueuse/components";
 
 import anime from "animejs";
@@ -66,7 +65,7 @@ interface ThisProps {
   date: ProjectDate;
   preview: string;
   image: string;
-  hints: Array<string>;
+  cards: Array<string>;
   color?: string;
   isPrimary?: boolean;
 }
@@ -111,33 +110,6 @@ const hover = (state: boolean) => {
     asideImagesRef.value?.forEach((img) => img.hide());
   }
 };
-
-// image dropping
-const previewDroppedImageSource = ref<string>();
-
-const onFloppyDrop = (files: Nullable<Array<File>>) => {
-  if (!files || files.length > 1) {
-    return;
-  }
-
-  const file = files[0];
-
-  if (!file.type.startsWith("image/")) {
-    anime({
-      targets: droppableImageRef.value,
-      easing: "easeInQuad",
-      translateX: [-40, 40, -30, 30, -10, 10, 0, 0],
-    });
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = (event) => (previewDroppedImageSource.value = event.target?.result as string);
-  reader.readAsDataURL(file);
-};
-
-const { isOverDropZone: isOverFloppyDropZone } = useDropZone(floppyRef, onFloppyDrop);
 
 // hooks (image preloader)
 onBeforeMount(() => useImage({ src: props.image }));

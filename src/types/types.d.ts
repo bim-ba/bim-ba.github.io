@@ -14,7 +14,7 @@ export interface Project {
   };
   preview: string;
   image: string;
-  hints: Array<string>;
+  cards: Array<string>;
 }
 
 export interface Square {
