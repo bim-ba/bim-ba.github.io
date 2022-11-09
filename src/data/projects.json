@@ -39,9 +39,9 @@
       "preview": "/svg/projectprev.jpg",
       "image": "/svg/project1.jpg",
       "cards": [
-        "https://via.placeholder.com/571x832",
-        "https://via.placeholder.com/402x992",
-        "https://via.placeholder.com/619x961"
+        "/svg/project1mini1.jpg",
+        "/svg/project1mini2.jpg",
+        "/svg/project1mini3.jpg"
       ],
       "date": {
         "year": 2020,
