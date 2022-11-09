@@ -71,12 +71,12 @@
     },
     {
       "title": "POSTERS CONCEPT",
-      "preview": "https://via.placeholder.com/517x350",
-      "image": "https://via.placeholder.com/517x1500",
+      "preview": "svg/project5prev.jpg",
+      "image": "svg/project5.jpg",
       "cards": [
-        "https://via.placeholder.com/479x844",
-        "https://via.placeholder.com/330x869",
-        "https://via.placeholder.com/334x640"
+        "svg/project5mini1.png",
+        "svg/project5mini2.jpg",
+        "svg/project5mini3.jpg"
       ],
       "date": {
         "year": 2019,
