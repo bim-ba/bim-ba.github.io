@@ -5,8 +5,8 @@
       "preview": "/svg/project2prev.jpg",
       "image": "/svg/project2.jpg",
       "cards": [
-        "https://via.placeholder.com/819x931",
-        "https://via.placeholder.com/334x640",
+        "/svg/project2mini1.jpg",
+        "/svg/project2.jpg",
         "https://via.placeholder.com/864x888"
       ],
       "date": {
