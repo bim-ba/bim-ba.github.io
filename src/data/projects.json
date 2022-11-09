@@ -53,13 +53,13 @@
       }
     },
     {
-      "title": "PROJECT SOME BOMB DA BABEPIZZA",
-      "preview": "https://via.placeholder.com/922x350",
-      "image": "https://via.placeholder.com/922x1500",
+      "title": "GARMONIYA CONCEPT",
+      "preview": "/svg/project4prev.jpg",
+      "image": "/svg/project4.png",
       "cards": [
-        "https://via.placeholder.com/550x723",
-        "https://via.placeholder.com/571x832",
-        "https://via.placeholder.com/334x640"
+        "/svg/project4mini1.jpg",
+        "/svg/project4mini2.jpg",
+        "/svg/project4mini3.jpg"
       ],
       "date": {
         "year": 2021,
