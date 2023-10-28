@@ -1,5 +1,3 @@
-<!-- TODO: fix scaleY problem -->
-
 <template>
   <router-view v-slot="{ Component, route }">
     <Head>
@@ -17,41 +15,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject, onMounted } from "vue";
+import { inject } from "vue";
 
 import { Head } from "@vueuse/head";
 import { useScreenOrientation } from "@vueuse/core";
 
-import { useAnySquareStore } from "@/stores/appmain";
-import { utilKey, type UtilKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/utils";
-
-// template ref
-const bodyRef = ref<Nullable<HTMLElement>>(null);
-
-// store
-const store = useAnySquareStore();
+import { utilKey, type UtilKey } from "@injection-keys";
 
 // inject
-const { rotationRequest } = inject(utilKey) as NonNullable<UtilKeyType>;
+const { rotationRequest } = inject(utilKey) as NonNullable<UtilKey>;
 
-// reactive
+// composables
 const { orientation } = useScreenOrientation();
-
-// square dragging
-store.$subscribe((_, { dragging, color }) => {
-  dragging
-    ? bodyRef.value?.style.setProperty("background-color", color)
-    : bodyRef.value?.style.removeProperty("background-color");
-});
-
-// hooks (dom ready)
-onMounted(() => (bodyRef.value = document.body));
 </script>
 
 <style scoped lang="scss">
 .route-container {
   height: 100%;
+
+  // filter: v-bind('inverted ? "invert(1)" : "invert(0)"');
+  // transition: filter 1s ease-out;
 }
 .alert-container {
   display: flex;
@@ -86,7 +69,9 @@ body,
 }
 
 #app {
-  font: calc(1vw + 1vh) "Fira Sans", sans-serif;
+  font:
+    calc(1vw + 1vh) "Fira Sans",
+    sans-serif;
   overflow: hidden;
   position: relative;
 }
@@ -98,6 +83,7 @@ body {
   background-size: 2.75em 2.75em;
 
   transition: background-color 1s ease-out; // when dragging
+  transition: filter 1s ease-out; // when dragging
 }
 
 // page transitions

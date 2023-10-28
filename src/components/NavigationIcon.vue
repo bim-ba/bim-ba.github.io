@@ -1,51 +1,68 @@
 <template>
   <router-link :to="to">
-    <img ref="navigationIconRef" src="/svg/favicon.svg" alt="appicon" />
+    <img ref="navigationIconRef" v-hover="hover" src="/svg/favicon.svg" alt="appicon" />
   </router-link>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
-import { useSpring, useMotionProperties } from "@vueuse/motion";
-import type { MotionProperties, PermissiveMotionProperties } from "@vueuse/motion";
-
-import { useHover } from "@vueuse/gesture";
+import { computedWithControl } from "@vueuse/core";
 import type { FullGestureState } from "@vueuse/gesture";
+import type { MotionProperties } from "@vueuse/motion";
 
-import type { Nullable } from "@/types/utils";
+import _ from "lodash";
 
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = ...
-interface ThisProps {
+import type { Nullable } from "@antfu/utils";
+
+import { useSpringAnimation, useInitialProps } from "@common/composables";
+
+/** props
+ * @prop size: `number` - icon size in `em's`
+ * @prop to: `string` - icon source (relative)
+ * @prop reversed: `boolean` - icon is reversed or not
+ */
+// used in template and in styling
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const props = defineProps<{
   size: number;
   to: string;
   reversed?: boolean;
-}
-const props = withDefaults(defineProps<ThisProps>(), { reversed: false });
+}>();
 
 // template refs
 const navigationIconRef = ref<Nullable<HTMLElement>>(null);
 
-// computed
-const rotation = computed(() => 180 * (props.reversed as unknown as number));
+// reactive
+const isAnimated = ref<boolean>();
+
+// initial props
+const initialProps = useInitialProps({ scale: 1 });
+
+// spring-set function
+const set = computedWithControl(
+  () => isAnimated.value,
+  () => {
+    if (isAnimated.value === false) {
+      const { set } = useSpringAnimation(navigationIconRef, initialProps, {
+        stiffness: 500,
+      });
+
+      return set;
+    }
+
+    return (properties: MotionProperties) => _.noop(properties);
+  }
+);
 
 // hovering
-const initialProps: MotionProperties = { scale: 1, rotate: rotation.value };
-const { motionProperties } = useMotionProperties(navigationIconRef, initialProps);
-const { set } = useSpring(motionProperties as PermissiveMotionProperties, { stiffness: 750 });
-
 const hover = ({ hovering }: FullGestureState<"move">) => {
-  if (!hovering) {
-    set(initialProps);
-    return;
-  }
-  set({ scale: 1.15 });
+  if (hovering) set.value({ scale: 1.15 });
+  else set.value(initialProps);
 };
-useHover(hover, { domTarget: navigationIconRef });
+
+// exposed
+defineExpose({ isAnimated });
 </script>
 
 <style lang="scss" scoped>
@@ -58,6 +75,7 @@ a {
 
   img {
     width: $width;
+    rotate: v-bind('reversed ? "180deg" : "none"');
   }
 }
 </style>

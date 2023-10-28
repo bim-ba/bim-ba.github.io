@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
 
 import NavigationIcon from "@components/NavigationIcon.vue";
 import FooterSquares from "@pages/projects/FooterSquares.vue";

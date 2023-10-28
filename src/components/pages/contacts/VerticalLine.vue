@@ -1,5 +1,5 @@
 <template>
-  <div ref="lineRef" class="vertical-line"></div>
+  <div class="vertical-line"></div>
 </template>
 
 <!-- this is needed to type component -->

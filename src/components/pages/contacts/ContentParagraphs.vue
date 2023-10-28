@@ -7,19 +7,19 @@
 
 <script setup lang="ts">
 import { ref, inject, computed } from "vue";
+import type { Nullable } from "@antfu/utils";
 
-import { contactsPageKey, type ContactsPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/utils";
+import { contactsPageKey, type ContactsPageKey } from "@injection-keys";
 
 // injected
-const { content } = inject(contactsPageKey) as NonNullable<ContactsPageKeyType>;
+const { content } = inject(contactsPageKey) as NonNullable<ContactsPageKey>;
 
 // template refs
-const paragraphsRef = ref<Nullable<Array<HTMLElement>>>(null);
+const paragraphsRef = ref<Nullable<Array<HTMLParagraphElement>>>(null);
 
-// computed
-//
-// markdown-like parser (i know this is bad and better to use libs like `marked`, `markdown.it`, etc...)
+/* computed
+markdown-like parser (i know this is bad and better to use libs like `marked`, `markdown.it`, etc...)
+*/
 const normalizedParagraphs = computed(() =>
   content.map((paragraph) =>
     paragraph

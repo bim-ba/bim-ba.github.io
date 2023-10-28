@@ -14,13 +14,14 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
 
-import { projectsPageKey, type ProjectsPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
+
+import { projectsPageKey, type ProjectsPageKey } from "@injection-keys";
 
 import ColoredSquare from "@components/ColoredSquare.vue";
 
 // inject
-const { squares } = inject(projectsPageKey) as NonNullable<ProjectsPageKeyType>;
+const { squares } = inject(projectsPageKey) as NonNullable<ProjectsPageKey>;
 
 // template refs
 const squaresRef = ref<Nullable<Array<InstanceType<typeof ColoredSquare>>>>(null);

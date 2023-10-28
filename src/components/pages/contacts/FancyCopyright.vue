@@ -17,6 +17,9 @@
 <script setup lang="ts"></script>
 
 <style lang="scss" scoped>
+$copyright-container-margins: 1em 5em;
+$copyright-container-font-size: 0.5em;
+$copyright-container-font-color: #777;
 .copyright-container {
   grid-area: copyright;
 
@@ -24,12 +27,12 @@
   align-items: center;
   justify-content: flex-end;
 
-  margin: 1em 5em;
+  margin: $copyright-container-margins;
 
-  font-size: 0.5em;
+  font-size: $copyright-container-font-size;
 
   span {
-    color: #777;
+    color: $copyright-container-font-color;
   }
 }
 </style>

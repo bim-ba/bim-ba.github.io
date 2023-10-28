@@ -1,13 +1,12 @@
 <template>
   <footer class="contacts-page-footer">
-    <NavigationIcon ref="iconRef" to="/projects" :size="3" reversed style="margin-left: 3em" />
+    <NavigationIcon ref="iconRef" to="/projects" :size="3" reversed class="icon" />
   </footer>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
 
 import NavigationIcon from "@components/NavigationIcon.vue";
 
@@ -18,10 +17,14 @@ const iconRef = ref<Nullable<InstanceType<typeof NavigationIcon>>>(null);
 defineExpose({ iconRef });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .contacts-page-footer {
   grid-area: footer;
 
   display: flex;
+
+  .icon {
+    margin-left: 3em;
+  }
 }
 </style>

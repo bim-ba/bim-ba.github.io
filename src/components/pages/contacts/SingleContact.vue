@@ -16,27 +16,29 @@
 <script setup lang="ts">
 import { useClipboard } from "@vueuse/core";
 
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = ...
-interface ThisProps {
+/*
+props
+
+`type: string` - contact type (telegram, twitter, vkontakte, etc...)
+`data: string` - contact text (anything you want)
+`link: string` - contact link (html-like link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)
+`copyable: boolean?` - `true` if you want to copy `data` to user clipboard, `false` if not
+*/
+const props = defineProps<{
   type: string;
   data: string;
   link: string;
   copyable?: boolean;
-}
-const props = defineProps<ThisProps>();
+}>();
 
 // copy
 const { copy, isSupported } = useClipboard();
 
-!isSupported && props.copyable
-  ? console.error(
-      `unfortunately, clipboard api is not supported in your browser, so we cannot copy my ${props.type.toLowerCase()}! 😢`
-    )
-  : "pass";
+// check clipboard-api support by user browser
+if (!isSupported && props.copyable)
+  console.error(
+    `unfortunately, clipboard api is not supported in your browser, so we cannot copy my ${props.type.toLowerCase()}! 😢`
+  );
 </script>
 
 <style lang="scss" scoped>

@@ -13,10 +13,12 @@ import {
   slideFromLeftAnimation,
   slideFromRightAnimation,
   riseFromBottomAnimation,
+  bubbleAnimation,
   bubbleJellyAnimation,
+  clearCSSProperties,
 } from "@common/animations";
 import { useTimeline } from "@common/composables";
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
 
 import Content from "@pages/main/FullName.vue";
 import FancyFooter from "@pages/main/FancyFooter.vue";
@@ -33,19 +35,83 @@ const { timeline } = useTimeline({ delay: 500 });
 // hooks
 onMounted(() =>
   timeline
-    .add({ targets: contentRef.value?.firstnameRef, ...slideFromLeftAnimation })
-    .add({ targets: contentRef.value?.lastnameRef, ...slideFromRightAnimation }, 0)
-    .add({ targets: contentRef.value?.descriptionRef, ...riseFromBottomAnimation }, "-=1000")
-    .add({ targets: footerRef.value?.coordinatesRef?.$el, ...riseFromBottomAnimation }, "-=1000")
-    .add({ targets: footerRef.value?.iconRef?.$el, ...bubbleJellyAnimation }, "-=1000")
+    .add({
+      targets: contentRef.value!.firstnameRef,
+      ...slideFromLeftAnimation,
+
+      complete: () => clearCSSProperties(contentRef.value!.firstnameRef, ["transform"]),
+    })
     .add(
       {
-        targets: backgroundRef.value?.squaresRef?.map(({ squareRef }) => squareRef),
+        targets: contentRef.value!.lastnameRef,
+        ...slideFromRightAnimation,
+
+        complete: () => clearCSSProperties(contentRef.value!.lastnameRef, ["transform"]),
+      },
+      0
+    )
+    .add(
+      {
+        targets: contentRef.value!.descriptionRef,
+        ...riseFromBottomAnimation,
+
+        complete: () => clearCSSProperties(contentRef.value!.descriptionRef, ["transform"]),
+      },
+      "-=1000"
+    )
+    .add(
+      {
+        begin: () => (footerRef.value!.coordinatesRef!.isAnimated = true),
+
+        targets: footerRef.value!.coordinatesRef!.$el,
+        ...riseFromBottomAnimation,
+
+        complete: () => {
+          footerRef.value!.coordinatesRef!.isAnimated = false;
+          clearCSSProperties(footerRef.value!.coordinatesRef, ["transform"]);
+        },
+      },
+      "-=1000"
+    )
+    .add(
+      {
+        begin: () => (footerRef.value!.iconRef!.isAnimated = true),
+
+        targets: footerRef.value!.iconRef!.$el,
+        ...bubbleJellyAnimation,
+
+        complete: () => {
+          footerRef.value!.iconRef!.isAnimated = false;
+          clearCSSProperties(footerRef.value!.iconRef, ["transform"]);
+        },
+      },
+      "-=1000"
+    )
+    .add(
+      {
+        begin: () => {
+          for (const squareRef of backgroundRef.value!.squaresRef!) squareRef.isAnimated = true;
+        },
+
+        targets: backgroundRef.value!.squaresRef!.map(({ squareRef }) => squareRef),
         delay: anime.stagger(100),
-        scaleY: [0, 1],
+        ...bubbleAnimation,
         translateX: ["2500%", 0],
+        rotate: "1turn",
       },
       "-=2000"
     )
+    .add({
+      targets: backgroundRef.value!.squaresRef!.map(({ squareRef }) => squareRef),
+      delay: anime.stagger(50),
+      rotate: "1.5turn",
+
+      complete: () => {
+        for (const squareRef of backgroundRef.value!.squaresRef!) {
+          clearCSSProperties(squareRef.squareRef!, ["transform"]);
+          squareRef.isAnimated = false;
+        }
+      },
+    })
 );
 </script>

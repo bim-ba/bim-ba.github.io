@@ -8,12 +8,7 @@
 
   <!-- floppy -->
   <div class="floppy-shadow-container">
-    <div
-      ref="floppyRef"
-      v-on-hover="hover"
-      class="floppy-container"
-      @click="projectModalRef?.show()"
-    >
+    <div ref="floppyRef" v-hover="hover" class="floppy-container" @click="projectModalRef?.show()">
       <div class="frame-container">
         <img
           ref="droppableImageRef"
@@ -27,13 +22,13 @@
     </div>
 
     <!-- aside images -->
-    <div v-show="!timelined" class="aside-images-container">
+    <div v-show="isAnimated === false" class="aside-images-container">
       <AsideImage
         v-for="(src, index) in props.cards"
         ref="asideImagesRef"
         :key="index"
         :src="src"
-        :side="(position[index] as 'top' | 'left' | 'right')"
+        :side="position[index]"
       />
     </div>
   </div>
@@ -42,34 +37,42 @@
 <script setup lang="ts">
 import { ref, computed, onBeforeMount } from "vue";
 
-import { useImage } from "@vueuse/core";
-import { vElementHover as vOnHover } from "@vueuse/components";
+import { useImage, computedWithControl } from "@vueuse/core";
+import type { FullGestureState } from "@vueuse/gesture";
+import type { MotionProperties } from "@vueuse/motion";
 
-import anime from "animejs";
+import _ from "lodash";
 
-import { normalScale, slightlyScale } from "@common/animations";
-import { shuffle, generateRandomNumber } from "@common/helpers";
+import { useSpringAnimation } from "@common/composables";
 import type { ProjectDate } from "@types";
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
 
 import AsideImage from "./AsideImage.vue";
 import FancyProjectModal from "./ProjectModal.vue";
 
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = ...
-interface ThisProps {
-  title: string;
-  date: ProjectDate;
-  preview: string;
-  image: string;
-  cards: Array<string>;
-  color?: string;
-  isPrimary?: boolean;
-}
-const props = withDefaults(defineProps<ThisProps>(), { color: "gray" });
+/** props
+ * @prop title: `string` - floppy title
+ * @prop date: `ProjectDate` - project date in custom format (like YYYY / Q[1-4]-Q[1-4])
+  - `YYYY` - project year
+  - `Q[1-4]` - project quarter
+ * @prop preview: `string` - project preview image link
+ * @prop image: `string` - project actual image link
+ * @prop cards: `string[]` - array of links to side cards
+ * @prop color: `string?` - floppy color (any css color)
+ * @prop isPrimary: `boolean?` - floppy is centered by default (only one can be)
+ */
+const props = withDefaults(
+  defineProps<{
+    title: string;
+    date: ProjectDate;
+    preview: string;
+    image: string;
+    cards: Array<string>;
+    color?: string;
+    isPrimary?: boolean;
+  }>(),
+  { color: "gray" }
+);
 
 // template refs
 const floppyRef = ref<Nullable<HTMLElement>>(null);
@@ -77,37 +80,50 @@ const droppableImageRef = ref<Nullable<HTMLImageElement>>(null);
 const asideImagesRef = ref<Nullable<Array<InstanceType<typeof AsideImage>>>>(null);
 const projectModalRef = ref<Nullable<InstanceType<typeof FancyProjectModal>>>(null);
 
-// data
-const position: Array<"top" | "left" | "right"> = shuffle("top", "left", "right");
+// non-reactive
+const position: Array<"top" | "left" | "right"> = _.shuffle(["top", "left", "right"]);
 
 // reactive
-const timelined = ref<boolean | undefined>(); // used to fix timeline + hover at the same time issue
+const isAnimated = ref<boolean>();
 
 // computed
-const formattedDate = computed(
-  () => `${props.date.year} / ${props.date.quarters.map((quarter) => "Q" + quarter).join("-")}`
-);
+const formattedDate = computed(() => {
+  const { year, quarters } = props.date;
+  return `${year} / ${quarters.map((quarter) => "Q" + quarter).join("-")}`;
+});
 const randomRotation = computed(() => {
   const [min, max] = [1, 8];
-  return `rotate(${generateRandomNumber(min, max)}deg)`;
+  const rotation = _.random(min, max);
+  return `rotate(${rotation}deg)`;
 });
 
-// hovering
-//
-// TODO: this can be optimized
-// `anime` on every call creates a new anime instance.
-// we can create an anime instace with necessary animation before hover method
-// but this will require some extra checks like component is mounted
-//
-const hover = (state: boolean) => {
-  if (timelined.value) return;
+// initial props
+const initialProps = { scale: 1 };
 
-  if (state) {
-    anime({ targets: floppyRef.value, ...slightlyScale(1.1) });
-    asideImagesRef.value?.forEach((img) => img.show());
+// spring-set function
+const set = computedWithControl(
+  () => isAnimated.value,
+  () => {
+    if (isAnimated.value === false) {
+      const { set } = useSpringAnimation(floppyRef, initialProps, {
+        stiffness: 350,
+      });
+
+      return set;
+    }
+
+    return (properties: MotionProperties) => _.noop(properties);
+  }
+);
+
+// hovering
+const hover = ({ hovering }: FullGestureState<"move">) => {
+  if (hovering) {
+    for (const asideImageRef of asideImagesRef.value!) asideImageRef.show();
+    set.value({ scale: 1.15 });
   } else {
-    anime({ targets: floppyRef.value, ...normalScale(1) });
-    asideImagesRef.value?.forEach((img) => img.hide());
+    for (const asideImageRef of asideImagesRef.value!) asideImageRef.hide();
+    set.value(initialProps);
   }
 };
 
@@ -115,7 +131,7 @@ const hover = (state: boolean) => {
 onBeforeMount(() => useImage({ src: props.image }));
 
 // exposed
-defineExpose({ floppyRef, timelined });
+defineExpose({ floppyRef, isAnimated });
 </script>
 
 <style scoped lang="scss">
@@ -204,8 +220,8 @@ $date-font-size: 0.95em;
   top: 0;
   left: 0;
 
-  width: 100%;
-  height: 100%;
+  height: $floppy-size;
+  aspect-ratio: 1 / 1;
 
   z-index: -1;
 }

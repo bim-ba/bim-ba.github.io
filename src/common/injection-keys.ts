@@ -1,34 +1,34 @@
 import type { InjectionKey } from "vue";
-import type { CityArea, Coordinates, Square, Content, Project, Contact } from "@types";
+import type { CityArea, Directions, Square, Content, Project, Contact } from "@types";
 
 // main page
-export interface MainPageKeyType {
+export interface MainPageKey {
   content: Content;
   location: {
     area: CityArea;
-    coordinates: Coordinates;
+    coordinates: Directions;
   };
   squares: Array<Square>;
 }
-export const mainPageKey = Symbol() as InjectionKey<MainPageKeyType>;
+export const mainPageKey = Symbol() as InjectionKey<MainPageKey>;
 
 // projects page
-export interface ProjectsPageKeyType {
+export interface ProjectsPageKey {
   projects: Array<Project>;
   squares: Array<Square>;
 }
-export const projectsPageKey = Symbol() as InjectionKey<ProjectsPageKeyType>;
+export const projectsPageKey = Symbol() as InjectionKey<ProjectsPageKey>;
 
 // contacts page
-export interface ContactsPageKeyType {
+export interface ContactsPageKey {
   title: string;
   content: Array<string>;
   contacts: Array<Contact>;
 }
-export const contactsPageKey = Symbol() as InjectionKey<ContactsPageKeyType>;
+export const contactsPageKey = Symbol() as InjectionKey<ContactsPageKey>;
 
 // utils
-export interface UtilKeyType {
+export interface UtilKey {
   rotationRequest: string;
 }
-export const utilKey = Symbol() as InjectionKey<UtilKeyType>;
+export const utilKey = Symbol() as InjectionKey<UtilKey>;

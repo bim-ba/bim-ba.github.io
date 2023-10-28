@@ -10,12 +10,12 @@
 
 <script setup lang="ts">
 import { ref, inject, computed } from "vue";
+import type { Nullable } from "@antfu/utils";
 
-import { mainPageKey, type MainPageKeyType } from "@injection-keys";
-import type { Nullable } from "@/types/utils";
+import { mainPageKey, type MainPageKey } from "@injection-keys";
 
 // inject
-const { content } = inject(mainPageKey) as NonNullable<MainPageKeyType>;
+const { content } = inject(mainPageKey) as NonNullable<MainPageKey>;
 
 // template refs
 const firstnameRef = ref<Nullable<HTMLElement>>(null);
@@ -46,8 +46,6 @@ $description-font-size: 1.25em;
   .name {
     font-size: $title-font-size;
     font-weight: $title-font-weight;
-
-    transition: color 0.25s ease-out, filter 0.25s ease-out;
   }
 
   .description {

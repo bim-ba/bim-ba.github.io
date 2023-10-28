@@ -2,12 +2,12 @@
   "projects": [
     {
       "title": "PROJECT JOHNY",
-      "preview": "https://via.placeholder.com/872x350",
-      "image": "https://via.placeholder.com/872x1500",
+      "preview": "/projects/devs_ex_machina.svg",
+      "image": "/projects/devs_ex_machina.svg",
       "cards": [
-        "https://via.placeholder.com/819x931",
-        "https://via.placeholder.com/334x640",
-        "https://via.placeholder.com/864x888"
+        "https://via.placeholder.com/772x961",
+        "https://via.placeholder.com/364x619",
+        "https://via.placeholder.com/334x640"
       ],
       "date": {
         "year": 2018,
@@ -84,6 +84,40 @@
       },
       "style": {
         "color": "mediumseagreen"
+      }
+    },
+    {
+      "title": "PROJECT JOHNY",
+      "preview": "/projects/devs_ex_machina.svg",
+      "image": "/projects/devs_ex_machina.svg",
+      "cards": [
+        "https://via.placeholder.com/772x961",
+        "https://via.placeholder.com/364x619",
+        "https://via.placeholder.com/334x640"
+      ],
+      "date": {
+        "year": 2018,
+        "quarters": [ 1, 2 ]
+      },
+      "style": {
+        "color": "cornflowerblue"
+      }
+    },
+    {
+      "title": "PROJECT JOHNY",
+      "preview": "/projects/devs_ex_machina.svg",
+      "image": "/projects/devs_ex_machina.svg",
+      "cards": [
+        "https://via.placeholder.com/772x961",
+        "https://via.placeholder.com/364x619",
+        "https://via.placeholder.com/334x640"
+      ],
+      "date": {
+        "year": 2018,
+        "quarters": [ 1, 2 ]
+      },
+      "style": {
+        "color": "cornflowerblue"
       }
     }
   ],

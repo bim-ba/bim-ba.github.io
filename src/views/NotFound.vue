@@ -6,8 +6,8 @@
         <img ref="innerRef" src="/svg/inner.svg" alt="loadicon" class="inner" />
       </router-link>
     </div>
-    <h1 ref="textRef" v-on-hover="hover" class="text">
-      {{ revealError ? errorData.details : errorData.code }}
+    <h1 ref="textRef" v-hover="hover" class="text">
+      {{ revealErrorText ? errorData.details : errorData.code }}
     </h1>
   </section>
 </template>
@@ -15,13 +15,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-import { vElementHover as vOnHover } from "@vueuse/components";
-
 import anime from "animejs";
 
-import { useTimeline } from "@/common/composables";
-import { bubbleAnimation, normalScale, slightlyScale } from "@common/animations";
-import type { Nullable } from "@/types/utils";
+import { computedWithControl } from "@vueuse/core";
+import type { FullGestureState } from "@vueuse/gesture";
+import type { MotionProperties } from "@vueuse/motion";
+
+import _ from "lodash";
+
+import type { Nullable } from "@antfu/utils";
+
+import { useTimeline, useSpringAnimation, useInitialProps } from "@common/composables";
+import { bubbleAnimation, clearCSSProperties } from "@common/animations";
 
 // template refs
 const iconRef = ref<Nullable<HTMLElement>>(null);
@@ -37,37 +42,60 @@ const errorData = {
 
 // reactive
 const { timeline } = useTimeline({ duration: 750, delay: 250 });
-const revealError = ref(false);
+const revealErrorText = ref(false);
+const isTextAnimated = ref<boolean>();
+
+// initial props
+const initialProps = useInitialProps({ scale: 1 });
+
+// spring-set function
+const set = computedWithControl(
+  () => isTextAnimated.value,
+  () => {
+    if (isTextAnimated.value === false) {
+      const { set } = useSpringAnimation(textRef, initialProps, {
+        stiffness: 500,
+      });
+
+      return set;
+    }
+
+    return (properties: MotionProperties) => _.noop(properties);
+  }
+);
 
 // hovering
-//
-// TODO: this can be optimized
-// `anime` on every call creates a new anime instance.
-// we can create an anime instace with necessary animation before hover method
-// but this will require some extra checks like component is mounted
-//
-const hover = (state: boolean) => {
-  revealError.value = state;
+const hover = ({ hovering }: FullGestureState<"move">) => {
+  revealErrorText.value = hovering;
 
-  state
-    ? anime({ targets: textRef.value, ...slightlyScale(1.1) })
-    : anime({ targets: textRef.value, ...normalScale(1) });
+  if (hovering) set.value({ scale: 1.1 });
+  else set.value(initialProps);
 };
 
 // hooks
 onMounted(() => {
   // center outer and inner in container because those absolutely positioned
-  anime.set(outerRef.value, { translateX: "-50%", translateY: "-50%" });
-  anime.set(innerRef.value, { translateX: "-50%", translateY: "-50%" });
+  anime.set(outerRef.value!, { translateX: "-50%", translateY: "-50%" });
+  anime.set(innerRef.value!, { translateX: "-50%", translateY: "-50%" });
 
   timeline
     .add({
       targets: iconRef.value,
       ...bubbleAnimation,
+
+      // FIXME: `scale` property affects page
+      complete: () => clearCSSProperties(iconRef.value!, ["transform"]),
     })
     .add({
+      begin: () => (isTextAnimated.value = true),
+
       targets: textRef.value,
       ...bubbleAnimation,
+
+      complete: () => {
+        clearCSSProperties(textRef.value!, ["transform"]);
+        isTextAnimated.value = false;
+      },
     })
     .finished.then(() => {
       anime({

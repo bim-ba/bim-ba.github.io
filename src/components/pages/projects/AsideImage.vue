@@ -4,19 +4,16 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import _ from "lodash";
 
-import { generateRandomNumber } from "@common/helpers";
-
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = ...
-interface ThisProps {
+/* props
+`src: string` - image source
+`side: "top" | "left" | "right"` - where image is peered out
+*/
+const props = defineProps<{
   src: string;
   side: "top" | "left" | "right";
-}
-const props = defineProps<ThisProps>();
+}>();
 
 // data
 const limit = 20;
@@ -28,7 +25,7 @@ const rotationConstraints = {
 };
 
 const [r_min, r_max] = rotationConstraints[props.side];
-const rotation = generateRandomNumber(r_min, r_max);
+const rotation = _.random(r_min, r_max);
 
 const randomRotation = {
   top: `rotate(${rotation}deg)`,
@@ -37,7 +34,7 @@ const randomRotation = {
 };
 const pickedRotation = randomRotation[props.side];
 
-const pickedOffset = generateRandomNumber(10, 50);
+const pickedOffset = _.random(10, 50);
 
 // reactive
 const peeredOut = ref(false);

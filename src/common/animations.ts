@@ -1,16 +1,35 @@
+import { unref } from "vue";
+import type { MaybeRef, ComponentPublicInstance } from "vue";
+
 import type CSS from "csstype";
 
 import type { AnimeAnimParams, AnimeCallBack } from "animejs";
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
 
-const overwriteCSSProperty = <T extends keyof CSS.PropertiesHyphen>(
+export const clearCSSProperties = <T extends keyof CSS.PropertiesHyphen>(
+  target: MaybeRef<Nullable<HTMLElement>> | MaybeRef<Nullable<ComponentPublicInstance>>,
+  properties: T[]
+) => {
+  const _target = unref(target);
+
+  if (!_target) return;
+
+  const __target: HTMLElement =
+    (<ComponentPublicInstance>_target).$el !== undefined
+      ? (<ComponentPublicInstance>_target).$el
+      : <HTMLElement>_target;
+
+  for (const property of properties) __target.style.removeProperty(property);
+};
+
+export const overwriteCSSProperty = <T extends keyof CSS.PropertiesHyphen>(
   property: T,
   value: CSS.PropertiesHyphen[T]
 ): { begin: AnimeCallBack["begin"]; complete: AnimeCallBack["complete"] } => {
   return {
     begin: ({ animatables }) =>
       animatables.forEach(
-        ({ target }) => target.style.setProperty(property, value as Nullable<string>) // remove Nullable
+        ({ target }) => target.style.setProperty(property, value as string) // remove Nullable
       ),
     complete: ({ animatables }) =>
       animatables.forEach(({ target }) => target.style.removeProperty(property)),
@@ -46,5 +65,5 @@ export const slideFromRightAnimation: AnimeAnimParams = {
   scaleY: [0, 1],
 };
 
-export const normalScale = (value: number): AnimeAnimParams => ({ scale: value });
+export const normalScale = (value: number = 1): AnimeAnimParams => ({ scale: value });
 export const slightlyScale = (value: number): AnimeAnimParams => ({ scale: value });

@@ -1,5 +1,5 @@
 <template>
-  <p ref="footerCoordinatesRef" v-on-hover="hover">
+  <p ref="footerCoordinatesRef" v-hover="hover">
     {{ revealLocation ? decodedLocation : encodedLocation }}
   </p>
 </template>
@@ -7,34 +7,38 @@
 <script setup lang="ts">
 import { ref, inject, computed } from "vue";
 
-import { vElementHover as vOnHover } from "@vueuse/components";
+import { computedWithControl } from "@vueuse/core";
+import type { FullGestureState } from "@vueuse/gesture";
+import type { MotionProperties } from "@vueuse/motion";
 
-import anime from "animejs";
+import _ from "lodash";
 
-import { normalScale, slightlyScale } from "@/common/animations";
-import { mainPageKey, type MainPageKeyType } from "@injection-keys";
-import type { CardinalPoint } from "@types";
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
+
+import { useInitialProps, useSpringAnimation } from "@common/composables";
+import { mainPageKey, type MainPageKey } from "@injection-keys";
+import type { Point } from "@types";
 
 // injected
-const { location } = inject(mainPageKey) as NonNullable<MainPageKeyType>;
+const { location } = inject(mainPageKey) as NonNullable<MainPageKey>;
 
 // template refs
-const footerCoordinatesRef = ref<Nullable<HTMLElement>>(null);
+const footerCoordinatesRef = ref<Nullable<HTMLParagraphElement>>(null);
 
 // reactive
+const isAnimated = ref<boolean>();
 const revealLocation = ref(false);
 
 // computed
 const encodedLocation = computed(() => {
-  let strings: string[] = [];
+  const strings: string[] = [];
 
-  for (const [crdName, crdData] of Object.entries(location.coordinates) as Array<
-    [string, CardinalPoint]
+  for (const [pointDirection, pointData] of Object.entries(location.coordinates) as Array<
+    [string, Point]
   >) {
-    const firstLetterUpper = crdName[0].toUpperCase();
-    const formattedCardinal = formatCardinal(crdData);
-    strings.push(`${firstLetterUpper} ${formattedCardinal}`);
+    const firstDirectionLetter = pointDirection[0];
+    const formattedPoint = formatPoint(pointData);
+    strings.push(`${firstDirectionLetter} ${formattedPoint}`);
   }
 
   return strings.join(" / ");
@@ -42,7 +46,7 @@ const encodedLocation = computed(() => {
 const decodedLocation = computed(() => `${location.area.city} / ${location.area.distrinct}`);
 
 // methods
-const formatCardinal = ({ degrees, minutes, seconds }: CardinalPoint) => {
+const formatPoint = ({ degrees, minutes, seconds }: Point) => {
   const degreesString = degrees ? `${degrees}\u00B0` : ""; // \u00B0 is degree symbol
   const minutesString = minutes ? `${minutes}'` : "";
   const secondsString = seconds ? `${seconds}"` : "";
@@ -50,19 +54,35 @@ const formatCardinal = ({ degrees, minutes, seconds }: CardinalPoint) => {
   return degreesString + minutesString + secondsString;
 };
 
+// initial props
+const initialProps = useInitialProps({ scale: 1 });
+
+// spring-set function
+const set = computedWithControl(
+  () => isAnimated.value,
+  () => {
+    if (isAnimated.value === false) {
+      const { set } = useSpringAnimation(footerCoordinatesRef, initialProps, {
+        stiffness: 500,
+      });
+
+      return set;
+    }
+
+    return (properties: MotionProperties) => _.noop(properties);
+  }
+);
+
 // hovering
-//
-// TODO: this can be optimized
-// `anime` on every call creates a new anime instance.
-// we can create an anime instace with necessary animation before hover method
-// but this will require some extra checks like component is mounted
-//
-const hover = (state: boolean) => {
-  revealLocation.value = state;
-  state
-    ? anime({ targets: footerCoordinatesRef.value, ...slightlyScale(1.15) })
-    : anime({ targets: footerCoordinatesRef.value, ...normalScale(1) });
+const hover = ({ hovering }: FullGestureState<"move">) => {
+  revealLocation.value = hovering;
+
+  if (hovering) set.value({ scale: 1.15 });
+  else set.value(initialProps);
 };
+
+//exposed
+defineExpose({ isAnimated });
 </script>
 
 <style lang="scss" scoped>
@@ -81,8 +101,11 @@ p {
 
   transition: color 0.25s ease-out;
 
+  text-transform: uppercase;
+
   &:hover {
     color: white;
+    text-transform: capitalize;
 
     &::selection {
       color: black;

@@ -25,17 +25,17 @@ export interface Square {
   breakLinesAfter?: number;
 }
 
-export interface CardinalPoint {
+export interface Point {
   degrees?: number;
   minutes?: number;
   seconds?: number;
 }
 
-export interface Coordinates {
-  north?: CardinalPoint;
-  soth?: CardinalPoint;
-  west?: CardinalPoint;
-  east?: CardinalPoint;
+export interface Directions {
+  north?: Point;
+  soth?: Point;
+  west?: Point;
+  east?: Point;
 }
 
 export interface CityArea {

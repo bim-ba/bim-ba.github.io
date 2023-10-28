@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createHead } from "@vueuse/head";
+import { GesturePlugin } from "@vueuse/gesture";
 import { createPinia } from "pinia";
 
 import App from "@/App.vue";
@@ -23,13 +24,7 @@ app
   .provide(projectsPageKey, projectsPageDate)
   .provide(contactsPageKey, contactsPageData);
 
-// reactive providers
-app.config.unwrapInjectedRef = true;
-
 // plugins
-app.use(router);
-
-app.use(createHead());
-app.use(createPinia());
+app.use(router).use(createHead()).use(createPinia()).use(GesturePlugin);
 
 app.mount("#app");

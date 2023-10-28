@@ -9,15 +9,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// props
-//
-// https://github.com/vuejs/core/issues/4294
-//
-// type ThisProps = ...
-interface ThisProps {
+/* props
+`defaultImage: string` - project image url
+*/
+const props = defineProps<{
   defaultImage: string;
-}
-const props = defineProps<ThisProps>();
+}>();
 
 // reactive
 const modalOpened = ref(false);

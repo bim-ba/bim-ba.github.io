@@ -9,8 +9,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-
-import type { Nullable } from "@/types/utils";
+import type { Nullable } from "@antfu/utils";
 
 import NavigationIcon from "@components/NavigationIcon.vue";
 import FooterCoordinates from "@pages/main/FooterCoordinates.vue";
@@ -24,6 +23,7 @@ defineExpose({ coordinatesRef, iconRef });
 </script>
 
 <style lang="scss" scoped>
+$navigation-icon-margin-left: 2.5em;
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -31,44 +31,9 @@ defineExpose({ coordinatesRef, iconRef });
   position: fixed;
   width: 100%;
   bottom: 1em;
+
   .icon {
-    margin-right: 2.5em;
-  }
-  .contacts {
-    margin-left: 5em;
-    font-weight: 500;
-    align-self: center;
-
-    transition: color 0.25s ease-out;
-
-    &:hover {
-      color: white;
-
-      &::selection {
-        color: black;
-        background: white;
-      }
-
-      &::after {
-        transform: scaleY(1);
-        transform-origin: bottom;
-      }
-    }
-
-    &::after {
-      content: "";
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      background: black;
-      transform: scaleY(0);
-      transform-origin: top;
-
-      transition: transform 0.25s ease-out;
-    }
+    margin-right: $navigation-icon-margin-left;
   }
 }
 </style>
