@@ -2,12 +2,12 @@
   "projects": [
     {
       "title": "PROJECT JOHNY",
-      "preview": "/projects/devs_ex_machina.svg",
-      "image": "/projects/devs_ex_machina.svg",
+      "preview": "https://via.placeholder.com/872x350",
+      "image": "https://via.placeholder.com/872x1500",
       "cards": [
-        "https://via.placeholder.com/772x961",
-        "https://via.placeholder.com/364x619",
-        "https://via.placeholder.com/334x640"
+        "/svg/project2mini1.jpg",
+        "/svg/project2.jpg",
+        "/svg/project2mini2.jpg"
       ],
       "date": {
         "year": 2018,
@@ -18,13 +18,13 @@
       }
     },
     {
-      "title": "VERY LONG NAMED PROJECT",
-      "preview": "https://via.placeholder.com/783x350",
-      "image": "https://via.placeholder.com/783x1500",
+      "title": "JAPAN POSTERS",
+      "preview": "/svg/project3prev.jpg",
+      "image": "/svg/project3.jpg",
       "cards": [
-        "https://via.placeholder.com/772x961",
-        "https://via.placeholder.com/364x619",
-        "https://via.placeholder.com/334x640"
+        "/svg/project3mini1.png",
+        "/svg/project3mini2.png",
+        "/svg/project3mini3.png"
       ],
       "date": {
         "year": 2021,
@@ -35,13 +35,13 @@
       }
     },
     {
-      "title": "PROJECT BOMB",
-      "preview": "https://via.placeholder.com/612x350",
-      "image": "https://via.placeholder.com/612x1500",
+      "title": "ARFASOUND",
+      "preview": "/svg/projectprev.jpg",
+      "image": "/svg/project1.jpg",
       "cards": [
-        "https://via.placeholder.com/571x832",
-        "https://via.placeholder.com/402x992",
-        "https://via.placeholder.com/619x961"
+        "/svg/project1mini1.jpg",
+        "/svg/project1mini2.jpg",
+        "/svg/project1mini3.jpg"
       ],
       "date": {
         "year": 2020,
@@ -53,13 +53,13 @@
       }
     },
     {
-      "title": "PROJECT SOME BOMB DA BABEPIZZA",
-      "preview": "https://via.placeholder.com/922x350",
-      "image": "https://via.placeholder.com/922x1500",
+      "title": "GARMONIYA CONCEPT",
+      "preview": "/svg/project4prev.jpg",
+      "image": "/svg/project4.png",
       "cards": [
-        "https://via.placeholder.com/550x723",
-        "https://via.placeholder.com/571x832",
-        "https://via.placeholder.com/334x640"
+        "/svg/project4mini1.jpg",
+        "/svg/project4mini2.jpg",
+        "/svg/project4mini3.jpg"
       ],
       "date": {
         "year": 2021,
@@ -70,13 +70,13 @@
       }
     },
     {
-      "title": "PROJECT PIZZA",
-      "preview": "https://via.placeholder.com/517x350",
-      "image": "https://via.placeholder.com/517x1500",
+      "title": "POSTERS CONCEPT",
+      "preview": "svg/project5prev.jpg",
+      "image": "svg/project5.jpg",
       "cards": [
-        "https://via.placeholder.com/479x844",
-        "https://via.placeholder.com/330x869",
-        "https://via.placeholder.com/334x640"
+        "svg/project5mini1.png",
+        "svg/project5mini2.jpg",
+        "svg/project5mini3.jpg"
       ],
       "date": {
         "year": 2019,
@@ -84,40 +84,6 @@
       },
       "style": {
         "color": "mediumseagreen"
-      }
-    },
-    {
-      "title": "PROJECT JOHNY",
-      "preview": "/projects/devs_ex_machina.svg",
-      "image": "/projects/devs_ex_machina.svg",
-      "cards": [
-        "https://via.placeholder.com/772x961",
-        "https://via.placeholder.com/364x619",
-        "https://via.placeholder.com/334x640"
-      ],
-      "date": {
-        "year": 2018,
-        "quarters": [ 1, 2 ]
-      },
-      "style": {
-        "color": "cornflowerblue"
-      }
-    },
-    {
-      "title": "PROJECT JOHNY",
-      "preview": "/projects/devs_ex_machina.svg",
-      "image": "/projects/devs_ex_machina.svg",
-      "cards": [
-        "https://via.placeholder.com/772x961",
-        "https://via.placeholder.com/364x619",
-        "https://via.placeholder.com/334x640"
-      ],
-      "date": {
-        "year": 2018,
-        "quarters": [ 1, 2 ]
-      },
-      "style": {
-        "color": "cornflowerblue"
       }
     }
   ],
