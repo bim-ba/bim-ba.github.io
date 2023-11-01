@@ -8,7 +8,7 @@
     :slides-per-view="3"
     :loop="true"
     :initial-slide="initialSlideIndex"
-    @swiperslidechange="onSlideChange"
+    @swiperslidechange="/* eslint-disable-line prettier/prettier */ (onSlideChange as SatisfiedFunction)"
   >
     <swiper-slide
       v-for="({ title, date, style, image, preview, cards }, index) in projects"
@@ -47,6 +47,24 @@ import { projectsPageKey, type ProjectsPageKey } from "@injection-keys";
 // type utils
 import type { Nullable } from "@antfu/utils";
 import type { Swiper } from "swiper";
+/**
+ * The problem is the event `@swiperslidechange` has a strange callable, that cannot be shimmed
+ * ```ts
+ * // swiper container component
+ * interface DefineComponent<{
+ *   // ...
+ *   swiperslidechange: (...args: unknown[]) => void; // <-- PROBLEM
+ * }>;
+ * 
+ * // actual swiper container component
+ * interface Swiper { ... }
+ * interface DefineComponent<{
+ *   // ...
+ *   swiperslidechange: (event: CustomEvent<Swiper>) => void; // <-- ACTUAL TYPE
+ * }>;
+```
+*/
+type SatisfiedFunction = (...args: unknown[]) => void;
 
 // template refs
 const floppiesRef = ref<Nullable<Array<InstanceType<typeof FloppyDisk>>>>(null);
