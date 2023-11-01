@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import { createHead } from "@vueuse/head";
 import { GesturePlugin } from "@vueuse/gesture";
-import { createPinia } from "pinia";
 
 import App from "@/App.vue";
 import router from "@/router";
@@ -25,6 +24,6 @@ app
   .provide(contactsPageKey, contactsPageData);
 
 // plugins
-app.use(router).use(createHead()).use(createPinia()).use(GesturePlugin);
+app.use(router).use(createHead()).use(GesturePlugin);
 
 app.mount("#app");

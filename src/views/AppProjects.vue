@@ -110,17 +110,22 @@ onMounted(() => {
         },
 
         targets: timelineElementsSquares,
-        delay: anime.stagger(100, { start: 500 }),
+        delay: anime.stagger(100, { start: 300, from: "center" }),
         ...bubbleAnimation,
-
-        complete: () => {
-          for (const squareRef of footerRef.value!.squaresRef!.squaresRef!) {
-            clearCSSProperties(squareRef.squareRef, ["transform"]);
-            squareRef.isAnimated = false;
-          }
-        },
       },
-      0
-    );
+      500
+    )
+    .add({
+      targets: timelineElementsSquares,
+      delay: anime.stagger(0, { from: "center" }),
+      rotate: "1.5turn",
+
+      complete: () => {
+        for (const squareRef of footerRef.value!.squaresRef!.squaresRef!) {
+          clearCSSProperties(squareRef.squareRef, ["transform"]);
+          squareRef.isAnimated = false;
+        }
+      },
+    });
 });
 </script>

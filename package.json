@@ -17,7 +17,6 @@
     "animejs": ">=3.2.1",
     "datastructures-js": "^13.0.0",
     "lodash": "^4.17.21",
-    "pinia": ">=2.0.14",
     "swiper": ">=8.1.5",
     "vue": ">=3.2.33",
     "vue-router": ">=4.0.15"

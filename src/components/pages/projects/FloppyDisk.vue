@@ -8,7 +8,7 @@
 
   <!-- floppy -->
   <div class="floppy-shadow-container">
-    <div ref="floppyRef" v-hover="hover" class="floppy-container" @click="projectModalRef?.show()">
+    <div ref="floppyRef" v-hover="hover" class="floppy-container" @click="projectModalRef!.show()">
       <div class="frame-container">
         <img
           ref="droppableImageRef"
@@ -116,13 +116,22 @@ const set = computedWithControl(
   }
 );
 
+// show aside images
+const showAsideImages = () => {
+  for (const asideImageRef of asideImagesRef.value!) asideImageRef.show();
+};
+// hide aside images
+const hideAsideImages = () => {
+  for (const asideImageRef of asideImagesRef.value!) asideImageRef.hide();
+};
+
 // hovering
 const hover = ({ hovering }: FullGestureState<"move">) => {
   if (hovering) {
-    for (const asideImageRef of asideImagesRef.value!) asideImageRef.show();
+    showAsideImages();
     set.value({ scale: 1.15 });
   } else {
-    for (const asideImageRef of asideImagesRef.value!) asideImageRef.hide();
+    hideAsideImages();
     set.value(initialProps);
   }
 };
@@ -131,12 +140,10 @@ const hover = ({ hovering }: FullGestureState<"move">) => {
 onBeforeMount(() => useImage({ src: props.image }));
 
 // exposed
-defineExpose({ floppyRef, isAnimated });
+defineExpose({ floppyRef, isAnimated, showAsideImages, hideAsideImages });
 </script>
 
 <style scoped lang="scss">
-$container-font-size: v-bind('isPrimary ? "1em" : "0.75em"');
-
 $floppy-color: v-bind(color);
 $floppy-size: 20em;
 

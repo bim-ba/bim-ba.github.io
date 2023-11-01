@@ -74,7 +74,7 @@ const hover = ({ hovering }: FullGestureState<"move">) => {
 
 // hooks
 onMounted(() => {
-  // center outer and inner in container because those absolutely positioned
+  // center outer and inner in container because those are absolutely positioned
   anime.set(outerRef.value!, { translateX: "-50%", translateY: "-50%" });
   anime.set(innerRef.value!, { translateX: "-50%", translateY: "-50%" });
 
@@ -83,7 +83,6 @@ onMounted(() => {
       targets: iconRef.value,
       ...bubbleAnimation,
 
-      // FIXME: `scale` property affects page
       complete: () => clearCSSProperties(iconRef.value!, ["transform"]),
     })
     .add({
@@ -135,12 +134,12 @@ $text-font-size: calc($outer-icon-height / 7);
   height: 100%;
   .icon {
     height: $icon-container-size;
+    position: relative;
     .outer,
     .inner {
       position: absolute;
       top: 50%;
       left: 50%;
-      // transform: translate(-50%, -50%);
       transition: height 0.15s ease-out;
     }
     .outer {

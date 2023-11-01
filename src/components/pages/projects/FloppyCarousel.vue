@@ -7,8 +7,8 @@
     :space-between="250"
     :slides-per-view="3"
     :loop="true"
-    :loop-additional-slides="3"
     :initial-slide="initialSlideIndex"
+    @swiperslidechange="onSlideChange"
   >
     <swiper-slide
       v-for="({ title, date, style, image, preview, cards }, index) in projects"
@@ -46,6 +46,7 @@ import { projectsPageKey, type ProjectsPageKey } from "@injection-keys";
 
 // type utils
 import type { Nullable } from "@antfu/utils";
+import type { Swiper } from "swiper";
 
 // template refs
 const floppiesRef = ref<Nullable<Array<InstanceType<typeof FloppyDisk>>>>(null);
@@ -58,6 +59,14 @@ const initialSlideIndex = projects.findIndex((project) => project.style.primary 
 
 // swiper registration (initialization)
 register();
+
+// events
+const onSlideChange = ({ detail }: CustomEvent<Swiper[]>) => {
+  type RealSwiper = Swiper & { previousRealIndex: number };
+  const previosFloppyIndex = (detail[0] as RealSwiper).previousRealIndex;
+
+  if (floppiesRef.value) floppiesRef.value[previosFloppyIndex].hideAsideImages();
+};
 
 // exposed
 defineExpose({ floppiesRef });

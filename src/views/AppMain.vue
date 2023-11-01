@@ -94,7 +94,7 @@ onMounted(() =>
         },
 
         targets: backgroundRef.value!.squaresRef!.map(({ squareRef }) => squareRef),
-        delay: anime.stagger(100),
+        delay: anime.stagger(75),
         ...bubbleAnimation,
         translateX: ["2500%", 0],
         rotate: "1turn",
@@ -103,7 +103,7 @@ onMounted(() =>
     )
     .add({
       targets: backgroundRef.value!.squaresRef!.map(({ squareRef }) => squareRef),
-      delay: anime.stagger(50),
+      delay: anime.stagger(0),
       rotate: "1.5turn",
 
       complete: () => {
